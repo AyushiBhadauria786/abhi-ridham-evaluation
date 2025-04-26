@@ -100,3 +100,69 @@ let removed = fruites.slice(2);
 console.log(removed);
 
 
+
+//In array try undefine, null , empty string
+
+
+
+const arr4 = [1,2,5,6,7]
+// arr4.splice(2,1);
+
+
+arr4.slice(1,3);
+console.log(arr4);
+
+arr4.unshift()
+console.log(arr4)
+
+
+
+const newArr = ["a","b","c","d","e","f"]
+const remove = newArr.splice(3,3)
+// const remove = newArr.shift(3)
+console.log(remove);
+newArr.unshift(...remove);
+console.log(newArr);
+
+
+//Array srching methods
+//15)Array indexOf
+
+let position = fruites.indexOf("Apple");
+console.log(position + 1);
+
+//16)Array lastndexOf
+
+let lastIndex = fruites.lastIndexOf("Apple");
+console.log(lastIndex); 
+
+
+//17)includes
+
+let isAvailable = fruites.includes("Apple");
+console.log(isAvailable);
+
+
+//18)find
+
+function findNum(nums){
+    return nums > 18;
+}
+
+const num = [1,15,18,25,20,14];
+const search = num.find(findNum);
+console.log(search)
+
+
+//19) find index
+
+let first = num.findIndex(findNum);
+console.log(first)
+
+
+//20)find last and lastIndex
+
+let last  = num.findLast(x => x > 18);
+console.log(last)
+console.log(num.findLastIndex(x=>x>18));
+
