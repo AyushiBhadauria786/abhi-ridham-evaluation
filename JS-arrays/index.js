@@ -166,3 +166,34 @@ let last  = num.findLast(x => x > 18);
 console.log(last)
 console.log(num.findLastIndex(x=>x>18));
 
+
+
+//Sorting methods
+
+//21) sort()
+
+let sorted = fruites.sort();
+console.log(sorted);
+
+//for numbers
+
+console.log("original array:",num)
+let numSort  = num.sort(function(a,b){
+    return a - b; 
+})
+console.log(numSort)
+console.log("original",num)
+
+
+//22) reverse() 
+
+console.log("original",fruites)
+let strReverse = fruites.reverse();
+console.log(strReverse)
+
+let reversed = num.reverse();
+console.log(reversed)
+console.log("original",num)
+
+
+
