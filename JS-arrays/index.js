@@ -197,3 +197,33 @@ console.log("original",num)
 
 
 
+//23) map 
+
+const nums = [1,2,3,4,5]
+
+const double = nums.map((item) => item * 2);
+console.log(double);
+
+
+//24) filter
+
+const even = double.filter((item) => {
+    return item > 4;
+})
+console.log(even);
+
+
+//25) reduce
+
+const sum = nums.reduce((item,index) => item + index);
+console.log(sum);
+
+
+//26)every and some
+
+console.log(nums.every((item) => item > 2)); //false
+console.log(nums.some((item) => item > 2));  //true
+
+
+
+
