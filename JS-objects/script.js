@@ -178,3 +178,22 @@ while(count <= 4){
 }
 
 
+//this keyword
+
+console.log(this)
+
+function normal() {
+    console.log(this)
+}
+normal()
+
+const obj = {
+    a: 15,
+    show: function(){
+        console.log(this.a);
+    },
+    usingArrow: () => console.log(this.a)
+}
+
+obj.show();
+obj.usingArrow(); //undefined
