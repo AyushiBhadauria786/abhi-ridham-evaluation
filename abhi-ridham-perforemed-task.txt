@@ -37,6 +37,10 @@
 
     -Methods:
         -assign , entries , create , keys , values , freeze
+        -deepCopy and shallowCopy
+        
+    - destructuring
+     -object destructuring , array destructuring
 
 
 -------Abhi------
