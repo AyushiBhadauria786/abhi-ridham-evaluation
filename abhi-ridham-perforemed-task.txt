@@ -32,6 +32,12 @@
     -spered
 
 
+2)Object in JS
+    -Creation -Manipulation
+
+    -Methods:
+        -assign , entries , create , keys , values , freeze
+
 
 -------Abhi------
 (1) Array Creation :- (i) simple  (ii) using new keyword
