@@ -225,5 +225,43 @@ console.log(nums.every((item) => item > 2)); //false
 console.log(nums.some((item) => item > 2));  //true
 
 
+//27)forEach
+nums.forEach(function(num){
+    console.log(num);
+})
+
+const students = [
+    { name: 'Alice', grade: 'A' },
+    { name: 'Bob', grade: 'B' },
+    { name: 'Charlie', grade: 'C' },
+  ];
+
+students.forEach((student) => {
+    console.log(`Name:${student.name} and secure Grade is:${student.grade}`)
+})
+
+
+//28) Array keys
+const keys = fruites.keys();
+
+for(let x of keys){
+    console.log(x);
+}
+
+
+//29)Array entries
+
+const list = fruites.entries();
+for(let x of list){
+    console.log(x)
+}
+
+
+//30)Array with
+
+const months = ["Jan","Feb","Mar","April"]
+const changed = months.with(2,"March");
+
+console.log(changed)
 
 
