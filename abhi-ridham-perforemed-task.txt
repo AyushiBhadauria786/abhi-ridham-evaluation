@@ -34,6 +34,20 @@
 
 
 -------Abhi------
+(1) Array Creation :- (i) simple  (ii) using new keyword
+
+=> Array Methods :- 
+    -length
+    -toString
+    -at
+    -join
+    -pop
+    -push
+    -shift
+    -unshift
+    -changing element
+    -delete element
+    
 
 
 
