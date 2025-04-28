@@ -145,7 +145,7 @@ console.log(allvalues);
 
 
 
-//=Object destructuring
+//Object destructuring
 
 const newPerson = {profileName: "Sara", country: "India", 
                   job: "Developer", address: {street: "xyz", area: "local"}}
@@ -159,6 +159,22 @@ console.log(street)
 console.log(area)
 
 
+//Loops 
 
+for(let key in newPerson){
+    console.log(`${key} : ${newPerson[key]}`);
+}
+
+
+for(let val of intro){
+    console.log(val);
+}
+
+
+let count = 1
+while(count <= 4){
+    console.log(count);
+    count++;
+}
 
 
