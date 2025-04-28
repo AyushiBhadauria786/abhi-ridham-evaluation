@@ -265,3 +265,46 @@ const changed = months.with(2,"March");
 console.log(changed)
 
 
+//31) Array values
+
+const list1 = fruites.values();
+
+for(let x of list1){
+    console.log(x);
+}
+
+//32) Array spread
+const q1 = ["Jan", "Feb", "Mar"];
+const q2 = ["Apr", "May", "Jun"];
+const q3 = ["Jul", "Aug", "Sep"];
+const q4 = ["Oct", "Nov", "Dec"];
+
+const year = [...q1,...q2,...q3,...q4];
+console.log(year)
+
+
+
+
+//Examples:
+const items = [
+    { name: 'Apple', price: 1 },
+    { name: 'Orange', price: 2 },
+    { name: 'Mango', price: 3 },
+];
+
+const totalprice = items.reduce((accumlator,item) =>{
+    return accumlator += item.price;
+},0);
+
+console.log(totalprice);
+
+
+const users = [
+    {id: 101, name: 'John'},
+    {id: 201, name: 'Doe'},
+    {id: 301, name: 'Jane'},
+];
+
+
+const userIds = users.map((item) => item.name);
+console.log(userIds);
