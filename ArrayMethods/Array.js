@@ -107,10 +107,127 @@ console.log(Numbers);
 
 // 10) deleted elements
 
-delete fruits[0];
+// delete fruits[0];
+// console.log(fruits);
+
+// delete Numbers[0];
+// console.log(Numbers);
+
+
+// 11) Array concat()
+
+const Merge = fruits.concat(Numbers);
+console.log(Merge);
+
+const add = fruits.concat("Plum")
+console.log(add);
+
+
+// 12) Array copyWithin()
+
+console.log(Numbers)
+
+const copy = Numbers.copyWithin(2)
+console.log(copy);
+
+const copy1 = Numbers.copyWithin(2,1)
+console.log(copy1);
+
+
+// 13) Array flat()
+
+const arr = [[1,2],[4,5],[6,7]];
+console.log(arr.flat());
+
+
+// 14) Array flatMap()
+
+const arr1 = [1,2,3,4,5,6]
+const newarr = arr1.flatMap(x => [x, x * 10]);
+// const newarr = arr1.flatMap(x=>(x,x*3));
+console.log(newarr);
+
+
+
+// 15) Array splice()
+
+const Name = ["abhi","jay","yash","bhargav","aakash"]
+
+// Name.splice(2);
+console.log(Name);
+
+// Name.splice(2,1,"Raj");
+console.log(Name);
+
+// Name.splice(2,1);
+console.log(Name)
+
+
+
+// 16) Array slice()
+
+const array2 = [12,45,76,94,67,34];
+
+console.log(array2.slice(2))
+console.log(array2.slice(1,3))
+
+
+// 17) Array Indexof
+
 console.log(fruits);
 
-delete Numbers[0];
-console.log(Numbers);
+console.log(fruits.indexOf("Cherry"));
+console.log(array2.indexOf(76));
 
-// 11) 
+
+// 18) Array lastIndexOf
+
+const fruits1 = ["Apple", "Orange", "Apple", "Mango","Apple"];
+console.log(fruits1.lastIndexOf("Apple"));
+
+
+// 19) Array includes
+
+console.log(fruits.includes("Kiwi"));
+console.log(fruits.includes("cherry"));
+
+
+// 20) Array find()
+
+const numbers = [12,23,45,13,5,10]
+
+let Find = numbers.find((item)=>{
+    return item > 18;
+});
+console.log(Find);
+
+
+// 21) Array findindex
+
+
+let findindex = numbers.findIndex((item)=>{
+    return item > 18;
+});
+console.log(findindex);
+
+
+// 22) Array findLast()
+
+
+let FindLast = numbers.findLast((item)=>{
+    return item > 18;
+});
+console.log(FindLast);
+
+
+// 23) Array findLastIndex()
+
+
+let findLastIndex = numbers.findLastIndex((item) => {
+  return item > 18;
+});
+
+console.log(findLastIndex);
+
+
+
