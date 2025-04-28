@@ -1,0 +1,36 @@
+------Ridham-------
+1) Array Methods--
+    -length
+    -toString()
+    -at
+    -pop
+    -push
+    -shift
+    -unshift
+    -delete
+    -join
+    -concat
+    -flat
+    -splice
+    -slice
+    -copyWithin
+    -indexOf
+    -latInexOf
+    -includes
+    -find
+    -findLast, findLastIndex
+    -sort
+    -reverse
+    -map
+    -reduce
+    -filter
+    -forEach
+    -keys
+    -with
+    -some
+    -every
+    -spered
+
+
+
+
