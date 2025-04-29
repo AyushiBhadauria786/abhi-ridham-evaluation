@@ -47,7 +47,54 @@
     -unshift
     -changing element
     -delete element
-    
+    -concat
+    -copyWithin
+    -flat
+    -splice
+    -slice
+    -indexOf
+    -lastIndexOf
+    -includes
+    -find
+    -findIndex
+    -findLast
+    -findLastIndex
+    -sort
+    -reverse
+    -forEach
+    -map
+    -filter
+    -reduce
+    -every
+    -some
+    -from
+    -keys
+    -with
+    -spered
+
+
+2) Object Creation :- (i)simple (ii)using new keyword
+   
+   Object Manipulation :- add,modify,delete
+
+   Object Methods :-  
+   -assign
+   -entries
+   -create
+   -fromentries
+   -values
+   -keys
+   -freeze
+
+   Destructuring :- (i) Object Destructuring (ii) Array Destructuring
+
+   -This keyword :- 
+   -using alone
+   -using function
+   -using arrow function
+   -using event listners
+   -using Methods(call,apply,bind)
+
 
 
 
