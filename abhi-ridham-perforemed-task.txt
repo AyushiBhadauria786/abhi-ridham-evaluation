@@ -39,8 +39,11 @@
         -assign , entries , create , keys , values , freeze
         -deepCopy and shallowCopy
         
-    - destructuring
+    - Destructuring
      -object destructuring , array destructuring
+
+     -This keyword
+        -Seen in global, in function , in objects, using call method , in evet listners, using arrow function also
 
 
 -------Abhi------
