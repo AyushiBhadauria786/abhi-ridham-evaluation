@@ -197,3 +197,63 @@ const obj = {
 
 obj.show();
 obj.usingArrow(); //undefined
+
+
+function say(){
+    console.log(`Hello, my name is ` + this.name);
+}
+
+const obj1 = {
+    name: "Ami",
+    sayHi: say
+};
+
+
+
+say();
+obj1.sayHi()
+
+
+
+//using call with this
+
+const obj2 = {
+    name: "newName"
+}
+
+say.call(obj2);
+
+
+function ageCheck() {
+    if(this.age > 18){
+        console.log("You can vote")
+    }else {
+        console.log("You can not vote")
+    }
+}
+
+const per1 = {age: 21};
+const per2 = {age: 15};
+
+ageCheck.call(per1)
+ageCheck.call(per2)
+
+
+const per3 = {
+    name: "ram",
+    age: 22,
+    greet : () => {
+        return `Hello, you are ${this.age} year old`
+    }
+}
+
+console.log(per3.greet()); //gives undefined because of arrow function  
+
+
+
+const button = document.querySelector("button");
+
+button.addEventListener("click",function(){
+    console.log(this);
+})
+
