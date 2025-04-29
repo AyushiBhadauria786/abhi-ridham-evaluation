@@ -83,3 +83,41 @@ Promise.allSettled([p1,p2,p3])
 
 
 
+//async await
+
+//without async await
+fetch("https://jsonplaceholder.typicode.com/todos")
+.then((res) => res.json())
+.then((result) => console.log(result));
+
+//with async await
+
+async function fetchUrl(url) {
+    try{
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log(result)
+    }catch(err){
+        console.log("error while fetching",err);
+    }
+}
+
+fetchUrl("https://jsonplaceholder.typicode.com/todos");
+
+
+async function datafetch(){
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    const json = await response.json();
+    if (json.userId == 1) {
+      json.completed == false;
+    } else {
+      json.completed == true;
+    }
+    console.log(json);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+datafetch();
