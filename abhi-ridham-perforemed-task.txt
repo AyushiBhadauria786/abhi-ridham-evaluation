@@ -45,6 +45,20 @@
      -This keyword
         -Seen in global, in function , in objects, using call method , in evet listners, using arrow function also
 
+    -loops:
+        for,for-in,for-of,while,do-while,forEach
+
+3)Asyncronus JS concept
+    -Seen Event loop, Micro task queue and macro task queue
+
+    => Promise
+        -Working of promises 
+        -Promise methods like Promise.all, any, allsettle, race etc
+        -tries diffrent examples with these
+
+    => Async-await
+        -Seen async-await, tried with Jsonplaceoholder API  
+
 
 -------Abhi------
 (1) Array Creation :- (i) simple  (ii) using new keyword
