@@ -230,4 +230,133 @@ let findLastIndex = numbers.findLastIndex((item) => {
 console.log(findLastIndex);
 
 
+// 24) Array sort()
 
+console.log(fruits1);
+
+// fruits1.sort()
+// console.log(fruits1);
+
+const Array1 = [23,86,93,765,64,2]
+
+const newarr1 = Array1.sort((a,b)=>{
+    return a-b;
+})
+
+console.log(Array1);
+
+// 25) Array Reverse
+
+fruits1.reverse();
+console.log(fruits1);
+
+// console.log(arr1);
+
+arr1.reverse();
+console.log(arr1)
+
+
+
+// 26) Array forEach()
+
+const numbers2 = [12,76,54,89,34,16,23]
+
+const foreach = numbers2.forEach((item)=>{
+    console.log(item);
+})
+
+
+// 27) Array map()
+
+const mapArray = numbers2.map((item)=>{
+    return item * 2
+})
+console.log(mapArray);
+
+
+//  28) Array filter()
+
+const filterArray = numbers2.filter((item)=>{
+    return item < 18;
+})
+console.log(filterArray);
+
+
+// 29) Array reduce()
+
+const Reducer = numbers2.reduce((curr,total)=>{
+    return curr = curr + total;
+},0) 
+console.log(Reducer);
+
+
+const Reducer2 = numbers2.reduce((curr,max)=>{
+    if(curr>max){
+        return curr;
+    }else{
+        return max;
+    }
+},0)
+console.log(Reducer2);
+
+
+// 30) Array every()
+
+console.log(numbers2);
+
+const Every = numbers2.every((item)=>{
+    return item < 18;
+})
+console.log(Every)
+
+
+// 31) Array some()
+
+const Some = numbers2.some((item)=>{
+    return item < 18;
+})
+console.log(Some);
+
+
+// 32) Array from()
+
+const myArr1 = Array.from("ABCDEFG");
+console.log(myArr1);
+
+
+// 33) Array keys()
+
+console.log(fruits);
+
+const Key = fruits.keys();
+// console.log(Key);
+
+for(let x of Key){
+    console.log(x);
+}
+
+
+
+// 34) Array with
+
+const month = ["jan","feb","march","apr"];
+
+// const Updated = month.with(2,"mar");
+// console.log(Updated);
+
+
+// 35) Array spread oprator
+
+const q1 = ["Jan", "Feb", "Mar"];
+const q2 = ["Apr", "May", "Jun"];
+const q3 = ["Jul", "Aug", "Sep"];
+const q4 = ["Oct", "Nov", "Des"];
+
+console.log(...q1,...q2,...q3,...q4);
+
+
+
+const name2 = ["abhi","ridham","aakash"];
+const numb = [23,21,25];
+
+console.log("jay",...name2,17,...numb);
