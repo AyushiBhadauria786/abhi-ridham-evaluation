@@ -123,6 +123,22 @@
    -using Methods(call,apply,bind)
 
 
+3)Asyncronus JS concept :- 
+   -eventloop 
+   -microtask
+   -macrotask
+
+    => Promise :- 
+       -how it is created and Working
+       -Different method of Promise :- all,allsettle,any,race
+       -perform every method with different examples
+       -understand different to each other
+
+    => Async-await
+       -perform async-await and how to remove chaining
+  
+
+
 
 
 
