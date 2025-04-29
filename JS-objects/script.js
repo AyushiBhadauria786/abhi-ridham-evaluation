@@ -81,6 +81,13 @@ details.firstName = "newName";
 console.log("original",details); //No change 
 console.log(frozonObj);
 
+//7)Object hasOwnProperty
+
+let check = details.hasOwnProperty("firstName");
+console.log("check",check)
+
+
+
 
 //Deep Copy and Shallow Copy
 
@@ -257,3 +264,43 @@ button.addEventListener("click",function(){
     console.log(this);
 })
 
+
+const myObject = {
+    fullname: 'John Doe',
+    myArrowFunction: null,
+  
+    sayName: function () {
+      this.myArrowFunction = () => {
+        return `My name is ${this.fullname}`
+      }
+    },
+  }
+  myObject.sayName();
+  console.log(myObject.myArrowFunction())
+
+
+
+
+  //more loops examples: 
+
+  let price = [20,10,20,50];
+  let total = 0;
+  for(let x of price){
+    total += x
+  }
+
+  console.log(total);
+  const average = total / price.length
+  console.log(average)
+
+
+
+  const salaries = {
+    Jack: 25000,
+    John: 35000,
+    Mona: 43000
+  };
+
+  for(let i in salaries){
+    console.log(`${i}:${salaries[i]}`);
+  }
