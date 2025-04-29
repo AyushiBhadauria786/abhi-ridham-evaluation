@@ -32,6 +32,19 @@
     -spered
 
 
+2)Object in JS
+    -Creation -Manipulation
+
+    -Methods:
+        -assign , entries , create , keys , values , freeze
+        -deepCopy and shallowCopy
+        
+    - Destructuring
+     -object destructuring , array destructuring
+
+     -This keyword
+        -Seen in global, in function , in objects, using call method , in evet listners, using arrow function also
+
 
 -------Abhi------
 (1) Array Creation :- (i) simple  (ii) using new keyword
