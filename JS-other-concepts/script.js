@@ -140,3 +140,50 @@ function sum(a){
 
 console.log("Curring sum:",sum(5)(2));
 
+
+//higher Order function:
+
+const arr1 = [1,2,3,4,5]
+
+const mapValue = arr1.map((item) => {
+    console.log(item * 2)
+})
+
+
+
+function highOrder(value){
+    console.log("HOC function");
+    value()
+}
+
+function callbackFunc(){
+    console.log("Callack function")
+}
+
+highOrder(callbackFunc);
+
+
+
+
+const radius = [1,2,3];
+
+const area = function(radius){
+    return Math.PI * radius * radius
+}
+
+const diameter = function(radius){
+    return 2 * radius
+}
+
+const calculate = function(radius,logic){
+    let output = [];
+    for(let i = 0; i < radius.length; i++){
+        output.push(logic(radius[i]))
+    }
+    return output;
+}
+
+console.log(calculate(radius,area))
+console.log(calculate(radius,diameter))
+
+
