@@ -51,3 +51,46 @@ function processTask() {
   }
   
   fetchData();
+
+
+
+  //Debounce
+
+  function debounce(func, delay) {
+    let timeoutId;
+    return function(...args){
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }  
+  }
+
+  const debounceSearch = debounce((query) => {
+    console.log(`Searching for: ${query}`)
+  },300);
+
+  const searchInput = document.getElementById("search-input");
+  searchInput.addEventListener("input", (e) => {
+    debounceSearch(e.target.value);
+  })
+
+
+  //throttle
+
+  function throttle(func, delay) {
+    let lastCall = 0;
+    return function (...args) {
+      const now = new Date().getTime();
+      if (now - lastCall >= delay) {
+        func(...args);
+        lastCall = now;
+      }
+    };
+  }
+  
+  const throttledScrollHandler = throttle(() => {
+    console.log("Loading more content...");
+  }, 1000);
+  
+  window.addEventListener("scroll", throttledScrollHandler);
