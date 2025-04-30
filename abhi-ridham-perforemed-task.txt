@@ -171,5 +171,9 @@
        -understand try,catch and finally and also understand throw for custom error
        -understand all type of error like range,reference,syntax,URI,Type etc.
 
+    => Debouncing and Throttling 
+       -understand Debouncing and Throttling and perform in the examples
+       -reduce api call and implement on their example.
+
 
 
