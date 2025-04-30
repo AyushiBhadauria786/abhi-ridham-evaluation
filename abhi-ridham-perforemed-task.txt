@@ -59,6 +59,17 @@
     => Async-await
         -Seen async-await, tried with Jsonplaceoholder API  
 
+4)Other JS topics:
+
+    -Seen LocalStorage and Session Storage tried diffrent methods of that
+     like:setItem,getItem,keys,clear(),removeItem()etc for both
+
+    =>function:
+        -Regular, Arrow, anonymus, first class, IIFE, function Expression and callback
+        -higher order functions
+        -function curring   
+        
+
 
 -------Abhi------
 (1) Array Creation :- (i) simple  (ii) using new keyword
