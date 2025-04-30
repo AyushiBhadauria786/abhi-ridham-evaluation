@@ -51,9 +51,92 @@ saveSessionBtn.addEventListener("click",() => {
 console.log(sessionStorage)
 
 
+//All types of functions
 
 
+//-Regular
+
+function areaOfCircle(radius){
+    return Math.PI * radius * radius;
+}
+
+console.log(areaOfCircle(5));
 
 
+//-anonymus function
 
+let square  = function(number) {
+    return number * number
+};
+
+console.log(square(5));
+
+
+//-IIFE function
+
+(function sum(a,b){
+    console.log(a + b)
+})(15,4);
+
+//IIFE with closure
+const counterFunc = (function() {
+    let count = 0
+    return function () {
+        console.log(`Hello ${count}`);
+        return count++;
+    }
+})()
+
+counterFunc();
+counterFunc();
+counterFunc();
+
+//-arrow
+
+const a = (x,y) => {
+    console.log(x * y);
+}
+
+a(2,5);
+
+
+//-callback 
+
+function greet(message,callback) {
+    console.log(`Hello ${message}.`)
+    callback();
+}
+
+function saySomething() {
+    console.log("Good By");
+}
+
+greet("Ridham",saySomething);
+
+//first class function and first class citizens
+
+function teacher(){
+    return "Teacher"
+}
+
+function student(){
+    return "Student"
+}
+
+function useBoth(user){
+    console.log("Welcome",user());
+}
+
+let message = useBoth(teacher);
+let message1 = useBoth(student);
+
+
+//curring
+function sum(a){
+    return function add(b){
+        return a + b
+    }
+}
+
+console.log("Curring sum:",sum(5)(2));
 
