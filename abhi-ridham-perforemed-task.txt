@@ -149,7 +149,27 @@
        -perform async-await and how to remove chaining
   
 
+4) javascript topics :-
 
+    => Storage
+       -LocalStorage and SessionStorage 
+       -understand how it is work and perform it.
+       -different methods :- setItem,getItem,removeItem,clear,keys etc and perform their examples
+       -understand different of both.
+       -understandhow cookies created and deleted after some expiry we can also set manually
+
+    => functions :-
+       -understand all the function :-
+       -Regular function
+       -arrow function
+       -first class function
+       -IIFE function
+       -callback function
+       -higher order function
+       
+    => Error handling :-
+       -understand try,catch and finally and also understand throw for custom error
+       -understand all type of error like range,reference,syntax,URI,Type etc.
 
 
 
