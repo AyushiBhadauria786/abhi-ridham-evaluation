@@ -7,6 +7,7 @@ import Navbar from './Navbar/Navbar'
 
 import Form from './component/Form'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import PageNotFound from './component/PageNotFound'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <Routes>
       <Route path="/" element={< Home />} />
       <Route path='/form' element={<Form/>} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
     </BrowserRouter>
     </>
@@ -26,3 +28,5 @@ function App() {
 }
 
 export default App
+
+

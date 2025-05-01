@@ -1,6 +1,7 @@
-import { Box, Container, TextareaAutosize, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, TextareaAutosize, TextField, Typography } from '@mui/material';
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import Summary from './Summary';
 
 interface Ifeild {
   FullName: string;
@@ -16,9 +17,14 @@ const Form = () => {
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm<Ifeild>({
     mode: 'onChange'
   });
+
+  const onSubmit = (data: Ifeild) => {
+    console.log("Submitted Data:", data);
+  };
+  
   return (
     <Container maxWidth="lg">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ border: "2px solid black", margin: "20px", padding: "20px" }}>
           <Typography mt={"20px"} variant="h4" id='regis'>Basic</Typography>
           <Box className='form-content'>
@@ -198,8 +204,61 @@ const Form = () => {
               />
             </Box>
           </Box>
+        <Summary/>
 
-          
+        <Typography mt={"20px"} variant="h4" id='regis'>Profile</Typography>
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
+            + add a new item
+          </Button>
+        </Box>
+
+        <Typography mt={"20px"} variant="h4" id='regis'>Experience</Typography>
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
+            + add a new item
+          </Button>
+        </Box>
+        
+
+
+        <Typography mt={"20px"} variant="h4" id='regis'>Education</Typography>
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
+            + add a new item
+          </Button>
+        </Box>
+
+
+        <Typography mt={"20px"} variant="h4" id='regis'>Skills</Typography>
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
+            + add a new item
+          </Button>
+        </Box>
+
+
+        <Typography mt={"20px"} variant="h4" id='regis'>Languages</Typography>
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
+            + add a new item
+          </Button>
+        </Box>
+
+        <Typography mt={"20px"} variant="h4" id='regis'>Projects</Typography>
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
+            + add a new item
+          </Button>
+        </Box>
+
+        <Box sx={{ mt:"20px" }}>
+          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#1e1e2f", color:"white"}} >
+            Preview
+          </Button>
+        </Box>
+
+
         </Box>
       </form>
     </Container>
@@ -207,3 +266,5 @@ const Form = () => {
 }
 
 export default Form
+
+
