@@ -30,6 +30,7 @@ const BasicsSecton: React.FC = () => {
       </Typography>
       
        <Box mb={2}>
+        <Typography variant="body1" fontStyle="">Full Name</Typography>
         <Controller
           name="fullName"
           control={control}
@@ -39,12 +40,13 @@ const BasicsSecton: React.FC = () => {
             value.trim() !== '' || 'Blank spaces are not allowed',
           }}
           render={({ field }) => (
-            <TextField fullWidth label="Full Name" variant="outlined" {...field} />
+            <TextField {...field} fullWidth placeholder="Enter Full Name" variant="outlined"  helperText={errors.fullName?.message}/>
           )}
         />
       </Box>
 
       <Box mb={2}>
+      <Typography variant="body1" fontStyle="">Headline</Typography>
         <Controller
           name="headline"
           control={control}
@@ -54,9 +56,14 @@ const BasicsSecton: React.FC = () => {
             value.trim() !== '' || 'Blank spaces are not allowed',
           }}
           render={({ field }) => (
-            <TextField fullWidth label="Headline" variant="outlined" {...field} />
+            <TextField {...field} fullWidth placeholder="Enter Headline" variant="outlined" helperText={errors.headline?.message}  />
           )}
         />
+      </Box>
+      
+      <Box display="flex" justifyContent="space-between" gap={2} >
+      <Typography variant="body1" >Email</Typography>
+      <Typography variant="body1" sx={{justifyContent: "space-between"}}>Website</Typography>
       </Box>
 
       <Box display="flex" gap={2} mb={2}>
@@ -69,7 +76,7 @@ const BasicsSecton: React.FC = () => {
             value.trim() !== '' || 'Blank spaces are not allowed',
           }}
           render={({ field }) => (
-            <TextField fullWidth label="Email" variant="outlined" {...field} />
+            <TextField {...field} fullWidth placeholder="Enter Email" variant="outlined" helperText={errors.email?.message}  />
           )}
         />
         <Controller
@@ -80,9 +87,14 @@ const BasicsSecton: React.FC = () => {
             value.trim() !== '' || 'Blank spaces are not allowed',
           }}
           render={({ field }) => (
-            <TextField fullWidth label="Website" variant="outlined" {...field} />
+            <TextField {...field} fullWidth placeholder="Enter Website" variant="outlined" helperText={errors.website?.message} />
           )}
         />
+      </Box>
+
+      <Box display="flex" justifyContent="space-between" gap={2} >
+      <Typography variant="body1" >Phone</Typography>
+      <Typography variant="body1" sx={{justifyContent: "space-between"}}>Location</Typography>
       </Box>
 
       <Box display="flex" gap={2}>
@@ -95,7 +107,7 @@ const BasicsSecton: React.FC = () => {
             value.trim() !== '' || 'Blank spaces are not allowed',
           }}
           render={({ field }) => (
-            <TextField fullWidth label="Phone" variant="outlined" {...field} />
+            <TextField {...field} fullWidth placeholder="Enter Phone Number" variant="outlined" helperText={errors.phone?.message}  />
           )}
         />
         <Controller
@@ -107,11 +119,11 @@ const BasicsSecton: React.FC = () => {
             value.trim() !== '' || 'Blank spaces are not allowed',
           }}
           render={({ field }) => (
-            <TextField fullWidth label="Location" variant="outlined" {...field} />
+            <TextField {...field} fullWidth placeholder="Enter Location" variant="outlined" helperText={errors.location?.message}  />
           )}
         />
-        <Button variant="contained" type="submit">Submit</Button>
       </Box>
+        {/* <Button variant="contained" type="submit" onClick={() => console.log("all data")} sx={{mt: 2}}>Submit</Button> */}
     
     </>
   );
