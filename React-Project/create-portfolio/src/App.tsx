@@ -8,6 +8,7 @@ import Navbar from './Navbar/Navbar'
 import Form from './component/Form'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PageNotFound from './component/PageNotFound'
+import Preview from './component/Preview'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path="/" element={< Home />} />
       <Route path='/form' element={<Form/>} />
       <Route path="*" element={<PageNotFound />} />
+      <Route path='/preview' element={<Preview/>} />
     </Routes>
     </BrowserRouter>
     </>

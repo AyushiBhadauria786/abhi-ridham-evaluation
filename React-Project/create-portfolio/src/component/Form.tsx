@@ -1,7 +1,11 @@
 import { Box, Button, Container, TextareaAutosize, TextField, Typography } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import Summary from './Summary';
+import Section from './Section';
+import FModal from './Fmodal';
+import { useNavigate } from 'react-router';
+
 
 interface Ifeild {
   FullName: string;
@@ -14,6 +18,13 @@ interface Ifeild {
 }
 
 const Form = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [sectionData, setSectionData] = useState<Record<string, any[]>>({});
+
+  const navigate = useNavigate();
+
+
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm<Ifeild>({
     mode: 'onChange'
   });
@@ -21,6 +32,8 @@ const Form = () => {
   const onSubmit = (data: Ifeild) => {
     console.log("Submitted Data:", data);
   };
+
+
   
   return (
     <Container maxWidth="lg">
@@ -48,6 +61,7 @@ const Form = () => {
                   label="Full Name" fullWidth
                   margin="normal"
                   type="text"
+                  
                   className="reg"
                   placeholder="Enter the FullName"
                   error={!!errors.FullName}
@@ -196,6 +210,7 @@ const Form = () => {
                     label="Location " fullWidth
                     margin="normal"
                     type="text"
+                    
                     className="reg"
                     placeholder="Enter the Location"
                     error={!!errors.Location}
@@ -206,54 +221,50 @@ const Form = () => {
           </Box>
         <Summary/>
 
-        <Typography mt={"20px"} variant="h4" id='regis'>Profile</Typography>
-        <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
-            + add a new item
-          </Button>
-        </Box>
 
-        <Typography mt={"20px"} variant="h4" id='regis'>Experience</Typography>
-        <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
-            + add a new item
-          </Button>
-        </Box>
-        
-
-
-        <Typography mt={"20px"} variant="h4" id='regis'>Education</Typography>
-        <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
-            + add a new item
-          </Button>
-        </Box>
+        {Section.map(section => (
+  <Box key={section.title} sx={{ mt: "20px" }}>
+    <Typography mt={"20px"} mb={"20px"} variant="h4">{section.title}</Typography>
+    <Button
+      sx={{ border: "1px solid black", width: "100%", bgcolor: "#f5f7fa", color: "inherit" }}
+      onClick={() => {
+        setSelectedSection(section.title);
+        setOpenModal(true);
+      }}
+    >
+      + add a new item
+    </Button>
 
 
-        <Typography mt={"20px"} variant="h4" id='regis'>Skills</Typography>
-        <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
-            + add a new item
-          </Button>
-        </Box>
+    {(sectionData[section.title] || []).map((item, index) => (
+      <Box key={index} sx={{ mt: 1, border: "1px solid black", borderRadius: 1 }}>
+        {section.fields.map(f => (
+          <Typography sx={{ml:"10px"}} key={f.name}>{f.label}: {item[f.name]}</Typography>
+        ))}
+      </Box>
+    ))}
+  </Box>
+))}
 
+      <FModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onCreate={(data) => {
+          if (!selectedSection) return;
+          setSectionData(prev => ({
+            ...prev,
+            [selectedSection]: [...(prev[selectedSection] || []), data]
+          }));
+          setOpenModal(false);
+        }}
+  
+        title={selectedSection || ""}
+        fields={Section.find(s => s.title === selectedSection)?.fields || []}
 
-        <Typography mt={"20px"} variant="h4" id='regis'>Languages</Typography>
-        <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
-            + add a new item
-          </Button>
-        </Box>
-
-        <Typography mt={"20px"} variant="h4" id='regis'>Projects</Typography>
-        <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#f5f7fa", color:"inherit"}} >
-            + add a new item
-          </Button>
-        </Box>
+      />
 
         <Box sx={{ mt:"20px" }}>
-          <Button sx={{ border: "1px solid black", width:"100%", bgcolor:"#1e1e2f", color:"white"}} >
+          <Button  onClick={() => navigate("/preview")} sx={{ border: "1px solid black", width:"100%", bgcolor:"#1e1e2f", color:"white"}} >
             Preview
           </Button>
         </Box>
@@ -266,5 +277,7 @@ const Form = () => {
 }
 
 export default Form
+
+
 
 
