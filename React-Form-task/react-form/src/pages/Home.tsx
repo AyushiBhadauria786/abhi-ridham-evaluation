@@ -1,42 +1,41 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import CreateForm from './CreateForm'
+import { useNavigate } from 'react-router'
 
-const Home = () => {
-    const[showForm,setShowForm] = useState(false)
+const Home: React.FC = () => {
+    const navigate = useNavigate();
 
-    if(showForm){
-        return <CreateForm />
-    }
 
   return (
     <>
      <Box 
      sx={{
-        minHeight: '50vh',
+        minHeight: '80vh',
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center', 
         justifyContent: 'center',
+        textAlign: 'center',
         p: 4,
      }}
     >
       <Container maxWidth="md">
         <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h2" component="h2" sx={{ color: 'text.primary' }}>
+          <Typography variant="h2" component="h1" sx={{ mb: 2 , fontWeight: "bold" }}>
             Profile Builder
           </Typography>
-          <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary', fontSize: '1.25rem' }}>
-            Create a minimal portfolio with our basic details form
+          <Typography variant="h6" component="p" sx={{ mb: 4, color: 'text.secondary' }}>
+            Create a minimal portfolio with our basic details form.
           </Typography>
           <Button 
             variant="contained" 
             color="primary"
             size="large"
-            onClick={() => setShowForm(true)}
-            sx={{ px: 2, py: 1 }} 
+            onClick={() => navigate('/form')}
+            sx={{ px: 4, py: 1.5 }} 
           >
-            Create Form
+            Create Your Profile
           </Button>
         </Box>
       </Container>

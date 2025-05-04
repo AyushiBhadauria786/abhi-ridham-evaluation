@@ -1,14 +1,14 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 import AddNewItem from './AddNewItem'
 
 const Projects: React.FC = () => {
   return (
-    <div>
-       <Typography variant="h4" gutterBottom sx={{mt: 4}}>Projects</Typography>  
-       <AddNewItem />
-    </div>
+    <Box sx={{ mt: 4 }}>
+       <Typography variant="h4" gutterBottom>Projects</Typography>  
+       <AddNewItem sectionName='Projects' />
+    </Box>
   )
 }
 
-export default Projects
+export default Projects;

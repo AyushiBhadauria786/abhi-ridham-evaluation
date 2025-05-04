@@ -1,10 +1,18 @@
-export const ModalFormData = [
+import { FormField } from "../types/type"
+import { SectionName } from "../types/type";
+
+interface ModalSection {
+    Name: Exclude<SectionName, 'Basics'>; 
+    data: FormField[];
+}
+
+export const ModalFormData: ModalSection[] = [
     {
         Name: "Profiles",
         data: [ 
             {
                 label: "Network",
-                name: "Network",
+                name: "network",
                 placeholder: "GitHub",
                 type: "text",
                 validation: {
@@ -13,7 +21,7 @@ export const ModalFormData = [
             },
             {
                 label: "Username",
-                name: "Username",
+                name: "username",
                 placeholder: "john.doe",
                 type: "text",
                 validation: {
@@ -23,11 +31,11 @@ export const ModalFormData = [
            
             {
                 label: "Website",
-                name: "Website",
+                name: "website",
                 placeholder: "https://github.com/profilename",
-                type: "text",
+                type: "url",
                 validation: {
-                    required: "Website is required",
+                    required: "Website url is required",
                 }
             }
         ]
@@ -48,16 +56,16 @@ export const ModalFormData = [
                 name: "position",
                 type: "text",
                 validation: {
-                    required: "position is required",
+                    required: "Position is required",
                 }
             },
             {
                 label: "Date or Date Range",
-                name: "Date",
+                name: "dateRange",
                 placeholder: "March 2023 - Present",
                 type: "text",
                 validation: {
-                    required: "Date is required",
+                    required: "Date range is required",
                 }
             },
             {
@@ -65,17 +73,25 @@ export const ModalFormData = [
                 name: "location",
                 type: "text",
                 validation: {
-                    required: "location is required"
+                    required: "Location is required"
                 }
             },
             {
                 label: "Website",
-                name: "Website",
+                name: "website",
                 placeholder: "Add company website",
-                type: "text",
+                type: "url",
                 validation: {
-                    required: "Website is required",
+                    required: "Website url is required",
                 }
+            },
+            { 
+                label: "Summary",
+                name: "summary", 
+                type: "text", 
+                multiline: true, 
+                rows: 4, 
+                // placeholder: "Describe your role and achievements..."
             }
         ]
     },
@@ -84,7 +100,7 @@ export const ModalFormData = [
         data: [
             {
                 label: "Institution",
-                name:"Institute",
+                name:"institute",
                 placeholder: "College Name",
                 type: "text",
                 validation: {
@@ -92,16 +108,25 @@ export const ModalFormData = [
                 }  
             },
             {
-                label: "Type Of Study",
-                name: "Study type",
-                placeholder: "Degree",
+                label: "Degree / Type Of Study",
+                name: "studyType",
+                placeholder: "BE in Computer Engineerig",
                 type: "text",
                 validation: {
-                    required: "Degree name is required"
+                    required: "Degree/Study Type is required"
                 }
             },
+            { 
+                label: "Date or Date Range", 
+                name: "dateRange", 
+                placeholder: "Sept 2018 - May 2022", 
+                type: "text", 
+                validation: { 
+                    required: "Date range is required" 
+                } 
+            },
             {
-                label: "Score",
+                label: "Score / Grade",
                 name: "score",
                 placeholder: "CGPA",
                 type: "text",
@@ -115,31 +140,19 @@ export const ModalFormData = [
         Name: "Skills",
         data: [
             {
-                lable: "Name",
-                name: "Name",
-                placeholder: "skills name",
+                label: "Skill Name",
+                name: "name",
+                placeholder: "JavaScript,Java...",
                 type: "text",
                 validation: {
                     required: "Skills are required"
                 }
             },
-            {
-                lable: "Description",
-                name: "description",
-                placeholder: "Add description",
-                type: "text",
-                validation: {
-                    required: "description is required"
-                }
-            },
-            {
-                label: "Level",
-                name: "level",
-                placeholder: "between 1 to 5",
-                type: "text",
-                validation: {
-                    required: "level is required"
-                }
+            { 
+                label: "Level", 
+                name: "level", 
+                placeholder: "e.g., Advanced or 5/5", 
+                type: "text" 
             }
         ]   
 
@@ -148,9 +161,9 @@ export const ModalFormData = [
         Name: "Projects",
         data: [
             {
-                label: "Name",
-                name: "Project Name",
-                placeholder: "Poject name",
+                label: "Project Name",
+                name: "projectName",
+                placeholder: "Task-Management",
                 type: "text",
                 validation: {
                     required: "Project name is required"
@@ -158,17 +171,19 @@ export const ModalFormData = [
 
             },
             {
-                lable: "Description",
+                label: "Description",
                 name: "description",
-                placeholder: "Add description",
+                placeholder: "Add description about project",
                 type: "text",
+                multiline: true,
+                rows: 3 ,
                 validation: {
-                    required: "description is required"
+                    required: "Description is required"
                 }
             },
             {
                 label: "Date or Date Range",
-                name: "Date",
+                name: "dateRange",
                 placeholder: "March 2023 - Present",
                 type: "text",
                 validation: {
@@ -176,19 +191,10 @@ export const ModalFormData = [
                 }
             },
             {
-                label: "Website",
-                name: "Website",
-                placeholder: "Add company website",
-                type: "text",
-            },
-            {
-                label: "Summary",
-                name: "summary",
-                placeholder: "Add summary about project",
-                type: "text",
-                validation: {
-                    required: "Summary is required",
-                }
+                label: "Project Link",
+                name: "website",
+                placeholder: "https://github.com/project",
+                type: "url",
             }
         ]
     }
