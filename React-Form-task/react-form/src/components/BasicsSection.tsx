@@ -107,7 +107,6 @@ const BasicsSection: React.FC = () => {
           control={control}
           rules={{
             validate: (value) => {
-
               if(typeof value === 'string'){
                 if(value.length > 0 && value.trim() === ''){
                   return 'Blank spaces are not allowed'

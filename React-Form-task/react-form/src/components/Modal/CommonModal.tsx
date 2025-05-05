@@ -104,7 +104,7 @@ const CommonModal: React.FC<CommonModalProps> = ({open,onClose,sectionName,editI
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
-          sx={{ display: "flex", flexDirection: "column", gap: 2.5 }} // Increased gap
+          sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
         >
           {fields.map((field: FormField) => (
             <Controller
