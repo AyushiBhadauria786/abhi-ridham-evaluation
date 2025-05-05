@@ -41,8 +41,12 @@ const BasicsSection: React.FC = () => {
     };
     updateBasicsData(cleanedData); 
     reset(); 
-    // console.log("Basics:", cleanedData);
     
+  };
+
+  const hasOnlySpecialCharacters = (value: string) => {
+    const onlySpecialCharsRegex = /^[^a-zA-Z0-9]+$/;
+    return onlySpecialCharsRegex.test(value);
   };
 
   return (
@@ -59,8 +63,11 @@ const BasicsSection: React.FC = () => {
           control={control}
           rules={{
             required: 'FullName is required',
-            validate: (value: string) =>
-            value.trim() !== '' || 'Blank spaces are not allowed',
+            validate: (value: string) =>{
+              if (value.trim() === "") return "Blank spaces are not allowed";
+              if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+              return true;
+            }
           }}
           render={({ field }) => (
             <TextField label="Full Name" {...field} fullWidth placeholder="Enter Full Name" variant="outlined" error={!!errors.fullName}  helperText={errors.fullName?.message}/>
@@ -74,8 +81,11 @@ const BasicsSection: React.FC = () => {
           control={control}
           rules={{
             required: 'Headline is required',
-            validate: (value: string) =>
-            value.trim() !== '' || 'Blank spaces are not allowed',
+            validate: (value: string) => {
+              if (value.trim() === "") return "Blank spaces are not allowed";
+              if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+              return true;
+            }
           }}
           render={({ field }) => (
             <TextField label="Headline" {...field} fullWidth placeholder="Sofware Developer" variant="outlined" error={!!errors.headline} helperText={errors.headline?.message}  />
@@ -108,9 +118,11 @@ const BasicsSection: React.FC = () => {
           rules={{
             validate: (value) => {
               if(typeof value === 'string'){
-                if(value.length > 0 && value.trim() === ''){
+                if(value.trim() === ''){
                   return 'Blank spaces are not allowed'
                 }
+                if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+                return true;
               }
               return true;
             }
@@ -130,8 +142,11 @@ const BasicsSection: React.FC = () => {
           control={control}
           rules={{
             required: 'Phone number is required',
-            validate: (value: string) =>
-              value.trim() !== '' || 'Blank spaces are not allowed',
+            validate: (value: string) =>{
+              if (value.trim() === "") return "Blank spaces are not allowed";
+              if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+              return true;
+            }
           }}
           render={({ field }) => (
             <TextField label="Phone" type="tel" {...field} fullWidth placeholder="Enter Phone Number" variant="outlined" error={!!errors.phone} helperText={errors.phone?.message}  />
@@ -144,8 +159,11 @@ const BasicsSection: React.FC = () => {
           control={control}
           rules={{
             required: 'Location is required',
-            validate: (value: string) =>
-              value.trim() !== '' || 'Blank spaces are not allowed',
+            validate: (value: string) => {
+              if (value.trim() === "") return "Blank spaces are not allowed";
+              if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+              return true;
+            }
           }}
           render={({ field }) => (
             <TextField label="Location" {...field} fullWidth placeholder="Enter Location" variant="outlined" error={!!errors.location} helperText={errors.location?.message}  />
@@ -161,6 +179,13 @@ const BasicsSection: React.FC = () => {
            <Controller
               name="summary"
               control={control}
+              rules={{
+                validate: (value: string) => {
+                  if (value.trim() === "") return "Blank spaces are not allowed";
+                  if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+                  return true;
+                }
+              }}
               render={({ field }) => (
                 <TextField  {...field} fullWidth multiline rows={4} variant="outlined" error={!!errors.summary} helperText={errors.summary?.message}/>
               )}

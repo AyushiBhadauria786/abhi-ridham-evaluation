@@ -22,6 +22,7 @@ const theme = createTheme({
 
 function App() {
 
+  console.log("Reloding....")
   return (
    <>
    <ThemeProvider theme={theme}>

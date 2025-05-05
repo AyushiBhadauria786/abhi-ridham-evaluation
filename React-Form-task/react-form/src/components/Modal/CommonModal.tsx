@@ -6,10 +6,10 @@ import { ModalFormData } from "../ModalFormData";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
 import Button from "@mui/material/Button";
-import { SectionName, SectionData, FormField, ListSectionName } from "../../types/type";
+import {  SectionData, FormField, ListSectionName } from "../../types/type";
 import { useFormContext as useAppFormContext } from "../../context/FormContext";
-import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import CloseIcon from '@mui/icons-material/Close';
 import IconButton from "@mui/material/IconButton";
 
 const style = {
@@ -94,7 +94,7 @@ const CommonModal: React.FC<CommonModalProps> = ({open,onClose,sectionName,editI
       <Box sx={style}>
          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <Typography variant="h6" component="h2">
-                {editIndex !== null ? `Edit Item` : `Add Item`}
+                {editIndex !== null ? `Edit Item` : `Add ${sectionName} Item`}
             </Typography>
             <IconButton onClick={onClose} size="small">
                 <CloseIcon />

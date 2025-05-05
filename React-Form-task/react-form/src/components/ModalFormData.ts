@@ -91,7 +91,6 @@ export const ModalFormData: ModalSection[] = [
                 type: "text", 
                 multiline: true, 
                 rows: 4, 
-                // placeholder: "Describe your role and achievements..."
             }
         ]
     },
