@@ -14,7 +14,9 @@ interface Props {
 const FModal = ({ open, onClose, onCreate, title, fields }: Props) => {
   const { control, handleSubmit, reset, formState: { errors } } = useForm();
 
-  const handleCreate = (data: any) => {
+  const handleCreate = (data: any , e:any) => {
+    e.preventDefault(); 
+    e.stopPropagation();
     onCreate(data);
     reset();
     onClose();

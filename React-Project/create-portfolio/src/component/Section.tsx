@@ -24,6 +24,7 @@ const Section: section[] = [
                 validation: {
                     required: "Network is required",
                 }
+               
             },
             {
                 label: "Username",
@@ -70,7 +71,7 @@ const Section: section[] = [
             {
                 label: "Date",
                 name: "Date",
-                type: "date",
+                type: "text",
                 validation: {
                     required: "Date is required",
                 }
@@ -131,9 +132,9 @@ const Section: section[] = [
                 }
             },
             {
-                // label: "Date",
-                name: "Date",
-                type: "date",
+                label: "Date",
+                name: "text",
+                type: "text",
                 validation: {
                     required: "Date is required",
                 }

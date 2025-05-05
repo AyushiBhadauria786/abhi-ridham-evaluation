@@ -28,9 +28,11 @@ const Summary = () => {
     
       <Typography mt={"20px"} variant="h4" id='regis'>Summary</Typography>
       <Box sx={{mt:"20px"}}>
+        
         <TextareaAutosize
           minRows={4}
           placeholder="Enter your summary"
+          
           style={{
             width: '99.35%',
             backgroundColor: "#f5f7fa",
@@ -43,4 +45,5 @@ const Summary = () => {
 };
 
 export default Summary;
+
 

@@ -1,40 +1,46 @@
 import { Box, Button, Container, TextareaAutosize, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import Summary from './Summary';
 import Section from './Section';
 import FModal from './Fmodal';
 import { useNavigate } from 'react-router';
+import { BasicData, usePortfolio } from '../Context/PortfolioContext';
 
 
-interface Ifeild {
-  FullName: string;
-  Headline: string;
-  Email: string;
-  Website: string;
-  Phone: number;
-  Location: string;
-  Summary: string;
-}
+
 
 const Form = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const [sectionData, setSectionData] = useState<Record<string, any[]>>({});
+  // const [sectionData, setSectionData] = useState<Record<string, any[]>>({});
 
   const navigate = useNavigate();
+  const { basicData, setBasicData, sectionData, setSectionData } = usePortfolio();
 
 
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm<Ifeild>({
+  const { register, handleSubmit, setValue, formState: { errors }, reset, control } = useForm<BasicData>({
     mode: 'onChange'
   });
 
-  const onSubmit = (data: Ifeild) => {
-    console.log("Submitted Data:", data);
+  // const onSubmit = (data: Ifeild) => {
+  //   console.log("Submitted Data:", data);
+  // };
+
+
+  const onSubmit = (data: BasicData) => {
+    setBasicData(data);
+    console.log(basicData);
+    // navigate("/preview");
   };
 
+  useEffect(() => {
+    if (basicData) {
+      Object.entries(basicData).forEach(([key, value]:any) => setValue(key, value));
+    }
+  }, [basicData, setValue]);
 
-  
+
   return (
     <Container maxWidth="lg">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,7 +67,7 @@ const Form = () => {
                   label="Full Name" fullWidth
                   margin="normal"
                   type="text"
-                  
+
                   className="reg"
                   placeholder="Enter the FullName"
                   error={!!errors.FullName}
@@ -210,7 +216,7 @@ const Form = () => {
                     label="Location " fullWidth
                     margin="normal"
                     type="text"
-                    
+
                     className="reg"
                     placeholder="Enter the Location"
                     error={!!errors.Location}
@@ -218,56 +224,65 @@ const Form = () => {
                 )}
               />
             </Box>
+             
           </Box>
-        <Summary/>
+          
+          <Summary />
 
 
-        {Section.map(section => (
-  <Box key={section.title} sx={{ mt: "20px" }}>
-    <Typography mt={"20px"} mb={"20px"} variant="h4">{section.title}</Typography>
-    <Button
-      sx={{ border: "1px solid black", width: "100%", bgcolor: "#f5f7fa", color: "inherit" }}
-      onClick={() => {
-        setSelectedSection(section.title);
-        setOpenModal(true);
-      }}
-    >
-      + add a new item
-    </Button>
+          {Section.map(section => (
+            <Box key={section.title} sx={{ mt: "20px" }}>
+              <Typography mt={"20px"} mb={"20px"} variant="h4">{section.title}</Typography>
+              <Button
+                sx={{ border: "1px solid black", width: "100%", bgcolor: "#f5f7fa", color: "inherit" }}
+                onClick={() => {
+                  setSelectedSection(section.title);
+                  setOpenModal(true);
+                }}
+              >
+                + add a new item
+              </Button>
 
 
-    {(sectionData[section.title] || []).map((item, index) => (
-      <Box key={index} sx={{ mt: 1, border: "1px solid black", borderRadius: 1 }}>
-        {section.fields.map(f => (
-          <Typography sx={{ml:"10px"}} key={f.name}>{f.label}: {item[f.name]}</Typography>
-        ))}
-      </Box>
-    ))}
-  </Box>
-))}
+              {(sectionData[section.title] || []).map((item, index) => (
+                <Box key={index} sx={{ mt: 1, border: "1px solid black", borderRadius: 1 }}>
+                  {section.fields.map(f => (
+                    <Typography sx={{ ml: "10px" }} key={f.name}>{f.name}: {item[f.name]}</Typography>
+                  ))}
+                </Box>
+              ))}
+            </Box>
+          ))}
 
-      <FModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onCreate={(data) => {
-          if (!selectedSection) return;
-          setSectionData(prev => ({
-            ...prev,
-            [selectedSection]: [...(prev[selectedSection] || []), data]
-          }));
-          setOpenModal(false);
-        }}
-  
-        title={selectedSection || ""}
-        fields={Section.find(s => s.title === selectedSection)?.fields || []}
+          <FModal
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            onCreate={(data) => {
+              if (!selectedSection) return;
+              setSectionData(prev => ({
+                ...prev,
+                [selectedSection]: [...(prev[selectedSection] || []), data]
+              }));
+              setOpenModal(false);
+            }}
 
-      />
+            title={selectedSection || ""}
+            fields={Section.find(s => s.title === selectedSection)?.fields || []}
 
-        <Box sx={{ mt:"20px" }}>
-          <Button  onClick={() => navigate("/preview")} sx={{ border: "1px solid black", width:"100%", bgcolor:"#1e1e2f", color:"white"}} >
-            Preview
-          </Button>
-        </Box>
+          />
+
+          <Box sx={{ mt: "20px" }}>
+            <Button
+              sx={{ border: "1px solid black", width: "100%", bgcolor: "#1e1e2f", color: "white" }}
+              onClick={handleSubmit((data) => {
+                setBasicData(data);
+                navigate("/preview");
+              })}
+            >
+              Preview
+            </Button>
+
+          </Box>
 
 
         </Box>
@@ -277,7 +292,6 @@ const Form = () => {
 }
 
 export default Form
-
 
 
 
