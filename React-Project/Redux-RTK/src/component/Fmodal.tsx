@@ -1,7 +1,9 @@
 import React from 'react';
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import { field } from './Section';
+import type { field } from './Section';
+import { useDispatch } from 'react-redux';
+import {addSectionitem} from "../Slice/portfolioSlice"
 
 interface Props {
   open: boolean;
@@ -11,13 +13,15 @@ interface Props {
   fields: field[];
 }
 
-const FModal = ({ open, onClose, onCreate, title, fields }: Props) => {
+const FModal = ({ open, onClose, title, fields }: Props) => {
   const { control, handleSubmit, reset, formState: { errors } } = useForm();
+
+  const dispatch = useDispatch();
 
   const handleCreate = (data: any , e:any) => {
     e.preventDefault(); 
     e.stopPropagation();
-    onCreate(data);
+    dispatch(addSectionitem({ section: title, item: data }));
     reset();
     onClose();
   };
@@ -36,8 +40,8 @@ const FModal = ({ open, onClose, onCreate, title, fields }: Props) => {
             <Controller
               key={field.name}
               name={field.name}
-              control={control}
               rules={field.validation}
+              control={control}
               render={({ field : newfield }) => (
 
 
@@ -71,7 +75,6 @@ const FModal = ({ open, onClose, onCreate, title, fields }: Props) => {
 
 export default FModal;
 
-                                                                                                                          
 
 
                                                                                                                           

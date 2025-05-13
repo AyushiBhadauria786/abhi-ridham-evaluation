@@ -12,7 +12,7 @@ export interface BasicData {
 
 interface PortfolioContextType {
   basicData: BasicData | null;
-  setBasicData: (data: BasicData) => void;
+  setBasicData: (data: BasicData) => void | null;
   sectionData: Record<string, any[]>;
   setSectionData: React.Dispatch<React.SetStateAction<Record<string, any[]>>>
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import { field } from './Section';
+import type { field } from './Section';
+import { useStore } from '../store/store';
 
 interface Props {
   open: boolean;
@@ -11,13 +12,16 @@ interface Props {
   fields: field[];
 }
 
-const FModal = ({ open, onClose, onCreate, title, fields }: Props) => {
+const FModal = ({ open, onClose, title, fields }: Props) => {
   const { control, handleSubmit, reset, formState: { errors } } = useForm();
+
+  const addSectionItem = useStore((state)=>state.addSectionItem)
+
 
   const handleCreate = (data: any , e:any) => {
     e.preventDefault(); 
     e.stopPropagation();
-    onCreate(data);
+    addSectionItem(title, data);
     reset();
     onClose();
   };
@@ -74,4 +78,4 @@ export default FModal;
                                                                                                                           
 
 
-                                                                                                                          
+                                                                                                                         

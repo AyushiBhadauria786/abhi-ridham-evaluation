@@ -4,7 +4,11 @@ import { Controller, useForm } from 'react-hook-form'
 import Section from './Section';
 import FModal from './Fmodal';
 import { useNavigate } from 'react-router';
-import { BasicData, usePortfolio } from '../Context/PortfolioContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../store/store';
+import { type BasicData, setBasicData, setSectionData } from '../Slice/portfolioSlice';
+
+
 
 
 
@@ -12,25 +16,26 @@ import { BasicData, usePortfolio } from '../Context/PortfolioContext';
 const Form = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  // const [sectionData, setSectionData] = useState<Record<string, any[]>>({});
+  
 
   const navigate = useNavigate();
-  const { basicData, setBasicData, sectionData, setSectionData } = usePortfolio();
+  
+
+  const dispatch = useDispatch();
+  const basicData = useSelector((state: RootState) => state.portfolio.basicData);
+  const sectionData = useSelector((state:RootState) => state.portfolio.sectionData)
 
 
   const { register, handleSubmit, setValue, formState: { errors }, reset, control } = useForm<BasicData>({
     mode: 'onChange'
   });
 
-  // const onSubmit = (data: Ifeild) => {
-  //   console.log("Submitted Data:", data);
-  // };
-
+  
 
   const onSubmit = (data: BasicData) => {
-    setBasicData(data);
+    dispatch(setBasicData(data));
     console.log(basicData);
-    // navigate("/preview");
+   
   };
 
   useEffect(() => {
@@ -44,7 +49,7 @@ const Form = () => {
     <Container maxWidth="lg">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ border: "2px solid black", margin: "20px", padding: "20px" }}>
-          <Typography mt={"20px"} variant="h4" id='regis'>Basic</Typography>
+          <Typography align="left" mt={"20px"} variant="h4" id='regis'>Basic</Typography>
           <Box className='form-content'>
             <Controller
               control={control}
@@ -226,47 +231,54 @@ const Form = () => {
 
           </Box>
 
-          <Box sx={{ mt: "20px" }} className='form-content'>
-            <Controller
-              control={control}
-              name="Summary"
-              rules={{
-                required: "Summary is required",
-                validate: (value) => {
-                  if (value.trim() === "") return "Summary cannot be blank"
-                  return true;
-                },
-                pattern: {
-                  value: /[A-Za-z0-9'\.\-\s\,]/,
-                  message: "Summary must be valid",
-                },
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Summary"
-                  multiline
-                  minRows={4}
-                  fullWidth
-                  margin="normal"
-                  className="reg"
-                  placeholder="Enter the Summary"
-                  error={!!errors.Summary}
-                  helperText={errors.Summary?.message}
-                />
-              )}
-            />
-          </Box>
+            {/* <Typography mt={"20px"} variant="h4" id='regis'>Summary</Typography> */}
+               <Box sx={{ mt: "20px" }} className='form-content'>
+                      <Controller
+                        control={control}
+                        name="Summary"
+                        rules={{
+                          required: "Summary is required",
+                          validate: (value) => {
+                            if (value.trim() === "") return "Summary cannot be blank"
+                            return true;
+                          },
+                          pattern: {
+                            value: /[A-Za-z0-9'\.\-\s\,]/,
+                            message: "Summary must be valid",
+                          },
+                        }}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            label="Summary"
+                            multiline
+                            minRows={4}
+                            fullWidth
+                            margin="normal"
+                            className="reg"
+                            placeholder="Enter the Summary"
+                            error={!!errors.Summary}
+                            helperText={errors.Summary?.message}
+                          />
+                        )}
+                      />
+                    </Box>
+          
+        {/* <Summary/> */}
+
 
 
           {Section.map(section => (
             <Box key={section.title} sx={{ mt: "20px" }}>
-              <Typography mt={"20px"} mb={"20px"} variant="h4">{section.title}</Typography>
+              <Typography align='left' mt={"20px"} mb={"20px"} variant="h4">{section.title}</Typography>
+
+
               {(sectionData[section.title] || []).map((item, index) => (
-                <Box key={index} sx={{ mt: 1, border: "1px solid black", borderRadius: 1,mb:"10px" }}>
+                <Box key={index} sx={{ mt: 1, mb: 2,border: "1px solid black", borderRadius: 1 }}>
                   {section.fields.map(f => (
-                    <Typography sx={{ ml: "10px" }} key={f.name}>{f.name}: {item[f.name]}</Typography>
+                    <Typography align='left' sx={{ ml: "10px" }} key={f.name}>{f.name}: {item[f.name]}</Typography>
                   ))}
+                  
                 </Box>
               ))}
               <Button
@@ -280,7 +292,7 @@ const Form = () => {
               </Button>
 
 
-           
+              
             </Box>
           ))}
 
@@ -289,10 +301,7 @@ const Form = () => {
             onClose={() => setOpenModal(false)}
             onCreate={(data) => {
               if (!selectedSection) return;
-              setSectionData(prev => ({
-                ...prev,
-                [selectedSection]: [...(prev[selectedSection] || []), data]
-              }));
+              dispatch(setSectionData(data))
               setOpenModal(false);
             }}
 
@@ -305,7 +314,7 @@ const Form = () => {
             <Button
               sx={{ border: "1px solid black", width: "100%", bgcolor: "#1e1e2f", color: "white" }}
               onClick={handleSubmit((data) => {
-                setBasicData(data);
+                dispatch(setBasicData(data));
                 navigate("/preview");
               })}
             >
@@ -322,5 +331,6 @@ const Form = () => {
 }
 
 export default Form
+
 
 

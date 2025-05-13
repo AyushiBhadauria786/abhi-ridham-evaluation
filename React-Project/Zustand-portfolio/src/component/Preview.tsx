@@ -1,11 +1,16 @@
 import React from 'react';
 import { Container, Typography, Box,  Button } from '@mui/material';
-import { usePortfolio } from '../Context/PortfolioContext';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useStore } from '../store/store';
 
 const Preview = () => {
-  const { basicData,setBasicData, sectionData,setSectionData } = usePortfolio();
+
+
+  const basicData = useStore((state)=>state.basicData);
+  const sectionData = useStore((state) => state.sectionData);
+  const resetForm = useStore((state)=>state.resetForm);
+
   const navigate = useNavigate();
 
   const { reset } = useForm(); 
@@ -17,16 +22,7 @@ const Preview = () => {
 
   const handleDone = () => {
     reset(); 
-    setBasicData({
-      FullName: '',
-      Headline: '',
-      Email: '',
-      Website: '',
-      Phone: '',
-      Location: '',
-      Summary: '',
-    });
-    setSectionData({});
+    resetForm();
     navigate('/'); 
   };
 

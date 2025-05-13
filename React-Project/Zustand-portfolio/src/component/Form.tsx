@@ -4,7 +4,8 @@ import { Controller, useForm } from 'react-hook-form'
 import Section from './Section';
 import FModal from './Fmodal';
 import { useNavigate } from 'react-router';
-import { BasicData, usePortfolio } from '../Context/PortfolioContext';
+import { useStore, type BasicData } from '../store/store';
+
 
 
 
@@ -12,10 +13,14 @@ import { BasicData, usePortfolio } from '../Context/PortfolioContext';
 const Form = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  // const [sectionData, setSectionData] = useState<Record<string, any[]>>({});
 
   const navigate = useNavigate();
-  const { basicData, setBasicData, sectionData, setSectionData } = usePortfolio();
+  
+
+  const basicData = useStore((state)=>state.basicData);
+  const setBasicData = useStore((state)=>state.setBasicData);
+  const sectionData = useStore((state) => state.sectionData);
+  const setSectionData = useStore((state) => state.setSectionData);
 
 
   const { register, handleSubmit, setValue, formState: { errors }, reset, control } = useForm<BasicData>({
@@ -289,10 +294,7 @@ const Form = () => {
             onClose={() => setOpenModal(false)}
             onCreate={(data) => {
               if (!selectedSection) return;
-              setSectionData(prev => ({
-                ...prev,
-                [selectedSection]: [...(prev[selectedSection] || []), data]
-              }));
+              setSectionData(data);
               setOpenModal(false);
             }}
 

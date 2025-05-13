@@ -1,14 +1,19 @@
 import React from 'react';
 import { Container, Typography, Box,  Button } from '@mui/material';
-import { usePortfolio } from '../Context/PortfolioContext';
+// import { usePortfolio } from '../Context/PortfolioContext';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../store/store';
+import { resetForm } from '../Slice/portfolioSlice'
 
 const Preview = () => {
-  const { basicData,setBasicData, sectionData,setSectionData } = usePortfolio();
+  // const { basicData,setBasicData, sectionData,setSectionData } = usePortfolio();
   const navigate = useNavigate();
+  const { basicData, sectionData } = useSelector((state: RootState) => state.portfolio);
 
   const { reset } = useForm(); 
+  const dispatch = useDispatch();
 
 
   const handleBack = () => {
@@ -17,16 +22,7 @@ const Preview = () => {
 
   const handleDone = () => {
     reset(); 
-    setBasicData({
-      FullName: '',
-      Headline: '',
-      Email: '',
-      Website: '',
-      Phone: '',
-      Location: '',
-      Summary: '',
-    });
-    setSectionData({});
+    dispatch(resetForm());
     navigate('/'); 
   };
 
