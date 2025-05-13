@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useFormContext as useAppFormContext } from "../context/FormContext";
-import { SectionName } from "../types/type";
 import { BasicData } from "../types/type";
 
 
@@ -180,9 +179,12 @@ const BasicsSection: React.FC = () => {
               name="summary"
               control={control}
               rules={{
-                validate: (value: string) => {
-                  if (value.trim() === "") return "Blank spaces are not allowed";
-                  if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+                required: 'Summay is required',
+                validate: (value: string | undefined) => { 
+                  if (typeof value === 'string') {
+                    if (value.trim() === "" && value !== "") return "Blank spaces are not allowed if field is not empty";
+                    if (value.trim() !== "" && hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+                  }
                   return true;
                 }
               }}
