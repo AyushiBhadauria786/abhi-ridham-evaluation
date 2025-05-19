@@ -152,5 +152,16 @@ console.log(count);
 
 
 
+// using match method
+
 const count1 = (str2.match(/[aeiou]/gi) || []).length;
 console.log(count1)
+
+
+
+   
+
+
+// ----------------------------------------------------------------------------------------------------------------------
+
+
