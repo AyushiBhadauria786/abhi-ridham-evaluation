@@ -2,14 +2,14 @@ import { FormField } from "../types/type"
 import { SectionName } from "../types/type";
 
 interface ModalSection {
-    Name: Exclude<SectionName, 'Basics'>; 
+    Name: Exclude<SectionName, 'Basics'>;
     data: FormField[];
 }
 
 export const ModalFormData: ModalSection[] = [
     {
         Name: "Profiles",
-        data: [ 
+        data: [
             {
                 label: "Network",
                 name: "network",
@@ -28,7 +28,7 @@ export const ModalFormData: ModalSection[] = [
                     required: "Username is required",
                 }
             },
-           
+
             {
                 label: "Website",
                 name: "website",
@@ -36,6 +36,14 @@ export const ModalFormData: ModalSection[] = [
                 type: "url",
                 validation: {
                     required: "Website url is required",
+                    validate : (value : string) =>{
+                        const trim = value.split(".")
+                        if ( trim[0] !== 'www' || trim[trim.length - 1] !== 'com') {
+                            return 'Input must be www.example.com';
+                          }
+                              return true;
+                        }
+                    
                 }
             }
         ]
@@ -80,17 +88,25 @@ export const ModalFormData: ModalSection[] = [
                 label: "Website",
                 name: "website",
                 placeholder: "Add company website",
-                type: "url",
+                type: "text",
+            
                 validation: {
-                    required: "Website url is required",
-                }
+                    required: "Website url is required", 
+                    validate : (value : string) =>{
+                        const trim = value.split(".")
+                        if ( trim[0] !== 'www' || trim[trim.length - 1] !== 'com') {
+                            return 'Input must be www.example.com';
+                          }
+                              return true;
+                        }
+                    }
             },
-            { 
+            {
                 label: "Summary",
-                name: "summary", 
-                type: "text", 
-                multiline: true, 
-                rows: 4, 
+                name: "summary",
+                type: "text",
+                multiline: true,
+                rows: 4,
             }
         ]
     },
@@ -99,12 +115,12 @@ export const ModalFormData: ModalSection[] = [
         data: [
             {
                 label: "Institution",
-                name:"institute",
+                name: "institute",
                 placeholder: "College Name",
                 type: "text",
                 validation: {
                     required: "Institute Name is required"
-                }  
+                }
             },
             {
                 label: "Degree / Type Of Study",
@@ -115,14 +131,14 @@ export const ModalFormData: ModalSection[] = [
                     required: "Degree/Study Type is required"
                 }
             },
-            { 
-                label: "Date or Date Range", 
-                name: "dateRange", 
-                placeholder: "Sept 2018 - May 2022", 
-                type: "text", 
-                validation: { 
-                    required: "Date range is required" 
-                } 
+            {
+                label: "Date or Date Range",
+                name: "dateRange",
+                placeholder: "Sept 2018 - May 2022",
+                type: "text",
+                validation: {
+                    required: "Date range is required"
+                }
             },
             {
                 label: "Score / Grade",
@@ -147,13 +163,13 @@ export const ModalFormData: ModalSection[] = [
                     required: "Skills are required"
                 }
             },
-            { 
-                label: "Level", 
-                name: "level", 
-                placeholder: "e.g., Advanced or 5/5", 
-                type: "text" 
+            {
+                label: "Level",
+                name: "level",
+                placeholder: "e.g., Advanced or 5/5",
+                type: "text"
             }
-        ]   
+        ]
 
     },
     {
@@ -175,7 +191,7 @@ export const ModalFormData: ModalSection[] = [
                 placeholder: "Add description about project",
                 type: "text",
                 multiline: true,
-                rows: 3 ,
+                rows: 3,
                 validation: {
                     required: "Description is required"
                 }
@@ -194,8 +210,19 @@ export const ModalFormData: ModalSection[] = [
                 name: "website",
                 placeholder: "https://github.com/project",
                 type: "url",
+                validation: {
+                    required: "Project url is required",
+                    validate : (value : string) =>{
+                        const trim = value.split(".")
+                        if ( trim[0] !== 'www' || trim[trim.length - 1] !== 'com') {
+                            return 'Input must be www.example.com';
+                          }
+                              return true;
+                        }
+                    
+                }
             }
         ]
     }
- 
+
 ]

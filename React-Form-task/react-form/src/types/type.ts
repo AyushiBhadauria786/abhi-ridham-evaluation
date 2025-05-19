@@ -5,6 +5,7 @@ export interface FormField {
     type: string;
     validation?: {
       required?: string | boolean;
+      validate?: any;
     };
     multiline?: boolean;
     rows?: number;

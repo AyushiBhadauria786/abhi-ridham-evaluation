@@ -13,7 +13,7 @@ interface FormContextType {
   resetAllFormData: () => void;
 }
 
-const FormContext = createContext<FormContextType | undefined>(undefined);
+export const FormContext = createContext<FormContextType | undefined>(undefined);
 
 export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [formData, setFormData] = useState<GlobalFormData>({});

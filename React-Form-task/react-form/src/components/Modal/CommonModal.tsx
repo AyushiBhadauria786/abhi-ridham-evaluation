@@ -114,10 +114,24 @@ const CommonModal: React.FC<CommonModalProps> = ({open,onClose,sectionName,editI
               rules={{
                  required: field.validation?.required ? (typeof field.validation.required === 'string' ? field.validation.required : 'This field is required') : false,
                  validate: (value: string | number | undefined) => {
+
+                  if (field.validation?.validate) {
+                    const result = field.validation.validate(value);
+                    if (result !== true) {
+                      return result;
+                    }
+                  }
+
                   if (typeof value === 'string' && value.trim() === '') {
                       return 'Blank spaces are not allowed';
                   }
-                  return true;
+                  
+                  // if( typeof value === 'string' && value.split(".")){
+                  //   if(!value.startsWith("wwww") && !value.endsWith("com")){
+                  //     return "You Enter wrong value";
+                  //   }
+                  // }
+                  // return true;
               },
               }}
               render={({ field: controllerField, fieldState: { error } }) => (
@@ -125,7 +139,7 @@ const CommonModal: React.FC<CommonModalProps> = ({open,onClose,sectionName,editI
                   {...controllerField}
                   label={field.label}
                   placeholder={field.placeholder || field.label}
-                  type={field.type}
+                  // type={field.type}
                   fullWidth
                   variant="outlined"
                   error={!!error}

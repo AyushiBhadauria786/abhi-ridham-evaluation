@@ -120,9 +120,17 @@ const BasicsSection: React.FC = () => {
                 if(value.trim() === ''){
                   return 'Blank spaces are not allowed'
                 }
-                if (hasOnlySpecialCharacters(value)) return "Input cannot contain only special characters";
+                if (hasOnlySpecialCharacters(value)) {
+                  return "Input cannot contain only special characters";
+                }
+                
+                  const Newval = value.split(".")
+                  if ( Newval[0] !== 'www' || Newval[Newval.length - 1] !== 'com') {
+                      return 'Input must be www.example.com';
+                  } 
                 return true;
               }
+              
               return true;
             }
           }}
