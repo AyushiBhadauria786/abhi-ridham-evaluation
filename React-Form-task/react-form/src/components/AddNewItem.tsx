@@ -114,7 +114,7 @@ const handleCloseModal = () => {
          <CommonModal
             open={modalOpen}
             onClose={handleCloseModal}
-            sectionName={sectionName}
+             sectionName={sectionName}
             editIndex={editIndex}
             initialData={initialData}
          />
@@ -123,4 +123,4 @@ const handleCloseModal = () => {
   );
 };
 
-export default AddNewItem;
+export default AddNewItem;                                                 

@@ -15,7 +15,7 @@ const PreviewForm: React.FC = () => {
 
 
     return (
-      <Box mb={4}>
+      <Box data-testid="preview-page" mb={4}>
         <Typography variant="h5" gutterBottom>{title}</Typography>
         {items.map((item, idx) => (
           <Paper
@@ -47,7 +47,7 @@ const PreviewForm: React.FC = () => {
   let hasRenderedPreviousSection = false;
 
   return (
-    <Container maxWidth="lg" sx={{ my: 4 }}>
+    <Container  maxWidth="lg" sx={{ my: 4 }}>
     <Typography variant="h3" gutterBottom textAlign="center" mb={4}>
       Profile Preview
     </Typography>
