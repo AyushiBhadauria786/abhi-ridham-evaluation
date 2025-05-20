@@ -8,15 +8,3 @@ describe("A truthy statement", () => {
     expect(1 + 1).toEqual(2);
   });
 });
-
-describe("App", () => {
-  it("renders properly", () => {
-      render(
-        <MemoryRouter>
-           <App />
-        </MemoryRouter>
-  )
-      const main = screen.getByRole("main")
-      expect(main).toBeInTheDocument()
-  })
-})

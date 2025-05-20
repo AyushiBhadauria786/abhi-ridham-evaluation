@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box,  Button } from '@mui/material';
 import { usePortfolio } from '../Context/PortfolioContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 
 const Preview = () => {
