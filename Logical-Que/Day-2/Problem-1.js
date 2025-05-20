@@ -41,3 +41,5 @@ function fact(n) {
     return res;
 }
 console.log(fact(5));
+
+
