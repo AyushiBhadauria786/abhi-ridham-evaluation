@@ -13,10 +13,20 @@ interface FormContextType {
   resetAllFormData: () => void;
 }
 
+interface FormProviderProps {
+  children: React.ReactNode;
+  initialData?: GlobalFormData;
+}
+
+
+
+
+
 export const FormContext = createContext<FormContextType | undefined>(undefined);
 
-export const FormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [formData, setFormData] = useState<GlobalFormData>({});
+export const FormProvider: React.FC< FormProviderProps> = ({ children,initialData }) => {
+  const [formData, setFormData] = useState<GlobalFormData>(initialData || {});
+
 
   const updateBasicsData = useCallback((data: BasicData) => {
     setFormData((prev) => ({

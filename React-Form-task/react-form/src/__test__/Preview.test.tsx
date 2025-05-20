@@ -85,46 +85,161 @@ describe('previewForm', () => {
         expect(await screen.findByText("Profile Preview")).toBeInTheDocument();
     });
 
+    it("renders basics section with full name and headline", () => {
+  const mockFormData = {
+    Basics: {
+      fullName: "John Doe",
+      email: "john@example.com",
+      phone: "1234567890",
+      location: "New York",
+      website: "https://johndoe.com",
+      summary: "Experienced software developer",
+      headline: "Frontend Developer"
+    },
+    Profiles: [],
+    Experience: [],
+    Education: [],
+    Projects: [],
+    Skills: []
+  };
+  
 
-    it("should fill form, navigate to preview, and render all sections", async () => {
-        const user = userEvent.setup();
+  render(
+    <MemoryRouter>
+      <FormProvider initialData={mockFormData}>
+        <PreviewForm />
+      </FormProvider>
+    </MemoryRouter>
+  );
 
-        render(
-            <MemoryRouter initialEntries={["/create"]}>
-                <FormProvider>
-                    <Routes>
-                        <Route path="/create" element={<CreateForm />} />
-                        <Route path="/preview" element={<PreviewForm />} />
-                    </Routes>
-                </FormProvider>
-            </MemoryRouter>
-        );
+  expect(screen.getByText("John Doe")).toBeInTheDocument();
+  expect(screen.getByText("Frontend Developer")).toBeInTheDocument();
+  expect(screen.getByText(/Email:/)).toBeInTheDocument();
+  expect(screen.getByText(/Phone:/)).toBeInTheDocument();
+  expect(screen.getByText(/Location:/)).toBeInTheDocument();
+  expect(screen.getByText("https://johndoe.com")).toBeInTheDocument();
+  expect(screen.getByText("Summary")).toBeInTheDocument();
+  expect(screen.getByText("Experienced software developer")).toBeInTheDocument();
+});
 
-        // Fill Basics Section
-        await user.type(screen.getByLabelText(/Full Name/i), "John Doe");
-        await user.type(screen.getByLabelText(/Email/i), "abhibutani@gmail.com");
-        await user.type(screen.getByLabelText(/Phone/i), "1234567890");
-        await user.type(screen.getByLabelText(/Location/i), "New York");
-        await user.type(screen.getByLabelText(/Headline/i), "Full Stack Developer");
-        await user.type(screen.getByLabelText(/Website/i), "www.abhi.com");
 
-        // Navigate to preview
-        await user.click(screen.getByRole("button", { name: /Add Details/i }));
-        await user.click(screen.getByRole("button", { name: /Preview Profile/i }));
+it("renders profiles section if profiles exist", () => {
+  const mockFormData = {
+    Basics: undefined,
+    Profiles: [
+      { network: "LinkedIn", username: "johndoe", url: "https://linkedin.com/in/johndoe" }
+    ],
+    Experience: [],
+    Education: [],
+    Projects: [],
+    Skills: []
+  };
 
-        screen.debug();
+  render(
+    <MemoryRouter>
+      <FormProvider initialData={mockFormData}>
+        <PreviewForm />
+      </FormProvider>
+    </MemoryRouter>
+  );
 
-        //  Assertions
-        await waitFor(() => {
-            expect(screen.queryByText(/1234567890/i)).toBeInTheDocument();
-          });
-          
-        expect(screen.getByText("John Doe")).toBeInTheDocument(); // sync
-        expect(screen.getByText("Full Stack Developer")).toBeInTheDocument();
-        expect(screen.getByText(/abhibutani@gmail.com/i)).toBeInTheDocument();
-        expect(screen.getByText(/New York/)).toBeInTheDocument();
-        expect(screen.getByText(/www.abhi.com/)).toBeInTheDocument();
+  expect(screen.getByText("Profiles")).toBeInTheDocument();
+  expect(screen.getByText(/LinkedIn/)).toBeInTheDocument();
+});
 
-    });
+
+it("renders skills section correctly", () => {
+    const mockFormData = {
+      Basics: undefined,
+      Profiles: [],
+      Experience: [],
+      Education: [],
+      Projects: [],
+      Skills: [
+        { name: "React", level: "Advanced" },
+        { name: "TypeScript", level: "Intermediate" }
+      ]
+    };
+  
+    render(
+      <MemoryRouter>
+        <FormProvider initialData={mockFormData}>
+          <PreviewForm />
+        </FormProvider>
+      </MemoryRouter>
+    );
+  
+    expect(screen.getByText("Skills")).toBeInTheDocument();
+    expect(screen.getByText(/React/)).toBeInTheDocument();
+    expect(screen.getByText(/TypeScript/)).toBeInTheDocument();
+  });
+
+  it("renders website as a link in basics", () => {
+    const mockFormData = {
+      Basics: {
+        fullName: "Jane Doe",
+        email: "jane@example.com",
+        phone: "9876543210",
+        location: "Los Angeles",
+        website: "https://janedoe.dev",
+        summary: "",
+        headline: "Backend Developer"
+      },
+      Profiles: [],
+      Experience: [],
+      Education: [],
+      Projects: [],
+      Skills: []
+    };
+  
+    render(
+      <MemoryRouter>
+        <FormProvider initialData={mockFormData}>
+          <PreviewForm />
+        </FormProvider>
+      </MemoryRouter>
+    );
+  
+    const link = screen.getByRole("link", { name: /https:\/\/janedoe.dev/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "https://janedoe.dev");
+  });
+
+  
+  it("renders all section titles when each section has data", () => {
+    const mockFormData = {
+      Basics: {
+        fullName: "Alice Smith",
+        email: "alice@example.com",
+        phone: "1111111111",
+        location: "Seattle",
+        website: "",
+        summary: "",
+        headline: "Full Stack Engineer"
+      },
+      Profiles: [{ network: "GitHub", username: "alice", url: "https://github.com/alice" }],
+      Experience: [{ company: "TechCorp", position: "Dev", startDate: "2020", endDate: "2021" }],
+      Education: [{ institution: "Uni", degree: "BSc", startDate: "2015", endDate: "2019" }],
+      Projects: [{ name: "Project A", description: "Cool stuff" }],
+      Skills: [{ name: "Node.js", level: "Advanced" }]
+    };
+  
+    render(
+      <MemoryRouter>
+        <FormProvider initialData={mockFormData}>
+          <PreviewForm />
+        </FormProvider>
+      </MemoryRouter>
+    );
+  
+    expect(screen.getByText("Profiles")).toBeInTheDocument();
+    expect(screen.getByText("Experience")).toBeInTheDocument();
+    expect(screen.getByText("Education")).toBeInTheDocument();
+    expect(screen.getByText("Projects")).toBeInTheDocument();
+    expect(screen.getByText("Skills")).toBeInTheDocument();
+  });
+  
+
+   
 
 })
