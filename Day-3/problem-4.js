@@ -3,6 +3,11 @@
 
 //Solution-1
 
+//In this first i will split str with spaces and then loop threw elemets
+//then using buid in methods capitalize sentence letter 
+//return with join so it is in string form not in array
+
+
 let sentence = "my name is ridham kansara";
 let sentence2 = "check for the value"
 
@@ -24,6 +29,8 @@ console.log(capitalize(sentence2));
 
 
 //Solution 2
+
+//same approch as above but using map function 
 
 function capitalFirst(str){
     let splitValue =  str.toLowerCase().split(' ');
