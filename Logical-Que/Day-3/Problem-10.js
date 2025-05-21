@@ -14,3 +14,10 @@ function rendomValue(arr){
 
 
 console.log(rendomValue(arr));
+
+
+// Using ES6 Features
+
+
+const getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)];
+console.log(getRandomItem(arr));
