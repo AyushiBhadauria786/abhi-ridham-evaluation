@@ -144,7 +144,7 @@ const CommonModal: React.FC<CommonModalProps> = ({open,onClose,sectionName,editI
                   {...controllerField}
                   label={field.label}
                   placeholder={field.placeholder || field.label}
-                  type={field.type}
+                  // type={field.type}
                   fullWidth
                   variant="outlined"
                   error={!!error}
@@ -162,7 +162,7 @@ const CommonModal: React.FC<CommonModalProps> = ({open,onClose,sectionName,editI
              type="submit"
              variant="contained"
              color="primary"
-             disabled={isSubmitting || !isValid && Object.keys(errors).length > 0} 
+            //  disabled={isSubmitting || !isValid && Object.keys(errors).length > 0} 
              sx={{ mt: 3, alignSelf: 'flex-end' }}
            >
             {isSubmitting ? 'Saving...' : (editIndex !== null ? 'Save Changes' : 'Add Item')}

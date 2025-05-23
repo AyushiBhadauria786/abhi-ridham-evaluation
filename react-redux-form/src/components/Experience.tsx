@@ -6,7 +6,7 @@ import { Box } from '@mui/material'
 const Experience: React.FC = () => {
   return (
     <>
-    <Box sx={{ mt: 4 }}>
+    <Box data-testid="experience-section" sx={{ mt: 4 }}>
        <Typography variant="h4" gutterBottom>Experience</Typography>  
        <AddNewItem sectionName='Experience' />
     </Box>

@@ -139,7 +139,7 @@ it('Location input field is editable', async () => {
     await userEvent.type(locationInput, 'Ahmedabad, Bopal');
     expect(locationInput).toHaveValue('Ahmedabad, Bopal');
   });
-})
+
 
 
 
@@ -288,6 +288,7 @@ it('Location input field is editable', async () => {
         expect(screen.getByLabelText('Location')).toHaveValue('12');
       
     });
+  });
 
 
 

@@ -60,7 +60,7 @@ const BasicsSection: React.FC = () => {
     return onlySpecialCharsRegex.test(value);
   };  
 
-  console.log(errors)
+
 
   return (
     <>
@@ -68,7 +68,7 @@ const BasicsSection: React.FC = () => {
         Basics Section
       </Typography>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+      <Box  data-testid="basics-section" sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2.5 }}>
        <Box sx={{flex: 1}}>
         <Controller
