@@ -32,19 +32,3 @@ function flattenObject(obj, parentKey = '', res = {}) {
 
 
 
-  // Using reducer 
-
-
-  function flattenObjectReduce(obj) {
-    return Object.keys(obj).reduce((acc, key) => {
-      if (typeof obj[key] === 'object' && obj[key] !== null) {
-        Object.assign(acc, flattenObjectReduce(obj[key]));
-      } else {
-        acc[key] = obj[key];
-      }
-      return acc;
-    }, {});
-  }
-
-  
-  console.log(flattenObjectReduce(obj));
