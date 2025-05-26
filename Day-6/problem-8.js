@@ -1,7 +1,7 @@
 // Given a sorted array of N integers and an integer x, write a program to find the lower bound of x.
 
 //The lower bound algorithm finds the first or the smallest index in a sorted array where the value at that index is greater than or equal to a given key.
-//The lower bound is the smallest index, ind, where arr[ind] >= x. B
+//The lower bound is the smallest index, ind, where arr[ind] >= target. 
 //But if any such index is not found, the lower bound algorithm returns n i.e. size of the given array.
 
 
