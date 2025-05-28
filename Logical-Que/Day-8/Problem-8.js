@@ -1,6 +1,10 @@
 // Sort an array using the selection sort technique.
 
 
+// Using for loop
+
+
+
 let arr = [8,4,1,6,9,3,7,2,5];
 
 function selectionSort(arr) {
@@ -19,4 +23,4 @@ function selectionSort(arr) {
     return arr;
   }
 
-  console.log(selectionSort(arr));
+console.log(selectionSort(arr));
