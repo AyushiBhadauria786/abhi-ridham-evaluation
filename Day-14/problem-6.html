@@ -1,0 +1,32 @@
+<!-- Write a JavaScript function that changes the background color of an element when a mouse enters it. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Problem - 6</title>
+    <style>
+      .changeColor {
+        position: absolute;
+        background: #E73c49;
+        width: 250px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Move mouse over to change color</h1>
+    <div class="changeColor"></div>
+    <script>
+      let color = ["#FFF", "#3C9EE7", "#E7993C", "#E73C99", "#3CE746", "#E7993C"];
+      document.querySelector("div").addEventListener("mouseover", () => {
+        document.querySelector("div").style.background =
+          color[Math.floor(Math.random() * color.length)];
+      });
+    </script>
+  </body>
+</html>
