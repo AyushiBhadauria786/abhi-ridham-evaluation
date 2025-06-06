@@ -2,11 +2,11 @@
 
 
 
-function CreateDebounceFunction(fn,delay){
+function CreateDebounceFunction(fn,delay){                 // Debounce function
 
     let timeout;
     return function(...arg){
-        return new Promise((resolve) => {
+        return new Promise((resolve) => {            // function using promise
             clearTimeout(timeout);
 
             timeout = setTimeout(() => {
@@ -18,10 +18,12 @@ function CreateDebounceFunction(fn,delay){
 }
 
 
-const debounce = CreateDebounceFunction((message) => {
+const debounce = CreateDebounceFunction((message) => {          // use debounce Function
     console.log(message);
     return 'Message is logged'
 },2000)
+
+
 
 debounce("hii abhii")
 .then((data) => {
