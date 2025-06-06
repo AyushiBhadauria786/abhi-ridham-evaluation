@@ -1,0 +1,30 @@
+<!-- // Write a JavaScript program that copies the content of a text box to the clipboard when a 
+// button is clicked. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem - 9</title>
+</head>
+<body>
+    <p id="myText">Hello copy this</p>
+    <p id="display-msg"></p>
+    <button class="btn" onclick="copyContent()">Copy!</button>
+<script>
+    let text = document.getElementById('myText').innerHTML
+    const copyContent = async () => {
+        try {
+            await navigator.clipboard.writeText(text);
+            console.log('Content copy to clipboard')
+            document.getElementById('display-msg').innerHTML = "text copied";
+        } catch (error) {
+            console.error('Failed to copy:',error);
+        }
+    }
+</script>
+</body>
+</html>
+
+    
