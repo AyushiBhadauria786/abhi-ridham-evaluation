@@ -10,17 +10,17 @@
 function triggerEvalError() {
     try {
 
-        throw new EvalError("This is a manually thrown EvalError");
+        throw new EvalError("This is a manually thrown EvalError");    // throw an error
 
     }
     catch (error) {
         if (error instanceof EvalError) {
 
-            console.error("Caught an EvalError:", error.message);
+            console.error("Caught an EvalError:", error.message);       // caught an EvalError
         }
         else {
 
-            console.error("Caught a different error:", error.message);
+            console.error("Caught a different error:", error.message);   // Caught different errors
         }
     }
 }
