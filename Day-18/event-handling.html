@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling</title>
+</head>
+<body>
+        <button id="check">Click Me</button>
+
+        <div>
+            <button class="child">click</button>
+        </div>
+
+        <h1>Bubbling and capturing phase examples</h1>
+
+        <ul>
+            <li>Kamal</li>
+            <li>Dhaval</li>
+            <li>Parimal</li>
+            <li>Lawal</li>
+        </ul>
+<script>
+    const button = document.getElementById("check");
+
+    button.addEventListener("click", (e) => {
+        console.log('Event',e.target)
+        console.log('Button click')
+    })
+
+    const parent = document.querySelector("div");
+    const child = document.querySelector(".child");
+
+    parent.addEventListener("click", () => {
+        console.log("clicked parent")
+        true
+    })
+    
+    child.addEventListener("click", () => {
+        console.log("clicked child")
+        // event.stopPropagation();    //for stopping parent action
+    })
+
+
+    const ul = document.querySelector("ul");
+    const li = document.querySelectorAll("li");
+
+    ul.addEventListener("click", () => {
+        console.log("ul is clicked")
+    })
+
+    li.forEach((list) => {
+        list.addEventListener("click",() => {
+            event.stopPropagation();
+            console.log("List item clicked")
+        })
+    })
+</script>        
+</body>
+</html>
