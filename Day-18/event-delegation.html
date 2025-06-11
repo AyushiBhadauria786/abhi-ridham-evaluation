@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Delegation Example</title>
+</head>
+<body>
+    <div>
+        <button>Button 1 clicked</button>
+        <button>Button 2 clicked</button>
+        <button>Button 3 clicked</button>
+    </div>
+<script>
+    //One way apply to all buttons
+
+    // const buttons = document.querySelectorAll("button");
+
+    // buttons.forEach(button => {
+    //     button.addEventListener("click", (e) => {
+    //         console.log(event.target.innerText);
+    //     })
+    // })
+
+    //other way using event delegation apply to it's parent
+
+    const div = document.querySelector("div");
+
+    div.addEventListener("click", (event) => {
+        if(event.target.tagName === "BUTTON"){
+            console.log(event.target.innerText)
+        }
+    })
+
+    //Now we have only one event listener in parent div but with same logic.
+</script>    
+</body>
+</html>
