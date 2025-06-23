@@ -11,13 +11,19 @@ import Reports from "./pages/Reports";
 import Contact from "./pages/Contact";
 import Faq from "./pages/Faq";
 import SignIn from "./pages/Signup";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from './theme';
+import Login from "./pages/Login";
 
 function App() {
   return (
     <>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/signup" element={<SignIn />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/header" element={<Header />} />
           <Route path="/" element={<FullLayout />}>
@@ -31,6 +37,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+    </ThemeProvider>
     </>
   );
 }
