@@ -1,0 +1,28 @@
+{
+    "card" : [
+        {
+            "name": "Your Categories",
+            "description" : "Automatically categorize expenses and track spending patterns with AI-powered insights."
+        },
+        {
+            "name": "Add New Category",
+            "description" : "Set financial goals and track progress with visual indicators and milestone celebrations."
+        },
+        {
+            "name": "Manage Budget Categories",
+            "description" : "Create intelligent budgets that adapt to your lifestyle and send smart alerts."
+        },
+        {
+            "name": "Visual Reports",
+            "description" : "Beautiful charts and reports that make understanding your finances simple and clear."
+        },
+        {
+            "name": "Bank-Level Security",
+            "description" : "Your financial data is protected with enterprise-grade encryption and security."
+        },
+        {
+            "name": "Instant Sync",
+            "description" : "Access your financial data anywhere, anytime with real-time synchronization."
+        }
+    ]
+}
