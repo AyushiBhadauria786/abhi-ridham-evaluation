@@ -10,11 +10,12 @@ import Budget from "./pages/Budget";
 import Reports from "./pages/Reports";
 import Contact from "./pages/Contact";
 import Faq from "./pages/Faq";
-import SignIn from "./pages/Signup";
+import SignIn from "./pages/signup/Signup";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from './theme';
 import Login from "./pages/Login";
+import Signup from "./pages/signup/Signup";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
           <Route path="/header" element={<Header />} />
           <Route path="/" element={<FullLayout />}>
