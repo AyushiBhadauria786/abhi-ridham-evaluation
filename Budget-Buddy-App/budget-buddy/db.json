@@ -8,35 +8,35 @@
     },
     {
       "icon": "/src/assets/Images/addNewCategory.png",
-      "color": "#3b82f6",
+      "color": "linear-gradient(to right, rgb(59, 130, 246), rgb(100, 116, 139));",
 
       "title": "Add New Category",
       "description": "Set financial goals and track progress with visual indicators and milestone celebrations."
     },
     {
       "icon": "/src/assets/Images/manageBudget.png",
-      "color": "#3b82f6",
+      "color": "linear-gradient(to right, rgb(100, 116, 139), rgb(59, 130, 246));",
 
       "title": "Manage Budget Categories",
       "description": "Create intelligent budgets that adapt to your lifestyle and send smart alerts."
     },
     {
       "icon": "/src/assets/Images/wallet.png",
-      "color": "#f97316",
+      "color": "linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68));",
 
       "title": "Visual Reports",
       "description": "Beautiful charts and reports that make understanding your finances simple and clear."
     },
     {
       "icon": "/src/assets/Images/security.png",
-      "color": "#6366f1",
+      "color": "linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));",
 
       "title": "Bank-Level Security",
       "description": "Your financial data is protected with enterprise-grade encryption and security."
     },
     {
       "icon": "/src/assets/TrendingUp.png",
-      "color": "#ec4899",
+      "color": "linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));",
 
       "title": "Instant Sync",
       "description": "Access your financial data anywhere, anytime with real-time synchronization."

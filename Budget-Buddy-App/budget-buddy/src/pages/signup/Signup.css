@@ -1,6 +1,95 @@
-.firstName  {
-    display: flex;
-    flex-direction: column;
+/* General form container */
+.mainForm {
+  width: 100%;
+  max-width: 400px;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(71, 85, 105);
+}
 
+.header span {
+  vertical-align: middle;
+}
+
+/* Subheading */
+#sub-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Input field wrappers */
+.firstName,
+.email,
+.password,
+.confirm-password {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #374151;
+}
+
+/* Input styles */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: rgb(37, 99, 235);
+}
+
+/* Sign Up Button */
+.signupBtn {
+  margin-top: 10px;
+}
+
+.signupBtn button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.signupBtn button:hover {
+  background: linear-gradient(to right, rgb(59, 72, 91), rgb(25, 84, 210));
+}
+
+/* Login link */
+.linkToLogin {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.linkToLogin a {
+  color: rgb(37, 99, 235);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.linkToLogin a:hover {
+  text-decoration: underline;
+}

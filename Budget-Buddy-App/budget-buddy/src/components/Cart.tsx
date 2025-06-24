@@ -8,10 +8,11 @@ interface CardData {
   icon?: string;
   title?: string;
   description?: string;
+  color?: string;
 }
 
 const Cart: React.FC<CardData> = () => {
-  const [data, setData] = useState<CardData | null>();
+  const [data, setData] = useState<CardData[]>([]);
 
   useEffect(() => {
     axios
@@ -23,68 +24,86 @@ const Cart: React.FC<CardData> = () => {
 
   return (
     <>
-      <Grid
-        container
-        rowSpacing={2}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        sx={{ mt: "76px" }}
+      <Box
+        sx={{
+          backgroundColor: "#F6FBFF",
+          margin: "96px 0px 0px",
+          px: { xs: 2, sm: 4, md: 8 },
+          minHeight: "85vh",
+        }}
       >
-        {data?.map((item) => (
-          <Grid size={4} mt={2} gap={2}>
-            <Card
-              sx={{
-                padding: 1,
-                margin: 1,
-                boxSizing: "border-box",
-                fontSize: "16px",
-                border: "1px solid black",
-              }}
-            >
-              <CardContent
-              sx={{
-                display:"flex",
-                flexDirection:"column",
-                alignItems:"center",
-                gap:"16px"
-              }}
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ mt: "76px" }}
+        >
+          {data?.map((item) => (
+            <Grid size={4} mt={2} gap={2}>
+              <Card
+                sx={{
+                  p: 2.5,
+                  borderRadius: 3,
+                  textAlign: "center",
+                  backgroundColor: "#fff",
+                  boxShadow: "0 6px 16px rgba(0,0,0,0.06)",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-6px)",
+                    boxShadow: "0 10px 20px rgba(0,0,0,0.12)",
+                  },
+                }}
               >
-                <Box
+                <CardContent
                   sx={{
-                    background: `${item.color}`,
-                    borderRadius: "16px", 
-                    height: "64px",
-                    width: "64px",
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
+                    gap: "16px",
                   }}
                 >
-                  <img
-                    src={item.icon}
-                    alt={item.name}
-                    style={{
-                      borderRadius: 8,
-                      width: "32px",
-                      height: "32px",
-                      justifyContent: "center",
+                  <Box
+                    sx={{
+                      background: `${item.color}`,
+                      borderRadius: "16px",
+                      height: "64px",
+                      width: "64px",
+                      display: "flex",
                       alignItems: "center",
+                      justifyContent: "center",
                     }}
-                  />
-                </Box>
-                <Typography
-                  gutterBottom
-                  sx={{ color: "text.secondary", fontSize: 14 }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography variant="body2" component="p" sx={{ fontSize: 12 }}>
-                  {item.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                  >
+                    <img
+                      src={item.icon}
+                      alt={item.name}
+                      style={{
+                        borderRadius: 8,
+                        width: "32px",
+                        height: "32px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    />
+                  </Box>
+                  <Typography
+                    gutterBottom
+                    sx={{ color: "text.secondary", fontSize: 14 }}
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    sx={{ fontSize: 12 }}
+                  >
+                    {item.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </>
   );
 };
