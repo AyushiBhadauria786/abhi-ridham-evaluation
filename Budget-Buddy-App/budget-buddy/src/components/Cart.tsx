@@ -75,7 +75,6 @@ const Cart: React.FC<CardData> = () => {
                   >
                     <img
                       src={item.icon}
-                      alt={item.name}
                       style={{
                         borderRadius: 8,
                         width: "32px",

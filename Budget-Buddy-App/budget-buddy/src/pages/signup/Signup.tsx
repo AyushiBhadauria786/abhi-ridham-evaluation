@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, Link} from "@mui/material";
 import React from "react";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import "./Signup.css";
@@ -51,8 +51,8 @@ const Signup: React.FC = () => {
           variant="outlined"
           sx={{
             width: "100%",
-            maxWidth: 480, 
-            padding: "32px 28px", 
+            maxWidth: 480,
+            padding: "32px 28px",
             borderRadius: 3,
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
           }}
@@ -95,7 +95,17 @@ const Signup: React.FC = () => {
           </Box>
 
           <Box className="linkToLogin">
-            <a href="/login">Already have an account? Login</a>
+            <Typography
+              variant="body2"
+              textAlign="center"
+              mt={3}
+              color="text.secondary"
+            >
+             Already have an account?{" "}
+              <Link href="/login" underline="hover">
+                Login
+              </Link>
+            </Typography>
           </Box>
         </Paper>
       </Box>

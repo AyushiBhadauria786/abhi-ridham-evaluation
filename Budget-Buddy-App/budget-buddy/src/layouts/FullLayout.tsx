@@ -1,18 +1,20 @@
-import React from 'react'
-import Sidebar from './Sidebar'
-import { Outlet } from 'react-router-dom'
-import Header from '../components/Header'
-import DashboardHeader from './DashboardHeader'
-
+import React from "react";
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import DashboardHeader from "./DashboardHeader";
+import { Box } from "@mui/material";
 
 const FullLayout = () => {
   return (
-    <div>
-        <Sidebar />
+    <div style={{ display: "flex" }}>
+      <Sidebar />
+      <Box sx={{display:"flex",flexGrow:"1",flexDirection:"column"}}>
         <DashboardHeader />
         <Outlet />
+      </Box>
     </div>
-  )
-}
+  );
+};
 
-export default FullLayout
+export default FullLayout;
