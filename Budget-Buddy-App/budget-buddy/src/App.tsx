@@ -16,6 +16,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from './theme';
 import Login from "./pages/Login";
 import Signup from "./pages/signup/Signup";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/home" element={<Home />} />
           <Route path="/header" element={<Header />} />
+          <Route path="/*" element={<NotFound />} />
           <Route path="/" element={<FullLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/add-transaction" element={<AddTransaction />} />
