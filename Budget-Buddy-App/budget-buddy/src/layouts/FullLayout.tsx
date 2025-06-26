@@ -8,8 +8,10 @@ import { Box } from "@mui/material";
 const FullLayout = () => {
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar />
-      <Box sx={{display:"flex",flexGrow:"1",flexDirection:"column"}}>
+      <Box>
+        <Sidebar />
+      </Box>
+      <Box sx={{ display: "flex", flexGrow: "1", flexDirection: "column" }}>
         <DashboardHeader />
         <Outlet />
       </Box>

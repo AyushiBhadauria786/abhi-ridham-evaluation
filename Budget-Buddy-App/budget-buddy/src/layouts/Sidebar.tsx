@@ -1,35 +1,43 @@
 import { Box, Button, IconButton, Link, Typography } from "@mui/material";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const sideBarLinks = [
     {
       icon: "./src/assets/Images/homeicon.png",
       name: "Dashbord",
+      path: "/dashboard",
     },
     {
       icon: "/src/assets/Images/plusicon.png",
       name: "Add Transaction",
+      path: "/add-transaction",
     },
     {
       icon: "/src/assets/Images/listicon.png",
       name: "Transactions",
+      path: "/transaction",
     },
     {
       icon: "/src/assets/Images/chart-pie-icon.png",
       name: "Budget",
+      path: "/budget",
     },
     {
       icon: "/src/assets/Images/chart-column.png",
       name: "Reports",
+      path: "/reports",
     },
     {
       icon: "/src/assets/Images/mail-icon.png",
       name: "Contact",
+      path: "/contact",
     },
     {
       icon: "/src/assets/Images/circle-help-icon.png",
       name: "FAQ",
+      path: "/faq",
     },
   ];
 
@@ -46,10 +54,9 @@ const Sidebar = () => {
           fontWeight: 400,
           lineHeight: "24px",
           borderRight: "1px solid rgb(218, 224, 231);",
-          width:"250px",
-          height:"100vh",
-          position:"relative"
-
+          width: "250px",
+          height: "100vh",
+          position: "relative",
         }}
       >
         <Box
@@ -103,25 +110,29 @@ const Sidebar = () => {
           <Box sx={{ padding: "8px" }}>
             <Typography
               variant="body2"
-              sx={{ color: "rgb(71 85 105 / var(--tw-text-opacity, 1))", borderTop: "1px solid rgb(218, 224, 231);" }}
+              sx={{
+                color: "rgb(71 85 105 / var(--tw-text-opacity, 1))",
+                borderTop: "1px solid rgb(218, 224, 231);",
+              }}
             >
               Navigation
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", margin: 1 }}>
               {sideBarLinks.map((item) => (
-                <Link
-                  sx={{
-                    padding: 1,
+                <NavLink 
+                  key={item.name} 
+                  to={item.path} 
+                  style={({ isActive }) => ({
+                    padding: "8px", // Changed from 1 to 8px to match current padding in your Mui Link
                     display: "flex",
                     gap: "10px",
                     alignItems: "center",
                     color: "rgb(30, 41, 59)",
                     textDecoration: "none",
                     cursor: "pointer",
-                    ":hover": {
-                      backgroundColor: "#e5e7eb",
-                    },
-                  }}
+                    backgroundColor: isActive ? "#e5e7eb" : "transparent", // Apply active style
+                    borderRadius: "4px", // Optional: subtle rounded corners for active state
+                  })}
                 >
                   <img
                     src={item.icon}
@@ -136,47 +147,53 @@ const Sidebar = () => {
                     }}
                   />
                   {item.name}
-                </Link>
+                </NavLink>
               ))}
             </Box>
           </Box>
         </Box>
 
         {/* Logout button */}
-      <Box
-        sx={{ display: "flex", alignItems: "center", gap: "8px", padding: 2,position:"absolute",bottom:"0px", borderTop: "1px solid rgb(218, 224, 231);" }}
-      >
-        <img
-          src="/src/assets/Images/logout-icon.png"
-          alt="logout"
-          style={{
-            width: "16px",
-            height: "16px",
-            fontSize: "14px",
-            fontWeight: 500,
-            lineHeight: "20px",
-            textAlign: "left",
-          }}
-        />
-        <Button
+        <Box
           sx={{
-            padding: 1,
             display: "flex",
-            gap: "5px",
             alignItems: "center",
-            color: "rgb(30, 41, 59)",
-            textDecoration: "none",
-            ":hover": {
-              backgroundColor: "#e5e7eb",
-            },
+            gap: "8px",
+            padding: 2,
+            position: "absolute",
+            bottom: "0px",
+            borderTop: "1px solid rgb(218, 224, 231);",
           }}
         >
-          Logout
-        </Button>
+          <img
+            src="/src/assets/Images/logout-icon.png"
+            alt="logout"
+            style={{
+              width: "16px",
+              height: "16px",
+              fontSize: "14px",
+              fontWeight: 500,
+              lineHeight: "20px",
+              textAlign: "left",
+            }}
+          />
+          <Button
+            sx={{
+              padding: 1,
+              display: "flex",
+              gap: "5px",
+              alignItems: "center",
+              color: "rgb(30, 41, 59)",
+              textDecoration: "none",
+              ":hover": {
+                backgroundColor: "#e5e7eb",
+              },
+            }}
+          >
+            Logout
+          </Button>
+        </Box>
       </Box>
-      </Box>
-
-      
     </>
   );
 };
