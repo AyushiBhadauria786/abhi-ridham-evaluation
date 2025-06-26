@@ -27,13 +27,20 @@ const Header: React.FC = () => {
       <Toolbar
         sx={{ display: "flex", justifyContent: "space-between", padding: 2 }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", padding: "10px 100px 10px 100px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            padding: "10px 100px 10px 100px",
+          }}
+        >
           <IconButton
             disableRipple
             disableFocusRipple
             disableTouchRipple
             sx={{
-               background: "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
+              background:
+                "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
               color: "#fff",
               mr: 1,
               width: "40px",
@@ -62,7 +69,14 @@ const Header: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, padding: "10px 100px 10px 100px"  }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            padding: "10px 100px 10px 100px",
+          }}
+        >
           <Button
             variant="text"
             onClick={() => navigate("/login")}
@@ -83,7 +97,7 @@ const Header: React.FC = () => {
               padding: "8px 16px",
               boxSizing: "border-box",
             }}
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
           >
             Get Started
           </Button>

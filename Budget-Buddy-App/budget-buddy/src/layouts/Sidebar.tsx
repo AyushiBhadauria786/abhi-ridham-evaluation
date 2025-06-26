@@ -56,7 +56,8 @@ const Sidebar = () => {
           borderRight: "1px solid rgb(218, 224, 231);",
           width: "250px",
           height: "100vh",
-          position: "relative",
+          position: "sticky",
+          top: 0
         }}
       >
         <Box

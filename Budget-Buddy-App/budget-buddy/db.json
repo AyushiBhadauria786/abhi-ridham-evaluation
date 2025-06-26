@@ -4,39 +4,90 @@
       "icon": "/src/assets/TrendingUp.png",
       "color": "linear-gradient(to right, rgb(100, 116, 139), rgb(59, 130, 246));",
       "title": "Your Categories",
-      "description": "Automatically categorize expenses and track spending patterns with AI-powered insights."
+      "description": "Automatically categorize expenses and track spending patterns with AI-powered insights.",
+      "id": "4979"
     },
     {
       "icon": "/src/assets/Images/addNewCategory.png",
       "color": "linear-gradient(to right, rgb(59, 130, 246), rgb(100, 116, 139));",
       "title": "Add New Category",
-      "description": "Set financial goals and track progress with visual indicators and milestone celebrations."
+      "description": "Set financial goals and track progress with visual indicators and milestone celebrations.",
+      "id": "77db"
     },
     {
       "icon": "/src/assets/Images/manageBudget.png",
       "color": "linear-gradient(to right, rgb(100, 116, 139), rgb(59, 130, 246));",
       "title": "Manage Budget Categories",
-      "description": "Create intelligent budgets that adapt to your lifestyle and send smart alerts."
+      "description": "Create intelligent budgets that adapt to your lifestyle and send smart alerts.",
+      "id": "23ef"
     },
     {
       "icon": "/src/assets/Images/wallet.png",
       "color": "linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68));",
       "title": "Visual Reports",
-      "description": "Beautiful charts and reports that make understanding your finances simple and clear."
+      "description": "Beautiful charts and reports that make understanding your finances simple and clear.",
+      "id": "b485"
     },
     {
       "icon": "/src/assets/Images/security.png",
       "color": "linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));",
       "title": "Bank-Level Security",
-      "description": "Your financial data is protected with enterprise-grade encryption and security."
+      "description": "Your financial data is protected with enterprise-grade encryption and security.",
+      "id": "d285"
     },
     {
       "icon": "/src/assets/TrendingUp.png",
       "color": "linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));",
       "title": "Instant Sync",
-      "description": "Access your financial data anywhere, anytime with real-time synchronization."
+      "description": "Access your financial data anywhere, anytime with real-time synchronization.",
+      "id": "3a99"
     }
   ],
   "transactions": [
+    {
+      "id": "d279",
+      "type": "income",
+      "amount": "20000",
+      "category": "Salary",
+      "description": "Monthly salary",
+      "date": "2025-06-08",
+      "notes": "Salary credited"
+    },
+    {
+      "id": "ea61",
+      "type": "expense",
+      "amount": "5000",
+      "category": "Rent",
+      "description": "PG rent",
+      "date": "2025-06-10",
+      "notes": "Rent"
+    },
+    {
+      "id": "2d97",
+      "type": "expense",
+      "amount": "1200",
+      "category": "Transportation",
+      "description": "bus-auto",
+      "date": "2025-06-11",
+      "notes": "bus-auto expense"
+    },
+    {
+      "id": "9110",
+      "type": "income",
+      "amount": "5000",
+      "category": "Freelance",
+      "description": "asdfg",
+      "date": "2025-06-26",
+      "notes": "dfgthfyju"
+    },
+    {
+      "id": "898d",
+      "type": "expense",
+      "amount": "3000",
+      "category": "Entertainment",
+      "description": "dfghj",
+      "date": "2025-06-26",
+      "notes": "sdfghjk"
+    }
   ]
 }
