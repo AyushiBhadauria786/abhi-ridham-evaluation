@@ -17,6 +17,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import axios from "axios";
+
+export const categories = [
+  "Groceries", "Rent", "Entertainment", "Transportation",
+  "Utilities", "Healthcare", "Salary", "Freelance", "Investment", "Other"
+];
 
 const AddTransaction = () => {
  const [formData, setFormData] = useState({
@@ -28,10 +34,7 @@ const AddTransaction = () => {
     notes: "",
   });
 
-const categories = [
-  "Groceries", "Rent", "Entertainment", "Transportation",
-  "Utilities", "Healthcare", "Salary", "Freelance", "Investment", "Other"
-];
+
 
 const labelStyle = {
   display: "block",
@@ -44,10 +47,24 @@ const labelStyle = {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
+    try {
+      const response = await axios.post("http://localhost:3001/transactions",formData)
+      console.log("Submitted Data:", response.data);
+      setFormData({
+        type: "expense",
+        amount: "",
+        category: "",
+        description: "",
+        date: new Date().toISOString().slice(0, 10),
+        notes: "",
+      });
+    } catch (error) {
+       console.error("Error adding transaction:", error);
+    }
   };
+
 
   return (
     <Box
@@ -100,6 +117,7 @@ const labelStyle = {
               <FormLabel sx={labelStyle}>Amount</FormLabel>
               <TextField
                 fullWidth
+                required
                 type="number"
                 value={formData.amount}
                 onChange={(e) => handleInputChange("amount", e.target.value)}
