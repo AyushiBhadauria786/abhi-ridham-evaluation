@@ -1,8 +1,11 @@
 import React from 'react'
+import SideBar from './SideBar';
 
 const MainLayout = () => {
   return (
-    <div>MainLayout</div>
+    <>
+    <SideBar/>
+    </>
   )
 }
 

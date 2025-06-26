@@ -1,26 +1,38 @@
 {
     "card" : [
         {
+            "image": "/YourCategories.png",
+            "bgcolor":  "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
             "name": "Your Categories",
             "description" : "Automatically categorize expenses and track spending patterns with AI-powered insights."
         },
         {
+            "image": "/AddNewCategory.png",
+            "bgcolor":  "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
             "name": "Add New Category",
             "description" : "Set financial goals and track progress with visual indicators and milestone celebrations."
         },
         {
+            "image": "/ManageBudgetCategories.png",
+            "bgcolor":  "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
             "name": "Manage Budget Categories",
             "description" : "Create intelligent budgets that adapt to your lifestyle and send smart alerts."
         },
         {
+            "image": "/VisualReports.png",
+            "bgcolor":  "linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68));",
             "name": "Visual Reports",
             "description" : "Beautiful charts and reports that make understanding your finances simple and clear."
         },
-        {
+        { 
+            "image": "/Bank-LevelSecurity.png",
+            "bgcolor":  "linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));",
             "name": "Bank-Level Security",
             "description" : "Your financial data is protected with enterprise-grade encryption and security."
         },
         {
+            "image": "/InstantSync.png",
+            "bgcolor":  "linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));",
             "name": "Instant Sync",
             "description" : "Access your financial data anywhere, anytime with real-time synchronization."
         }

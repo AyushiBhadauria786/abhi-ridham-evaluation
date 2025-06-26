@@ -10,6 +10,7 @@ import Transactions from '../Pages/Transactions'
 import Contact from '../Pages/Contact'
 import Reports from '../Pages/Reports'
 import Faq from '../Pages/Faq'
+import MainLayout from '../UiLayout/MainLayout'
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
           <Route path='/contact' element={<Contact/>}></Route>
           <Route path='/reports' element={<Reports/>}></Route>
           <Route path='/faq' element={<Faq/>}></Route>
-
+          <Route path='/main' element={<MainLayout/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

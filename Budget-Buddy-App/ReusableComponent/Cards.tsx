@@ -2,16 +2,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Box, Card, Grid } from '@mui/material';
+import { Box, Card } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-
+import Grid from '@mui/material/Grid';
 
 const commonStyles = {
   bgcolor: 'background.paper',
   m: 1,
-  p: 2,
-  border: 1,
-  width: '17rem',
+  p: 3,
+  width: '17.5rem',
   height: '12rem',
 };
 
@@ -34,7 +33,7 @@ export default function Cards() {
         const result = await response.json();
         setData(result);
       }
-      catch (err:any) {
+      catch (err: any) {
         setError(err)
       } finally {
         setLoading(false);
@@ -51,21 +50,47 @@ export default function Cards() {
   }
 
   return (
-    <React.Fragment>
-      <Grid container spacing={5}>
-        {data.map((item:any) => 
-        <CardContent >
-          <Box sx={{ ...commonStyles, border: 1, borderRadius: 3, boxShadow: 3 }}>
-            <Typography variant="h5" component="div">
+    <>
+    <Grid container spacing={1}>
+    {data.map((item: any, index: number) => (
+        <CardContent>
+          <Box sx={{ ...commonStyles, borderRadius: 2, boxShadow: 5 }}>
+         
+            
+            <Box sx={{
+              background: `${item.bgcolor}`,
+              borderRadius: "16px",
+              height: "64px",
+              width: "64px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              alignContent:"center"
+            }}>
+
+            {item.image && (
+              <img
+                src={item.image}
+                alt={item.name}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '15px'
+                }}
+              />
+            )}
+            </Box>
+            <Typography variant="h6" component="div" sx={{ mt: "20px", fontFamily: "ui-sans-serif, system-ui, sans-serif"}}>
               {item.name}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ mt: "15px",fontFamily: "ui-sans-serif, system-ui, sans-serif" }}>
               {item.description}
             </Typography>
           </Box>
         </CardContent>
-        )}
-      </Grid>
-    </React.Fragment>
+
+    ))}
+  </Grid>
+</>  
   );
 }
