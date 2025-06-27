@@ -1,5 +1,6 @@
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 export const lastTransactions = [ 
@@ -37,15 +38,28 @@ export const lastTransactions = [
 
 
 const LastTransactions = () => {
+
+    const navigate = useNavigate();
+
   return (
     <Box>
+        <Box sx={{display: "flex", justifyContent: "space-between", textAlign: 'center'}}>
+
         <Typography variant="h5"
           sx={{
-            fontSize: "24px",
-            fontWeight: 600,
-            lineHeight: "24px",
-            letterSpacing: "-0.6px"
-          }}>Last 5 Transactions</Typography>
+              fontSize: "24px",
+              fontWeight: 600,
+              lineHeight: "24px",
+              letterSpacing: "-0.6px",
+              alignItems: 'center',
+            //   padding: "8px",
+            //   marginTop: "10px"
+            }}>Last 5 Transactions</Typography>
+
+        <Button sx={{border: '1px solid', lineHeight: "24px",  }} size="small" onClick={() => navigate('/transaction')}>
+            View All Transactions
+        </Button>
+            </Box>
         <TableContainer>
             <Table>
                 <TableHead>

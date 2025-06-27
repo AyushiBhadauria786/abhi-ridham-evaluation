@@ -76,18 +76,45 @@
       "type": "income",
       "amount": "5000",
       "category": "Freelance",
-      "description": "asdfg",
+      "description": "website project",
       "date": "2025-06-26",
-      "notes": "dfgthfyju"
+      "notes": "react website"
     },
     {
       "id": "898d",
       "type": "expense",
       "amount": "3000",
       "category": "Entertainment",
-      "description": "dfghj",
+      "description": "Netfilx and prime",
       "date": "2025-06-26",
-      "notes": "sdfghjk"
+      "notes": "entertainment"
+    },
+    {
+      "id": "94fb",
+      "type": "income",
+      "amount": "5000",
+      "category": "Salary",
+      "description": "salary",
+      "date": "2025-06-26",
+      "notes": "salary"
+    },
+    {
+      "id": "56b2",
+      "type": "expense",
+      "amount": "400",
+      "category": "Utilities",
+      "description": "cloths",
+      "date": "2025-06-20",
+      "notes": "cloths"
+    },
+    {
+      "id": "5c66",
+      "type": "expense",
+      "amount": "500",
+      "category": "Healthcare",
+      "description": "scsdffs",
+      "date": "2025-06-27",
+      "notes": "efefefe"
     }
   ]
 }

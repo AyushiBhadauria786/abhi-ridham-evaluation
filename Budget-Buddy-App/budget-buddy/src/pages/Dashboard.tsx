@@ -6,14 +6,16 @@ import BudgetOverview from "../components/BudgetOverview";
 import BudgetCategories from "../components/BudgetCategories";
 import LastTransactions from "../components/LastTransactions";
 import axios from "axios";
+import type { Transaction, BudgetCategoryData, PieChartData } from "../types";
+
 
 const Dashboard = () => {
-  const [transactions, setTransactions] = useState([]);
-  const [currentBalance, setCurrentBalance] = useState(0);
-  const [totalMonthlyExpenses, setTotalMonthlyExpenses] = useState(0);
-  const [totalMonthlyIncome, setTotalMonthlyIncome] = useState(0);
-  const [budgetCategoriesData, setBudgetCategoriesData] = useState([]);
-  const [pieChartData, setPieChartData] = useState([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [currentBalance, setCurrentBalance] = useState<number | string>(0);
+  const [totalMonthlyExpenses, setTotalMonthlyExpenses] = useState<number>(0);
+  const [totalMonthlyIncome, setTotalMonthlyIncome] = useState<number>(0);
+  const [budgetCategoriesData, setBudgetCategoriesData] = useState<BudgetCategoryData[]>([]);
+  const [pieChartData, setPieChartData] = useState<PieChartData[]>([]);
 
   // initial data fetch
   useEffect(() => {
@@ -32,15 +34,46 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (transactions.length > 0) {
-      let balance = 0;
-      let monthyExpenses = 0;
-      let monthlyIncome = 0;
+      let balance: string | number = 0;
+      let monthyExpenses: string | number = 0;
+      let monthlyIncome: string | number = 0;
       const dataFromCategory = {};
 
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
+
+      transactions.forEach((transaction) => {
+        const amountValue = transaction.amount
+        if(transaction.type === "income"){
+          balance += amountValue
+        }
+
+        const transactionDate = new Date(transaction.date);
+        if(transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear){
+          if(transaction.type === "expense"){
+            monthyExpenses += amountValue
+
+            if(dataFromCategory[transaction.category]){
+              dataFromCategory[transaction.category] += amountValue
+            }else{
+              dataFromCategory[transaction.category] = amountValue
+            }
+          }else{
+            monthlyIncome += amountValue
+          }
+        }
+      });
+
+      setCurrentBalance(balance);
+      setTotalMonthlyExpenses(monthyExpenses);
+      setTotalMonthlyIncome(monthlyIncome);
+
     }
-  }, []);
+  }, [transactions]);
+
+  
+
+  const totalMonthlyBudget = 12000;
 
   return (
     <Box sx={{ padding: "24px" }}>
@@ -75,7 +108,12 @@ const Dashboard = () => {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-        <BalanceDisplayCard />
+        <BalanceDisplayCard 
+        currentBalance={currentBalance}
+        totalMonthlyBudget={totalMonthlyBudget}
+        totalMonthlyExpenses={totalMonthlyExpenses}
+        remainningMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}
+        />
       </Box>
 
       <Grid
@@ -88,7 +126,9 @@ const Dashboard = () => {
           <BudgetOverview />
         </Grid>
         <Grid sx={{ border: "1px solid" }}>
-          <BudgetCategories />
+          <BudgetCategories 
+          budgetCategoriesData={budgetCategoriesData}
+          />
         </Grid>
       </Grid>
 

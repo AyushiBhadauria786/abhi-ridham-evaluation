@@ -1,25 +1,18 @@
 import React from "react";
 import { categories } from "../pages/AddTransaction";
 import { Box, LinearProgress, Typography } from "@mui/material";
+import type { BudgetCategoryData } from "../types";
 
-const BudgetCategories = () => {
-  const [progress, setProgress] = React.useState(0);
+interface BudgetCategoiesProps {
+    budgetCategoriesData: BudgetCategoryData[];
+}
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+const BudgetCategories: React.FC<BudgetCategoiesProps> = ({ budgetCategoriesData }) => {
+  
+    const getProcess = (spend: number, budgeted: number) => {
+        if(budgeted === 0) return 0;
+        return Math.min((spend / budgeted) * 100,100);
+    }
 
   return (
     <>
@@ -38,17 +31,17 @@ const BudgetCategories = () => {
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column", width: '100%' }}> 
-      {categories.slice(0, 5).map((item, index) => (
+      {categories.slice(0,5).map((item, index) => (
         <Box key={index} sx={{ display: "flex", flexDirection: "column", mb: 2 }}> 
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> 
             <Typography variant="body2" sx={{ fontWeight: 600 }}> 
               {item}
             </Typography>
             <Typography variant="body2" sx={{ ml: 2 }}>
-              rupees/budget
+             value / budget
             </Typography>
           </Box>
-          <LinearProgress variant="determinate" value={progress} sx={{ mt: 0.5 }} />
+          <LinearProgress variant="determinate" value={getProcess(item.value,item.budget)} sx={{ mt: 0.5 }} />
         </Box>
       ))}
     </Box>
