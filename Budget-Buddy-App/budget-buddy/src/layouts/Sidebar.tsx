@@ -124,15 +124,15 @@ const Sidebar = () => {
                   key={item.name} 
                   to={item.path} 
                   style={({ isActive }) => ({
-                    padding: "8px", // Changed from 1 to 8px to match current padding in your Mui Link
+                    padding: "8px",
                     display: "flex",
                     gap: "10px",
                     alignItems: "center",
                     color: "rgb(30, 41, 59)",
                     textDecoration: "none",
                     cursor: "pointer",
-                    backgroundColor: isActive ? "#e5e7eb" : "transparent", // Apply active style
-                    borderRadius: "4px", // Optional: subtle rounded corners for active state
+                    backgroundColor: isActive ? "#e5e7eb" : "transparent", 
+                    borderRadius: "4px",
                   })}
                 >
                   <img
