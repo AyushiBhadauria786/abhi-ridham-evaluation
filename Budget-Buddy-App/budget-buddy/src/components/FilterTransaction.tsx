@@ -1,144 +1,156 @@
-import { Box, Button, FormLabel, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-
-import type { Transaction } from "../types";
-
-import { categories } from "../pages/AddTransaction";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-interface TransactionTableProps {
-    data: Transaction[]
+interface FilterProps {
+  onFilterChange?: (filters: any) => void;
 }
 
-const FilterTransaction: React.FC<TransactionTableProps> = ({data}) => {
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
+const FilterTransaction: React.FC<FilterProps> = ({ onFilterChange }) => {
+  const [description, setDescription] = useState("");
+  const [type, setType] = useState("");
+  const [category, setCategory] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/budgets");
+        const catList = res.data.map((b: any) => b.category);
+        setCategories(catList);
+      } catch (err) {
+        console.error("Failed to fetch categories", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
-      useEffect(() => {
-        const fetchTransactions = async () => {
-          try {
-            const response = await axios.get("http://localhost:3001/transactions");
-            console.log(response.data);
-            setTransactions(response.data);
-          } catch (error) {
-            console.error("Error fetching transactions:", error);
-          }
-        };
-    
-        fetchTransactions();
-      }, []);
+  const handleClearFilters = () => {
+    setDescription("");
+    setType("");
+    setCategory("");
+    setFromDate("");
+    setToDate("");
+    onFilterChange?.({});
+  };
 
+  const handleFilterChange = () => {
+    onFilterChange?.({
+      description,
+      type,
+      category,
+      fromDate,
+      toDate,
+    });
+  };
 
   return (
-    <>
-    <Box>
-        <Typography variant="h5" sx={{ fontSize: "24px", lineHeight: "24px" }}>
-          Filters
-        </Typography>
-      </Box>
-      <Box sx={{  display: "flex" }}>
-        <Box
-          sx={{
-            mt: 2,
-            margin: "8px 0px 0px",
-            padding: "9px 12px",
-          }}
-        >
-          <FormLabel>Search</FormLabel>
-          <TextField type="text" />
-        </Box>
-        <Box
-          sx={{
-            mt: 2,
-             margin: "8px 0px 0px",
-            padding: "9px 12px",
-          }}
-        >
-          <FormLabel> Type</FormLabel>
-          <TextField type="text" />
-        </Box>
-        <Box
-          sx={{
-            mt: 2,
-             margin: "8px 0px 0px",
-            padding: "9px 12px",
-          }}
-        >
-          <FormLabel>Category</FormLabel>
-          <TextField type="text" />
-        </Box>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+        gap: 2,
+        mb: 2,
+      }}
+    >
+      <TextField
+        type="search"
+        label="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        fullWidth
+      />
 
-        <Box
-          sx={{
-            mt: 2,
-             margin: "8px 0px 0px",
-            padding: "9px 12px",
-          }}
+      <FormControl fullWidth>
+        <InputLabel>Type</InputLabel>
+        <Select
+          value={type}
+          label="Type"
+          onChange={(e) => setType(e.target.value)}
         >
-          <FormLabel>From Date</FormLabel>
-          <TextField type="date" />
-        </Box>
-        
-        <Box
-          sx={{
-            mt: 2,
-             margin: "8px 0px 0px",
-            padding: "9px 12px",
-          }}
-        >
-          <FormLabel>To Date</FormLabel>
-          <TextField type="date" />
-        </Box>
-      </Box>
-      <Box sx={{display: "flex", lineHeight: "24px", padding: "9px 12px"}}>
-        <Button variant="contained" size="small">Clear Filters</Button>
-      </Box>
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="income">Income</MenuItem>
+          <MenuItem value="expense">Expense</MenuItem>
+        </Select>
+      </FormControl>
 
-      <Box>
-        <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell>Description</TableCell>
-                                <TableCell>Category</TableCell>
-                                <TableCell>Amount</TableCell>
-                                <TableCell>Type</TableCell>
-                                <TableCell>Actions</TableCell>
-                                
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {transactions.map((item) => (
-                                <TableRow key={item.id}>
-                                    <TableCell>
-                                    
-                                        <Typography variant="body2" sx={{display: 'flex', }}>
-                                           {item.date}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.description}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.category}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.amount}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.type}
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.notes}
-                                    </TableCell>
-                                </TableRow>  
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+      <FormControl fullWidth>
+        <InputLabel>Category</InputLabel>
+        <Select
+          value={category}
+          label="Category"
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <MenuItem value="">All</MenuItem>
+          {categories.map((cat) => (
+            <MenuItem key={cat} value={cat}>
+              {cat}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <TextField
+        label="From Date"
+        type="date"
+        slotProps={{
+          inputLabel: {
+            shrink: true,
+          },
+        }}
+        value={fromDate}
+        onChange={(e) => setFromDate(e.target.value)}
+        fullWidth
+      />
+      <TextField
+        label="To Date"
+        type="date"
+        slotProps={{
+          inputLabel: {
+            shrink: true,
+          },
+        }}
+        value={toDate}
+        onChange={(e) => setToDate(e.target.value)}
+        fullWidth
+      />
+
+      <Box sx={{ display: "flex", gap: 2, gridColumn: "span 3", mt: 1 }}>
+        <Button
+          variant="contained"
+          onClick={handleFilterChange}
+          sx={{
+            backgroundColor: "rgb(71 85 105)",
+            ":hover": { backgroundColor: "rgb(55 65 81)" },
+          }}
+        >
+          Apply Filters
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={handleClearFilters}
+          sx={{
+            color: "rgb(71 85 105)",
+            borderColor: "rgb(71 85 105)",
+            ":hover": {
+              backgroundColor: "#f8fafc",
+            },
+          }}
+        >
+          Clear Filters
+        </Button>
       </Box>
-    </>
+    </Box>
   );
 };
 
