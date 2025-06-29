@@ -1,21 +1,33 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import BalanceDisplayCard from "../components/BalanceDisplayCard";
-import ReusableCard from "../components/ReusbleCard";
 import BudgetOverview from "../components/BudgetOverview";
 import BudgetCategories from "../components/BudgetCategories";
 import LastTransactions from "../components/LastTransactions";
 import axios from "axios";
-import type { Transaction, BudgetCategoryData, PieChartData } from "../types";
-
+import type {
+  Transaction,
+  BudgetCategoryData,
+  PieChartData,
+  Budget as BudgetType,
+} from "../types";
 
 const Dashboard = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [budgets, setBudgets] = useState<BudgetType[]>([]);
+  const [displayDate, setDisplayDate] = useState(new Date());
+
   const [currentBalance, setCurrentBalance] = useState<number | string>(0);
+  const [totalMonthlyBudget, setTotalMonthlyBudget] = useState<number>(0);
   const [totalMonthlyExpenses, setTotalMonthlyExpenses] = useState<number>(0);
   const [totalMonthlyIncome, setTotalMonthlyIncome] = useState<number>(0);
-  const [budgetCategoriesData, setBudgetCategoriesData] = useState<BudgetCategoryData[]>([]);
   const [pieChartData, setPieChartData] = useState<PieChartData[]>([]);
+  const [lastFiveTransactions, setLastFiveTransactions] = useState<
+    Transaction[]
+  >([]);
+  const [budgetCategoryData, setBudgetCategoryData] = useState<
+    BudgetCategoryData[]
+  >([]);
 
   // initial data fetch
   useEffect(() => {
@@ -33,47 +45,88 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (transactions.length > 0) {
-      let balance: string | number = 0;
-      let monthyExpenses: string | number = 0;
-      let monthlyIncome: string | number = 0;
-      const dataFromCategory = {};
+    const fetchBudgets = async () => {
+      try {
+        const budgetRes = await axios.get("http://localhost:3001/budgets");
+        console.log(budgetRes.data);
+        setBudgets(budgetRes.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchBudgets();
+  }, []);
+
+  useEffect(() => {
+    if (transactions.length > 0 && budgets.length > 0) {
+      let balance = 0;
+      let monthyExpenses = 0;
+      let monthlyBudget = 0;
+      const expenseByCategory: { [key: string]: number } = {};
 
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
 
-      transactions.forEach((transaction) => {
-        const amountValue = transaction.amount
-        if(transaction.type === "income"){
-          balance += amountValue
-        }
+      balance = transactions.reduce((acc, t) => {
+        const amount = Number(t.amount) || 0;
+        return t.type === "income" ? acc + amount : acc - amount;
+      }, 0);
 
-        const transactionDate = new Date(transaction.date);
-        if(transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear){
-          if(transaction.type === "expense"){
-            monthyExpenses += amountValue
+      // Filter for transactions in the current month
+      const monthlyTransactions = transactions.filter((t) => {
+        const transactionDate = new Date(t.date);
+        return (
+          transactionDate.getMonth() === currentMonth &&
+          transactionDate.getFullYear() === currentYear
+        );
+      });
 
-            if(dataFromCategory[transaction.category]){
-              dataFromCategory[transaction.category] += amountValue
-            }else{
-              dataFromCategory[transaction.category] = amountValue
-            }
-          }else{
-            monthlyIncome += amountValue
-          }
+      monthlyTransactions.forEach((transaction) => {
+        const amountValue = Number(transaction.amount) || 0;
+        if (transaction.type === "expense") {
+          monthyExpenses += amountValue;
+          expenseByCategory[transaction.category] =
+            (expenseByCategory[transaction.category] || 0) + amountValue;
+        } else if (
+          transaction.type === "income" &&
+          transaction.category === "Salary"
+        ) {
+          monthlyBudget += amountValue;
         }
       });
 
       setCurrentBalance(balance);
       setTotalMonthlyExpenses(monthyExpenses);
-      setTotalMonthlyIncome(monthlyIncome);
+      setTotalMonthlyBudget(monthlyBudget);
 
+      const chartData = Object.keys(expenseByCategory).map((category) => ({
+        name: category,
+        value: expenseByCategory[category],
+      }));
+      setPieChartData(chartData);
+
+      const categoryData = budgets.map((budget) => ({
+        category: budget.category,
+        limit: budget.limit,
+        spent: expenseByCategory[budget.category] || 0,
+      }));
+      setBudgetCategoryData(categoryData);
+
+      const sortedTransactions = [...transactions].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+      setLastFiveTransactions(sortedTransactions.slice(0, 5));
     }
-  }, [transactions]);
+  }, [transactions, budgets]);
 
-  
-
-  const totalMonthlyBudget = 12000;
+  const handleMonthChange = (direction: "prev" | "next") => {
+    setDisplayDate((currentDate) => {
+      const newDate = new Date(currentDate);
+      newDate.setMonth(newDate.getMonth() + (direction === "next" ? 1 : -1));
+      return newDate;
+    });
+  };
 
   return (
     <Box sx={{ padding: "24px" }}>
@@ -87,18 +140,27 @@ const Dashboard = () => {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="h5" sx={{ fontWeight: 500 }}>
+          <Typography variant="h5" sx={{ fontWeight: 500, mb: 3 }}>
             Financial Overview
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Button
+              onClick={() => handleMonthChange("prev")}
               sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
             >
               &lt;
             </Button>
-            <Typography sx={{ fontWeight: 300 }}>Month</Typography>
+            <Typography
+              sx={{ fontWeight: 500, minWidth: "110px", textAlign: "center" }}
+            >
+              {displayDate.toLocaleString("en-US", {
+                month: "long",
+                year: "numeric",
+              })}
+            </Typography>{" "}
             <Button
+              onClick={() => handleMonthChange('next')}
               sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
             >
               &gt;
@@ -108,32 +170,25 @@ const Dashboard = () => {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-        <BalanceDisplayCard 
-        currentBalance={currentBalance}
-        totalMonthlyBudget={totalMonthlyBudget}
-        totalMonthlyExpenses={totalMonthlyExpenses}
-        remainningMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}
+        <BalanceDisplayCard
+          currentBalance={currentBalance}
+          totalMonthlyBudget={totalMonthlyBudget}
+          totalMonthlyExpenses={totalMonthlyExpenses}
+          remainingMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}
         />
       </Box>
 
-      <Grid
-        container
-        spacing={4}
-        gap={3}
-        sx={{ display: "flex", justifyContent: "space-evenly" }}
-      >
-        <Grid sx={{ border: "1px solid" }}>
-          <BudgetOverview />
+      <Grid container spacing={3} mt={2} sx={{paddingLeft: "40px"}}>
+        <Grid item xs={12} md={6} lg={7}>
+          <BudgetOverview pieChartData={pieChartData} />
         </Grid>
-        <Grid sx={{ border: "1px solid" }}>
-          <BudgetCategories 
-          budgetCategoriesData={budgetCategoriesData}
-          />
+        <Grid item xs={12} md={6} lg={5}>
+          <BudgetCategories budgetData={budgetCategoryData} />
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 3 }}>
-        <LastTransactions />
+      <Box sx={{ mt: 4 }}>
+        <LastTransactions transactions={lastFiveTransactions} />
       </Box>
     </Box>
   );

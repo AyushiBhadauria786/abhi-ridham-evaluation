@@ -2,82 +2,115 @@ import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import React from "react";
 import type { BalanceCardItem } from "../types";
 
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+
 interface BalanceDisplayProps {
-    currentBalance: number;
-    totalMonthlyBudget: number;
-    totalMonthlyExpenses: number;
-    remainingMonthlyBudget: number
+  currentBalance: number;
+  totalMonthlyBudget: number;
+  totalMonthlyExpenses: number;
+  remainingMonthlyBudget: number;
 }
 
 const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
-    currentBalance,
-    totalMonthlyBudget,
-    totalMonthlyExpenses,
-    remainingMonthlyBudget,
+  currentBalance,
+  totalMonthlyBudget,
+  totalMonthlyExpenses,
+  remainingMonthlyBudget,
 }) => {
   const budget: BalanceCardItem[] = [
     {
       heading: "Current Balance",
-      logo: "",
-      balance: totalMonthlyBudget,
-      description: "As of June,2025",
+      logo: (
+        <MonetizationOnIcon
+          fontSize="small"
+          sx={{ color: "text.secondary", opacity: 0.7 }}
+        />
+      ),
+      balance: currentBalance.toLocaleString('en-IN'),
+      description: `As of ${new Date().toLocaleDateString("en-GB", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })}`,
+      color: "#000",
     },
     {
       heading: "Total Monthly Budget",
-      logo: "",
-      balance: totalMonthlyBudget,
-      description: "As of June,2025",
+      logo: <TrendingUpIcon fontSize="small" sx={{ color: "success.main" }} />,
+      balance: totalMonthlyBudget.toLocaleString('en-IN'),
+      description: "This Month",
+      color: "success.main",
     },
     {
       heading: "Total Montly Expenses",
-      logo: "",
-      balance: totalMonthlyExpenses,
-      description: "As of June,2025",
+      logo: <TrendingDownIcon fontSize="small" sx={{ color: "error.main" }} />,
+      balance: totalMonthlyExpenses.toLocaleString('en-IN'),
+      description: "This Month",
+      color: "error.main",
     },
     {
       heading: "Remaining Monthly Budget",
-      logo: "",
-      balance: remainingMonthlyBudget,  
-      description: "As of June,2025",
+      logo: (
+        <AccountBalanceWalletIcon
+          fontSize="small"
+          sx={{ color: "text.secondary", opacity: 0.7 }}
+        />
+      ),
+      balance: remainingMonthlyBudget.toLocaleString('en-IN'),
+      description: "Left to spend",
+      color: "success.main",
     },
   ];
 
   return (
-    <Box sx={{ display: "flex", padding: "8px", mt: "8px", gap: "10px" }}>
+    <Grid container spacing={3}>
       {budget.map((item) => (
-        <Grid  mt={2} gap={2} size={4} key={item.heading}> 
+        <Grid item xs={12} sm={6} md={3} key={item.heading}>
           <Card
             sx={{
-              p: 3.5,
+              p: 4,
               borderRadius: 3,
-              textAlign: "center",
               backgroundColor: "#fff",
-              boxShadow: "0 6px 16px rgba(0,0,0,0.06)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+              border: "1px solid #e2e8f0",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
             }}
           >
-            <CardContent
+            <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "16px",
-                fontSize: "14px",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
               }}
             >
-              <Typography variant="h6" sx={{fontSize: "12px"}}>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                fontWeight={500}
+              >
                 {item.heading}
               </Typography>
-             <Typography variant="h6" fontWeight="bold">
+              {item.logo}
+            </Box>
+
+            <Box mt={1}>
+              <Typography variant="h5" fontWeight="bold" color={item.color}>
                 ₹{item.balance}
               </Typography>
-            <Typography variant="body2" color="text.secondary">
+              <Typography variant="caption" color="text.secondary">
                 {item.description}
               </Typography>
-            </CardContent>
+            </Box>
           </Card>
         </Grid>
       ))}
-    </Box>
+    </Grid>
   );
 };
 

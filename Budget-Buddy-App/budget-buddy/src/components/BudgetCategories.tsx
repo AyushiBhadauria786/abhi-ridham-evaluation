@@ -1,51 +1,78 @@
 import React from "react";
 import { categories } from "../pages/AddTransaction";
-import { Box, LinearProgress, Typography } from "@mui/material";
+import { Box, LinearProgress, Typography, Paper } from "@mui/material";
 import type { BudgetCategoryData } from "../types";
 
-interface BudgetCategoiesProps {
-    budgetCategoriesData: BudgetCategoryData[];
+interface BudgetCategoriesProps {
+  budgetData: BudgetCategoryData[];
 }
 
-const BudgetCategories: React.FC<BudgetCategoiesProps> = ({ budgetCategoriesData }) => {
-  
-    const getProcess = (spend: number, budgeted: number) => {
-        if(budgeted === 0) return 0;
-        return Math.min((spend / budgeted) * 100,100);
+const BudgetCategories: React.FC<BudgetCategoriesProps> = ({ budgetData }) => {
+   const getProcess = (spend: number, budgeted: number) => {
+        const spentAmount = spend || 0;
+        const budgetAmount = budgeted || 0;
+        if(budgetAmount === 0) return 0;
+        return Math.min((spentAmount / budgetAmount) * 100, 100);
     }
 
   return (
-    <>
-      <Box sx={{ mt: 2, width: "475px" }}>
-        <Typography
-          variant="h5"
-          sx={{
-            fontSize: "24px",
-            fontWeight: 600,
-            lineHeight: "24px",
-            letterSpacing: "-0.6px"
-          }}
-        >
-          Budget Categories
-        </Typography>
-      </Box>
+    <Paper
+      sx={{
+        p: 3,
+        borderRadius: 3,
+        boxShadow: 3,
+        height: "100%",
+        width: "200%",
+      }}
+    >
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 600,
+          mb: 2,
+        }}
+      >
+        Budget Categories
+      </Typography>
 
-      <Box sx={{ display: "flex", flexDirection: "column", width: '100%' }}> 
-      {categories.slice(0,5).map((item, index) => (
-        <Box key={index} sx={{ display: "flex", flexDirection: "column", mb: 2 }}> 
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> 
-            <Typography variant="body2" sx={{ fontWeight: 600 }}> 
-              {item}
-            </Typography>
-            <Typography variant="body2" sx={{ ml: 2 }}>
-             value / budget
-            </Typography>
-          </Box>
-          <LinearProgress variant="determinate" value={getProcess(item.value,item.budget)} sx={{ mt: 0.5 }} />
-        </Box>
-      ))}
-    </Box>
-    </>
+      <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        {budgetData.length > 0 ? (
+          budgetData.map((item, index) => (
+            <Box
+              key={index}
+              sx={{ display: "flex", flexDirection: "column", mb: 2 }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  {item.category}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ ml: 2, color: "text.secondary" }}
+                >
+                 ₹{(item.spend || 0).toLocaleString('en-IN')} / ₹{(item.budget || 0).toLocaleString('en-IN')}
+                </Typography>
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={getProcess(item.spend, item.budget)}
+                sx={{ mt: 0.5, height: 8, borderRadius: 4 }}
+              />
+            </Box>
+          ))
+        ) : (
+          <Typography color="text.secondary" sx={{ mt: 2 }}>
+            No budget categories set.
+          </Typography>
+        )}
+      </Box>
+    </Paper>
   );
 };
 
