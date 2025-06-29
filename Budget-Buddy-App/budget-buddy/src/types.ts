@@ -1,30 +1,41 @@
 export interface Transaction {
-    id: string;
-    type: 'expense' | 'income';
-    amount: string;
-    category: string;
-    description: string;
-    date: string;
-    notes: string;
+  id: string;
+  type: "expense" | "income";
+  amount: string;
+  category: string;
+  description: string;
+  date: string;
+  notes?: string;
 }
-
 
 export interface BalanceCardItem {
-    heading: string;
-    logo: string;
-    balance: number;
-    description: string;
+  heading: string;
+  logo: any;
+  balance: number | string;
+  description: string;
+  color: string;
 }
 
-
 export interface BudgetCategoryData {
-    name: string;
-    value: number;
-    budget: number
+  category: string;
+  spend: number;
+  budget: number;
 }
 
 export interface PieChartData {
-    id: string;
-    value: number;
-    label: string;
+  name: string;
+  value: number;
+}
+
+export interface Budget {
+  id: number | string;
+  category: string;
+  limit: number;
+}
+
+export interface User {
+    id: number | string;
+    fullName: string;
+    email: string;
+    password?: string;
 }

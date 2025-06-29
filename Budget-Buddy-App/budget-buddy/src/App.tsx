@@ -13,35 +13,56 @@ import Faq from "./pages/Faq";
 import SignIn from "./pages/signup/Signup";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from './theme';
+import theme from "./theme";
 import Login from "./pages/Login";
 import Signup from "./pages/signup/Signup";
 import NotFound from "./pages/NotFound";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import AuthRoute from "./components/AuthRoute";
+import { checkAuth } from "./redux/authSlice";
+import type { AppDispatch } from "./redux/store";
+import { Navigate } from "react-router-dom";
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/header" element={<Header />} />
-          <Route path="/*" element={<NotFound />} />
-          <Route path="/" element={<FullLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/add-transaction" element={<AddTransaction />} />
-            <Route path="/transaction" element={<Transactions />} />
-            <Route path="/budget" element={<Budget />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<Faq />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/header" element={<Header />} />
+
+            <Route element={<AuthRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<FullLayout />}>
+                <Route index element={<Navigate to="/dashboard" replace />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/add-transaction" element={<AddTransaction />} />
+                <Route path="/transaction" element={<Transactions />} />
+                <Route path="/budget" element={<Budget />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faq" element={<Faq />} />
+              </Route>
+            </Route>
+
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 }
