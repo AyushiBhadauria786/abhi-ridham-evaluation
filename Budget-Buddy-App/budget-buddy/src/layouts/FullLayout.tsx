@@ -1,21 +1,36 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
 import DashboardHeader from "./DashboardHeader";
 import { Box } from "@mui/material";
+import { useState } from "react";
 
 const FullLayout = () => {
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+
+  const handleSidebarToggle = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div style={{ display: "flex" }}>
-      <Box>
-        <Sidebar />
+    <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: 'background.default' }}>
+      <Sidebar isSidebarOpen={isSidebarOpen} />
+      <Box 
+        component="main"
+        sx={{ 
+          display: "flex", 
+          flexGrow: 1, 
+          flexDirection: "column",
+          transition: 'margin-left 0.2s ease-in-out',
+          marginLeft: isSidebarOpen ? "250px" : "80px", // Adjust margin based on sidebar state
+        }}
+      >
+        <DashboardHeader handleSidebarToggle={handleSidebarToggle} />
+        <Box sx={{ flexGrow: 1, p: 3, width: '100%' }}>
+            <Outlet />
+        </Box>
       </Box>
-      <Box sx={{ display: "flex", flexGrow: "1", flexDirection: "column" }}>
-        <DashboardHeader />
-        <Outlet />
-      </Box>
-    </div>
+    </Box>
   );
 };
 

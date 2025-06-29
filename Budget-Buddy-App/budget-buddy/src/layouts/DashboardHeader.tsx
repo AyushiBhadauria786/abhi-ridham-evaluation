@@ -1,43 +1,59 @@
-import { Avatar, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
 import React from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useLocation } from "react-router-dom";
 
-const DashboardHeader = () => {
+interface DashboardHeaderProps {
+  handleSidebarToggle: () => void;
+}
+
+const getHeadingFromPathname = (pathname: string): string => {
+  const name = pathname.split("/").pop()?.replace("-", " ");
+  if (!name) return "Dashboard";
+
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+const DashboardHeader: React.FC<DashboardHeaderProps> = ({
+  handleSidebarToggle,
+}) => {
+  const location = useLocation();
+  const pageTitle = getHeadingFromPathname(location.pathname);
+
   return (
-    <div
-      style={{
-        padding: "1px 20px",
+    <Box
+      component="header"
+      sx={{
+        padding: "8px 24px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        fontWeight: 400,
-        borderBottom: "1px solid black",
+        borderBottom: "1px solid #E2E8F0",
+        height: "64px",
+        bgcolor: "#fff",
+        top: 0,
+        zIndex: 1100,
       }}
     >
-      <div
-        style={{  
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingTop: "12px",
-        }}
-      >
-        <Button sx={{  }}>
-          <img
-            src="/src/assets/Images/panel-left.png"
-            alt="panel"
-            style={{ width: "14px", height: "14px" }}
-          />
-        </Button>
-        <Typography>Dynamic heading</Typography>
-      </div>
-      <div style={{ paddingTop: "12px", display: "flex", gap: "10px" }}>
-        <Avatar sx={{ bgcolor: "" }}>JD</Avatar>
-        <div style={{ gap: "0px" }}>
-          <Typography variant="body2">John Doe</Typography>
-          <Typography component="span">Member</Typography>
-        </div>
-      </div>
-    </div>
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <IconButton onClick={handleSidebarToggle} edge="start">
+            <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" fontWeight={600} color="text.primary">
+            {pageTitle}
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", alignItems: 'center', gap: 1.5 }}>
+        <Avatar sx={{ bgcolor: "primary.main" }}>JD</Avatar>
+        <Box>
+          <Typography variant="subtitle2" fontWeight={600}>John Doe</Typography>
+          <Typography variant="caption" color="text.secondary">Member</Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

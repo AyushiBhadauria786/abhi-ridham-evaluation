@@ -1,12 +1,28 @@
 import { Box, Button, IconButton, Link, Typography } from "@mui/material";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../redux/store";
+import { logout } from "../redux/authSlice";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isSidebarOpen: boolean;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/home');
+  }
+
   const sideBarLinks = [
     {
       icon: "./src/assets/Images/homeicon.png",
-      name: "Dashbord",
+      name: "Dashboard",
       path: "/dashboard",
     },
     {
@@ -44,6 +60,7 @@ const Sidebar = () => {
   return (
     <>
       <Box
+        component="aside"
         sx={{
           padding: "16px",
           display: "flex",
@@ -54,147 +71,97 @@ const Sidebar = () => {
           fontWeight: 400,
           lineHeight: "24px",
           borderRight: "1px solid rgb(218, 224, 231);",
-          width: "250px",
+          width: isSidebarOpen ? "250px" : "100px",
           height: "100vh",
-          position: "sticky",
-          top: 0
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 1200,
+          backgroundColor: "#fff",
+          transition: "width 0.2s ease-in-out",
+          overflowX: "hidden",
         }}
       >
         <Box
           sx={{
-            padding: "6px",
-            boxSizing: "border-box",
+            p: 2,
+            display: "flex",
             alignItems: "center",
-            borderRadius: "12px",
-            fontSize: "16px",
-            fontWeight: 400,
-            lineHeight: "24px",
+            gap: 1,
+            flexShrink: 0
           }}
         >
           <IconButton
             disableRipple
-            disableFocusRipple
-            disableTouchRipple
             sx={{
               background:
                 "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
               color: "#fff",
-              mr: 1,
               width: "40px",
               height: "40px",
               borderRadius: "12px",
+              flexShrink: 0,
             }}
           >
             <img
               src="/src/assets/Images/wallet.png"
               alt="wallet"
               style={{
-                borderRadius: 6,
-                width: "40px",
                 height: "20px",
-                justifyContent: "center",
-                alignItems: "center",
               }}
             />
           </IconButton>
-          <Typography variant="h6" component="span" sx={{ fontWeight: "bold" }}>
+          {isSidebarOpen && (
+          <Typography variant="h6" component="span" sx={{ fontWeight: "bold", whiteSpace: 'nowrap' }}>
             Finance<span style={{ fontWeight: 300 }}>Flow</span>
           </Typography>
-        </Box>
+        )}
+      </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            gap: "4px",
-          }}
-        >
-          <Box sx={{ padding: "8px" }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "rgb(71 85 105 / var(--tw-text-opacity, 1))",
-                borderTop: "1px solid rgb(218, 224, 231);",
-              }}
+      <Box sx={{ flexGrow: 1, p: 1, overflowY: 'auto', overflowX: 'hidden'  }}>
+        <Box component="nav" sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 2 }}>
+          {sideBarLinks.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              style={({ isActive }) => ({
+                display: "flex",
+                alignItems: "center",
+                gap: "16px",
+                padding: "10px 16px",
+                color: isActive ? "rgb(37, 99, 235)" : "rgb(51, 65, 85)",
+                backgroundColor: isActive ? "rgba(37, 99, 235, 0.1)" : "transparent",
+                textDecoration: "none",
+                borderRadius: "8px",
+                fontWeight: 500
+              })}
             >
-              Navigation
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", margin: 1 }}>
-              {sideBarLinks.map((item) => (
-                <NavLink 
-                  key={item.name} 
-                  to={item.path} 
-                  style={({ isActive }) => ({
-                    padding: "8px",
-                    display: "flex",
-                    gap: "10px",
-                    alignItems: "center",
-                    color: "rgb(30, 41, 59)",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                    backgroundColor: isActive ? "#e5e7eb" : "transparent", 
-                    borderRadius: "4px",
-                  })}
-                >
-                  <img
-                    src={item.icon}
-                    alt="icons"
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      lineHeight: "20px",
-                      textAlign: "left",
-                    }}
-                  />
-                  {item.name}
-                </NavLink>
-              ))}
-            </Box>
-          </Box>
-        </Box>
-
-        {/* Logout button */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: 2,
-            position: "absolute",
-            bottom: "0px",
-            borderTop: "1px solid rgb(218, 224, 231);",
-          }}
-        >
-          <img
-            src="/src/assets/Images/logout-icon.png"
-            alt="logout"
-            style={{
-              width: "16px",
-              height: "16px",
-              fontSize: "14px",
-              fontWeight: 500,
-              lineHeight: "20px",
-              textAlign: "left",
-            }}
-          />
-          <Button
-            sx={{
-              padding: 1,
-              display: "flex",
-              gap: "5px",
-              alignItems: "center",
-              color: "rgb(30, 41, 59)",
-              textDecoration: "none",
-              ":hover": {
-                backgroundColor: "#e5e7eb",
-              },
-            }}
-          >
-            Logout
-          </Button>
+              <img src={item.icon} alt={`${item.name} icon`} style={{ width: "20px", height: "20px" }} />
+              {isSidebarOpen && <Typography variant="body2" sx={{whiteSpace: 'nowrap'}}>{item.name}</Typography>}
+            </NavLink>
+          ))}
         </Box>
       </Box>
+
+        {/* Logout button */}
+        <Box sx={{ p: 1, borderTop: "1px solid #E2E8F0", flexShrink: 0 }}>
+        <Button
+          fullWidth
+          onClick={handleLogout}
+          sx={{
+            justifyContent: isSidebarOpen ? 'flex-start' : 'center',
+            color: "rgb(51, 65, 85)",
+            textTransform: 'none',
+            gap: 2,  
+            p: 1,
+            ":hover": { backgroundColor: "#f8fafc" },
+          }}
+        >
+          <LogoutIcon />
+          {isSidebarOpen && 'Logout'}
+        </Button>
+      </Box>
+    </Box>
     </>
   );
 };

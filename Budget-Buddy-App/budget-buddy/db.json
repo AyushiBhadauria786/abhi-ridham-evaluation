@@ -45,76 +45,97 @@
   ],
   "transactions": [
     {
-      "id": "d279",
+      "id": "f08c",
       "type": "income",
       "amount": "20000",
       "category": "Salary",
-      "description": "Monthly salary",
-      "date": "2025-06-08",
-      "notes": "Salary credited"
+      "description": "Monthly Salary",
+      "date": "2025-06-28",
+      "notes": "Salary"
     },
     {
-      "id": "ea61",
+      "id": "bd96",
       "type": "expense",
-      "amount": "5000",
+      "amount": "6000",
       "category": "Rent",
-      "description": "PG rent",
-      "date": "2025-06-10",
-      "notes": "Rent"
+      "description": "PG Rent",
+      "date": "2025-07-01",
+      "notes": "Monthly Rent"
     },
     {
-      "id": "2d97",
+      "id": "2f53",
       "type": "expense",
-      "amount": "1200",
-      "category": "Transportation",
-      "description": "bus-auto",
-      "date": "2025-06-11",
-      "notes": "bus-auto expense"
+      "amount": "200",
+      "category": "Groceries",
+      "description": "vegetable and fruites",
+      "date": "2025-06-29",
+      "notes": "wccc"
     },
     {
-      "id": "9110",
+      "id": "9e45",
       "type": "income",
-      "amount": "5000",
+      "amount": "6000",
       "category": "Freelance",
-      "description": "website project",
-      "date": "2025-06-26",
-      "notes": "react website"
+      "description": "freelance ",
+      "date": "2025-06-13",
+      "notes": "aasdf"
     },
     {
-      "id": "898d",
+      "id": "99f8",
       "type": "expense",
-      "amount": "3000",
-      "category": "Entertainment",
-      "description": "Netfilx and prime",
-      "date": "2025-06-26",
-      "notes": "entertainment"
-    },
-    {
-      "id": "94fb",
-      "type": "income",
       "amount": "5000",
-      "category": "Salary",
-      "description": "salary",
-      "date": "2025-06-26",
-      "notes": "salary"
+      "category": "Investment",
+      "description": "Investment",
+      "date": "2025-06-30",
+      "notes": "Investment"
     },
     {
-      "id": "56b2",
-      "type": "expense",
-      "amount": "400",
-      "category": "Utilities",
-      "description": "cloths",
-      "date": "2025-06-20",
-      "notes": "cloths"
-    },
-    {
-      "id": "5c66",
-      "type": "expense",
+      "id": "547e",
+      "type": "income",
       "amount": "500",
-      "category": "Healthcare",
-      "description": "scsdffs",
-      "date": "2025-06-27",
-      "notes": "efefefe"
+      "category": "Other",
+      "description": "other",
+      "date": "2025-06-28",
+      "notes": "other"
+    },
+    {
+      "id": "f567",
+      "type": "expense",
+      "amount": "200",
+      "category": "Entertainment",
+      "description": "Prime",
+      "date": "2025-06-29",
+      "notes": "amazon prime"
+    }
+  ],
+  "budgets": [
+    {
+      "category": "Rent",
+      "limit": 8500,
+      "id": "4f48"
+    },
+    {
+      "id": "f91c",
+      "category": "Entertainment",
+      "limit": 500
+    },
+    {
+      "id": "2ecc",
+      "category": "Transportation",
+      "limit": 400
+    },
+    {
+      "id": "ca2b",
+      "category": "Groceries ",
+      "limit": 1500
+    }
+  ],
+  "users": [
+    {
+      "id": "7709",
+      "fullName": "Ridham Kansara",
+      "email": "ridhamtest@gmail.com",
+      "password": "Ridhamtest@123"
     }
   ]
 }
