@@ -22,7 +22,7 @@ const FullLayout = () => {
           flexGrow: 1, 
           flexDirection: "column",
           transition: 'margin-left 0.2s ease-in-out',
-          marginLeft: isSidebarOpen ? "250px" : "80px", // Adjust margin based on sidebar state
+          marginLeft: isSidebarOpen ? "250px" : "80px",
         }}
       >
         <DashboardHeader handleSidebarToggle={handleSidebarToggle} />
