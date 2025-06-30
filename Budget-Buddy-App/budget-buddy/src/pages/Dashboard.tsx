@@ -129,15 +129,18 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ padding: "24px" }}>
+    <Box sx={{}}>
       {/* Inner content */}
-      <Box>
+     
         {/* Container for heading and month/arrow group */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2
           }}
         >
           <Typography variant="h5" sx={{ fontWeight: 500, mb: 3 }}>
@@ -167,22 +170,21 @@ const Dashboard = () => {
             </Button>
           </Box>
         </Box>
-      </Box>
+      
 
-      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+      
         <BalanceDisplayCard
           currentBalance={currentBalance}
           totalMonthlyBudget={totalMonthlyBudget}
           totalMonthlyExpenses={totalMonthlyExpenses}
           remainingMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}
         />
-      </Box>
-
-      <Grid container spacing={3} mt={2} sx={{paddingLeft: "40px"}}>
+     
+      <Grid container spacing={3} mt={4} sx={{}}>
         <Grid item xs={12} md={6} lg={7}>
           <BudgetOverview pieChartData={pieChartData} />
         </Grid>
-        <Grid item xs={12} md={6} lg={5}>
+        <Grid item xs={12} lg={5}>
           <BudgetCategories budgetData={budgetCategoryData} />
         </Grid>
       </Grid>

@@ -77,7 +77,7 @@
       "amount": "6000",
       "category": "Freelance",
       "description": "freelance ",
-      "date": "2025-06-13",
+      "date": "2025-06-18",
       "notes": "aasdf"
     },
     {
@@ -106,6 +106,15 @@
       "description": "Prime",
       "date": "2025-06-29",
       "notes": "amazon prime"
+    },
+    {
+      "id": "adef",
+      "type": "expense",
+      "amount": "1000",
+      "category": "Healthcare",
+      "description": "Health",
+      "date": "2025-06-30",
+      "notes": "udief"
     }
   ],
   "budgets": [
@@ -136,6 +145,12 @@
       "fullName": "Ridham Kansara",
       "email": "ridhamtest@gmail.com",
       "password": "Ridhamtest@123"
+    },
+    {
+      "id": "d48e",
+      "fullName": "Ridham",
+      "email": "ridhamkansara26@gmail.com",
+      "password": "ridham@123"
     }
   ]
 }

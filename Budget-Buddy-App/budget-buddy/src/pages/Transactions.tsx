@@ -49,7 +49,6 @@ const Transactions = () => {
         console.error("Failed to fetch transactions:", err);
       }
     };
-    fetchTransactions();
 
     useEffect(() => {
       fetchTransactions();
@@ -202,7 +201,7 @@ const Transactions = () => {
         <DialogTitle>Edit Transaction</DialogTitle>
         <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
           <TextField
-          sx={{mt: 1}}
+            sx={{mt: 1}}
             label="Description"
             type="txt"
             value={editTransaction?.description || ""}
@@ -221,7 +220,11 @@ const Transactions = () => {
             type="date"
             value={editTransaction?.date || ""}
             onChange={(e) => handleEditChange("date", e.target.value)}
-            InputLabelProps={{ shrink: true }}
+            slotProps={{
+              inputLabel: {
+                shrink: true,
+              }
+            }}
             fullWidth
           />
           <FormControl fullWidth>

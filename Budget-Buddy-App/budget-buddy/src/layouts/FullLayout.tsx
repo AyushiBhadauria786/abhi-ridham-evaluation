@@ -22,11 +22,11 @@ const FullLayout = () => {
           flexGrow: 1, 
           flexDirection: "column",
           transition: 'margin-left 0.2s ease-in-out',
-          marginLeft: isSidebarOpen ? "250px" : "80px",
+          marginLeft: isSidebarOpen ? "250px" : "100px",
         }}
       >
         <DashboardHeader handleSidebarToggle={handleSidebarToggle} />
-        <Box sx={{ flexGrow: 1, p: 3, width: '100%' }}>
+        <Box sx={{ flexGrow: 1, p: 3, width: '100%' ,minHeight:"calc(100vh - 64px)"}}>
             <Outlet />
         </Box>
       </Box>

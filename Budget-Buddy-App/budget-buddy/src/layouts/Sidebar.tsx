@@ -76,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
           position: "fixed",
           top: 0,
           left: 0,
-          zIndex: 1200,
+          // zIndex: 1200,
           backgroundColor: "#fff",
           transition: "width 0.2s ease-in-out",
           overflowX: "hidden",

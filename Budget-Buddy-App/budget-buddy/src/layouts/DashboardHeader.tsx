@@ -35,7 +35,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         height: "64px",
         bgcolor: "#fff",
         top: 0,
-        zIndex: 1100,
+        // flexGrow:1
+        flexShrink: 0
+        // zIndex: 1100,
       }}
     >
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

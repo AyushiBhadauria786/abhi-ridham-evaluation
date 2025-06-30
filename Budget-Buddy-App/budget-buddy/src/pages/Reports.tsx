@@ -1,10 +1,13 @@
+import { Box } from '@mui/material'
 import React from 'react'
 
 
 
 const Reports = () => {
   return (
-    <div>Reports</div>
+    <Box sx={{padding: "24px"}}>
+      Reports
+    </Box>
   )
 }
 

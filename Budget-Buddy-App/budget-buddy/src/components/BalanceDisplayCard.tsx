@@ -35,7 +35,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
         day: "numeric",
         year: "numeric",
       })}`,
-      color: "#000",
+      color: "text.primary",
     },
     {
       heading: "Total Monthly Budget",
@@ -45,7 +45,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
       color: "success.main",
     },
     {
-      heading: "Total Montly Expenses",
+      heading: "Total Monthly Expenses",
       logo: <TrendingDownIcon fontSize="small" sx={{ color: "error.main" }} />,
       balance: totalMonthlyExpenses.toLocaleString('en-IN'),
       description: "This Month",
@@ -68,10 +68,10 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
   return (
     <Grid container spacing={3}>
       {budget.map((item) => (
-        <Grid item xs={12} sm={6} md={3} key={item.heading}>
+        <Grid item xs={12} sm={6} md={3}  key={item.heading} >
           <Card
             sx={{
-              p: 4,
+              p: 2,
               borderRadius: 3,
               backgroundColor: "#fff",
               boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
