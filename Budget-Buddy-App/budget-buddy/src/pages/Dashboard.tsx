@@ -124,6 +124,15 @@ const Dashboard = () => {
     setDisplayDate((currentDate) => {
       const newDate = new Date(currentDate);
       newDate.setMonth(newDate.getMonth() + (direction === "next" ? 1 : -1));
+
+      const today = new Date();
+      if (
+        newDate.getFullYear() > today.getFullYear() ||
+        (newDate.getFullYear() === today.getFullYear() &&
+          newDate.getMonth() > today.getMonth())
+      ) {
+        return currentDate;
+      }
       return newDate;
     });
   };
@@ -131,55 +140,53 @@ const Dashboard = () => {
   return (
     <Box sx={{}}>
       {/* Inner content */}
-     
-        {/* Container for heading and month/arrow group */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 2
-          }}
-        >
-          <Typography variant="h5" sx={{ fontWeight: 500, mb: 3 }}>
-            Financial Overview
-          </Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Button
-              onClick={() => handleMonthChange("prev")}
-              sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
-            >
-              &lt;
-            </Button>
-            <Typography
-              sx={{ fontWeight: 500, minWidth: "110px", textAlign: "center" }}
-            >
-              {displayDate.toLocaleString("en-US", {
-                month: "long",
-                year: "numeric",
-              })}
-            </Typography>{" "}
-            <Button
-              onClick={() => handleMonthChange('next')}
-              sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
-            >
-              &gt;
-            </Button>
-          </Box>
+      {/* Container for heading and month/arrow group */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 2,
+          mb: 2,
+        }}
+      >
+        <Typography variant="h5" sx={{ fontWeight: 500, mb: 3 }}>
+          Financial Overview
+        </Typography>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Button
+            onClick={() => handleMonthChange("prev")}
+            sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
+          >
+            &lt;
+          </Button>
+          <Typography
+            sx={{ fontWeight: 500, minWidth: "110px", textAlign: "center" }}
+          >
+            {displayDate.toLocaleString("en-US", {
+              month: "long",
+              year: "numeric",
+            })}
+          </Typography>{" "}
+          <Button
+            onClick={() => handleMonthChange("next")}
+            sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
+          >
+            &gt;
+          </Button>
         </Box>
-      
+      </Box>
 
-      
-        <BalanceDisplayCard
-          currentBalance={currentBalance}
-          totalMonthlyBudget={totalMonthlyBudget}
-          totalMonthlyExpenses={totalMonthlyExpenses}
-          remainingMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}
-        />
-     
+      <BalanceDisplayCard
+        currentBalance={currentBalance}
+        totalMonthlyBudget={totalMonthlyBudget}
+        totalMonthlyExpenses={totalMonthlyExpenses}
+        remainingMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}
+      />
+
       <Grid container spacing={3} mt={4} sx={{}}>
         <Grid item xs={12} md={6} lg={7}>
           <BudgetOverview pieChartData={pieChartData} />

@@ -1,5 +1,4 @@
 import React from "react";
-import { categories } from "../pages/AddTransaction";
 import { Box, LinearProgress, Typography, Paper } from "@mui/material";
 import type { BudgetCategoryData } from "../types";
 

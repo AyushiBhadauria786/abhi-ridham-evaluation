@@ -59,7 +59,7 @@
       "amount": "6000",
       "category": "Rent",
       "description": "PG Rent",
-      "date": "2025-07-01",
+      "date": "2025-06-29",
       "notes": "Monthly Rent"
     },
     {
@@ -151,6 +151,171 @@
       "fullName": "Ridham",
       "email": "ridhamkansara26@gmail.com",
       "password": "ridham@123"
+    }
+  ],
+  "faqSections": [
+    {
+      "id": 1,
+      "title": "Getting Started",
+      "faqs": [
+        {
+          "id": 1,
+          "question": "How do I create my first budget category?",
+          "answer": "Navigate to the 'Budget' page from the sidebar menu. In the 'Add New Category' section, enter a category name (like 'Groceries') and set a monthly budget limit. Click 'Add Category' to save it. You can then use this category when adding transactions.",
+          "keywords": [
+            "budget",
+            "category",
+            "create",
+            "first",
+            "add",
+            "groceries",
+            "monthly",
+            "limit"
+          ]
+        },
+        {
+          "id": 2,
+          "question": "What's the difference between income and expense transactions?",
+          "answer": "Income transactions represent money coming into your account (salary, freelance work, etc.) and are displayed in green. Expense transactions represent money going out (purchases, bills, etc.) and are displayed in red. Select the appropriate type when adding a transaction.",
+          "keywords": [
+            "income",
+            "expense",
+            "transaction",
+            "difference",
+            "money",
+            "salary",
+            "freelance",
+            "purchases",
+            "bills",
+            "green",
+            "red"
+          ]
+        },
+        {
+          "id": 3,
+          "question": "How do I add my first transaction?",
+          "answer": "Go to 'Add Transaction' in the sidebar. Choose whether it's an income or expense, enter the amount, select a category, add a description, and set the date. Click 'Add Transaction' to save it to your history.",
+          "keywords": [
+            "add",
+            "transaction",
+            "first",
+            "income",
+            "expense",
+            "amount",
+            "category",
+            "description",
+            "date",
+            "history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Managing Transactions",
+      "faqs": [
+        {
+          "id": 4,
+          "question": "Can I edit or delete transactions after adding them?",
+          "answer": "Yes! Go to the 'Transactions' page where you'll see all your transactions in a table. Each row has Edit and Delete buttons in the Actions column. Click Edit to modify transaction details or Delete to remove it completely.",
+          "keywords": [
+            "edit",
+            "delete",
+            "transaction",
+            "modify",
+            "remove",
+            "table",
+            "actions",
+            "buttons"
+          ]
+        },
+        {
+          "id": 5,
+          "question": "How do I search for specific transactions?",
+          "answer": "On the Transactions page, use the search and filter tools at the top. You can search by description, filter by transaction type (income/expense), category, or date range. This helps you quickly find specific transactions.",
+          "keywords": [
+            "search",
+            "filter",
+            "transaction",
+            "description",
+            "type",
+            "category",
+            "date",
+            "range",
+            "find"
+          ]
+        },
+        {
+          "id": 6,
+          "question": "What happens if I don't categorize a transaction?",
+          "answer": "While categories are helpful for budgeting and reporting, you can add transactions without categories. However, we recommend always selecting a category to get the most accurate budget tracking and reports.",
+          "keywords": [
+            "categorize",
+            "category",
+            "budgeting",
+            "reporting",
+            "tracking",
+            "reports",
+            "uncategorized"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Budget Management",
+      "faqs": [
+        {
+          "id": 7,
+          "question": "How do budget limits work?",
+          "answer": "Budget limits help you control spending in each category. When you spend money in a category, it's tracked against your monthly limit. The dashboard shows progress bars - green means you're within budget, orange means you're close to the limit, and red means you've exceeded it.",
+          "keywords": [
+            "budget",
+            "limits",
+            "control",
+            "spending",
+            "category",
+            "monthly",
+            "dashboard",
+            "progress",
+            "bars",
+            "green",
+            "orange",
+            "red"
+          ]
+        },
+        {
+          "id": 8,
+          "question": "Can I change my budget limits during the month?",
+          "answer": "Yes, you can modify budget limits anytime in the Budget page. Click the Edit button next to any category to update the monthly limit. This is useful if your spending needs change.",
+          "keywords": [
+            "change",
+            "modify",
+            "budget",
+            "limits",
+            "month",
+            "edit",
+            "update",
+            "spending",
+            "needs"
+          ]
+        },
+        {
+          "id": 9,
+          "question": "What happens when I delete a budget category?",
+          "answer": "When you delete a category, the category itself is removed, but all transactions associated with it remain in your history. Those transactions become 'uncategorized' and won't count toward any budget limits.",
+          "keywords": [
+            "delete",
+            "budget",
+            "category",
+            "remove",
+            "transactions",
+            "history",
+            "uncategorized",
+            "limits"
+          ]
+        }
+      ]
     }
   ]
 }

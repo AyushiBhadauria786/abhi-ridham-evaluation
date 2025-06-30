@@ -7,6 +7,11 @@ interface DashboardHeaderProps {
   handleSidebarToggle: () => void;
 }
 
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+const fullName = user.fullName || "User";
+const firstLetter = fullName.charAt(0).toUpperCase();
+
+
 const getHeadingFromPathname = (pathname: string): string => {
   const name = pathname.split("/").pop()?.replace("-", " ");
   if (!name) return "Dashboard";
@@ -49,9 +54,9 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: 'center', gap: 1.5 }}>
-        <Avatar sx={{ bgcolor: "primary.main" }}>JD</Avatar>
+        <Avatar sx={{ bgcolor: "primary.main" }}>{firstLetter}</Avatar>
         <Box>
-          <Typography variant="subtitle2" fontWeight={600}>John Doe</Typography>
+          <Typography variant="subtitle2" fontWeight={600}>{fullName}</Typography>
           <Typography variant="caption" color="text.secondary">Member</Typography>
         </Box>
       </Box>
