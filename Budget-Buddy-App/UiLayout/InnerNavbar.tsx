@@ -3,8 +3,13 @@ import React from 'react'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { useNavigate } from 'react-router-dom';
 import { Margin } from '@mui/icons-material';
+import sideBarLinks from './RenderArrayOfObject';
+import { useLocation } from 'react-router-dom'; 
 
 const InnerNavbar = () => {
+
+  const location = useLocation();
+  const currentPage = sideBarLinks.find(item => location.pathname.startsWith(item.link));
 
   return (
     <Box sx={{ marginTop: "-8px", marginRight: "-8px",  }}>
@@ -40,7 +45,7 @@ const InnerNavbar = () => {
               />
             </Button>
 
-
+            
             <Typography variant="h6" component="p" sx={{
               ml:"8px",
               borderRadius: '16px',
@@ -51,8 +56,11 @@ const InnerNavbar = () => {
               fontFamily: "ui-sans-serif, system-ui, sans-serif",
 
             }}>
-              Dashboard
+              
+              {currentPage?.Component || "Dashboard"}
+             
             </Typography>
+           
           </Box>
 
           <Box component={"span"} sx={{  display: "flex", mr:"30px"}}>

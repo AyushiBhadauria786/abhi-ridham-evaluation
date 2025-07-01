@@ -2,8 +2,23 @@ import { Box, Button, IconButton, Link, Typography } from '@mui/material'
 import React from 'react'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import sideBarLinks from './RenderArrayOfObject';
+import { NavLink, useNavigate } from 'react-router';
+import {  signOut } from 'firebase/auth';
+import { auth } from '../src/Firebase';
 
 const SideBar = () => {
+
+const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login'); 
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+  
   return (
     <>
       <Box sx={{
@@ -16,7 +31,13 @@ const SideBar = () => {
           borderRight: "1px solid #ccc",
           width:"240px",
           height:"100vh",
-          position:"sticky"}}>
+          position:"sticky",
+          top: 0, 
+          backgroundColor: "#fff", 
+          zIndex: 1100,
+          
+      
+          }}>
         <Box sx={{ display: "flex", padding: "16px", width: "13rem", borderBottom: "1px solid #ccc" }}>
           <IconButton
             sx={{
@@ -56,23 +77,26 @@ const SideBar = () => {
               Navigation
             </Typography>
             <Box
-              sx={{ display: "flex", paddingRight: "16px", width: "13rem", paddingLeft: "16px", flexDirection: "column", position:"absolute",height:"75.5%"}}>
+              sx={{ display: "flex", paddingRight: "12px", width: "13rem", paddingLeft: "10px", flexDirection: "column", position:"absolute",height:"75.5%"}}>
               {sideBarLinks.map((item) => (
-                <Link
-                  sx={{
-                    borderRadius: "8px",
+                <NavLink
+                key={item.Component}
+                to={item.link}
+                  style={({isActive}) => ({
+                    borderRadius: "5px",
+                    backgroundColor: isActive ? "rgb(228, 231, 238)" : "transparent",
                     padding: 1,
                     display: "flex",
-                    ":hover": {
-                      backgroundColor: "#e5e7eb",
-                    },
                     gap: "20px",
                     alignItems: "center",
                     color: "rgb(15, 21, 31)",
                     textDecoration: "none",
-                    cursor : "pointer"
+                    cursor : "pointer",
+                    height:"30px",
+                    margin:" 5px 5px 5px 0px"
+                  })}>
                     
-                  }}>
+                
                   <img
 
                     src={item.SideBarIcon}
@@ -86,11 +110,11 @@ const SideBar = () => {
                       fontWeight: 300,
                     }}
                   />
-                  <Typography sx={{ fontSize: "15px" }}>
+                  <Typography sx={{ fontSize: "15px", }}>
                     {item.Component}
                   </Typography>
 
-                </Link>
+                </NavLink>
               ))}
             </Box>
           </Box>
@@ -111,6 +135,7 @@ const SideBar = () => {
             }}
           />
           <Button
+          onClick={handleLogout}
             sx={{
               borderRadius: "8px",
               ":hover": {

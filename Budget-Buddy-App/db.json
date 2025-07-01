@@ -1,40 +1,132 @@
 {
-    "card" : [
-        {
-            "image": "/YourCategories.png",
-            "bgcolor":  "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
-            "name": "Your Categories",
-            "description" : "Automatically categorize expenses and track spending patterns with AI-powered insights."
-        },
-        {
-            "image": "/AddNewCategory.png",
-            "bgcolor":  "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
-            "name": "Add New Category",
-            "description" : "Set financial goals and track progress with visual indicators and milestone celebrations."
-        },
-        {
-            "image": "/ManageBudgetCategories.png",
-            "bgcolor":  "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
-            "name": "Manage Budget Categories",
-            "description" : "Create intelligent budgets that adapt to your lifestyle and send smart alerts."
-        },
-        {
-            "image": "/VisualReports.png",
-            "bgcolor":  "linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68));",
-            "name": "Visual Reports",
-            "description" : "Beautiful charts and reports that make understanding your finances simple and clear."
-        },
-        { 
-            "image": "/Bank-LevelSecurity.png",
-            "bgcolor":  "linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));",
-            "name": "Bank-Level Security",
-            "description" : "Your financial data is protected with enterprise-grade encryption and security."
-        },
-        {
-            "image": "/InstantSync.png",
-            "bgcolor":  "linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));",
-            "name": "Instant Sync",
-            "description" : "Access your financial data anywhere, anytime with real-time synchronization."
-        }
-    ]
+  "card": [
+    {
+      "image": "/YourCategories.png",
+      "bgcolor": "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
+      "name": "Your Categories",
+      "description": "Automatically categorize expenses and track spending patterns with AI-powered insights.",
+      "id": "5cac"
+    },
+    {
+      "image": "/AddNewCategory.png",
+      "bgcolor": "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
+      "name": "Add New Category",
+      "description": "Set financial goals and track progress with visual indicators and milestone celebrations.",
+      "id": "4954"
+    },
+    {
+      "image": "/ManageBudgetCategories.png",
+      "bgcolor": "linear-gradient(to right, rgb(71, 85, 105), rgb(37, 99, 235))",
+      "name": "Manage Budget Categories",
+      "description": "Create intelligent budgets that adapt to your lifestyle and send smart alerts.",
+      "id": "9e38"
+    },
+    {
+      "image": "/VisualReports.png",
+      "bgcolor": "linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68));",
+      "name": "Visual Reports",
+      "description": "Beautiful charts and reports that make understanding your finances simple and clear.",
+      "id": "d8c6"
+    },
+    {
+      "image": "/Bank-LevelSecurity.png",
+      "bgcolor": "linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));",
+      "name": "Bank-Level Security",
+      "description": "Your financial data is protected with enterprise-grade encryption and security.",
+      "id": "2b0a"
+    },
+    {
+      "image": "/InstantSync.png",
+      "bgcolor": "linear-gradient(to right, rgb(236, 72, 153), rgb(244, 63, 94));",
+      "name": "Instant Sync",
+      "description": "Access your financial data anywhere, anytime with real-time synchronization.",
+      "id": "611d"
+    }
+  ],
+  "Transactions": [
+    {
+      "id": "8f58",
+      "type": "Expense",
+      "date": "2025-06-27",
+      "amount": "1200",
+      "categories": "Utilities",
+      "note": "nothing",
+      "description": "Coffee"
+    },
+    {
+      "id": "b74e",
+      "type": "Income",
+      "date": "2025-06-28",
+      "amount": "25000",
+      "categories": "Salary",
+      "note": "nothing",
+      "description": "Monthly salary"
+    },
+    {
+      "id": "515e",
+      "type": "Expense",
+      "date": "2025-06-28",
+      "amount": "1500",
+      "categories": "Rent",
+      "note": "nothing",
+      "description": "Rent"
+    },
+    {
+      "id": "0261",
+      "type": "Expense",
+      "date": "2025-06-28",
+      "amount": "15000",
+      "categories": "Healthcare",
+      "note": "nothing",
+      "description": "Operation"
+    },
+    {
+      "id": "438e",
+      "type": "Expense",
+      "date": "2025-06-30",
+      "amount": "300",
+      "categories": "Transportation",
+      "note": "nothing",
+      "description": "Daily up down"
+    },
+    {
+      "id": "6a80",
+      "type": "Income",
+      "date": "2025-07-01",
+      "amount": "25000",
+      "categories": "Salary",
+      "note": "nothing",
+      "description": "Monthly salary"
+    },
+    {
+      "id": "6c72",
+      "type": "Expense",
+      "date": "2025-07-01",
+      "amount": "15000",
+      "categories": "Rent",
+      "note": "nothing",
+      "description": "Room rent"
+    },
+    {
+      "id": "32b0",
+      "type": "Expense",
+      "date": "2025-07-01",
+      "amount": "3000",
+      "categories": "Entertainment",
+      "note": "nothing",
+      "description": "Netflix"
+    }
+  ],
+  "Budget": [
+    {
+      "id": "1e93",
+      "name": "shoping",
+      "monthlyLimit": "3000"
+    },
+    {
+      "id": "5c9a",
+      "name": "working",
+      "monthlyLimit": "5000"
+    }
+  ]
 }
