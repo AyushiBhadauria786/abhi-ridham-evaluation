@@ -45,76 +45,40 @@
   ],
   "transactions": [
     {
-      "id": "f08c",
+      "id": "a4bc",
       "type": "income",
-      "amount": "20000",
+      "amount": "10000",
       "category": "Salary",
       "description": "Monthly Salary",
-      "date": "2025-06-28",
+      "date": "2025-07-01",
       "notes": "Salary"
     },
     {
-      "id": "bd96",
+      "id": "ce7b",
       "type": "expense",
-      "amount": "6000",
+      "amount": "450",
+      "category": "Groceries ",
+      "description": "Groceries",
+      "date": "2025-07-01",
+      "notes": "groceries"
+    },
+    {
+      "id": "aa68",
+      "type": "expense",
+      "amount": "8500",
       "category": "Rent",
-      "description": "PG Rent",
-      "date": "2025-06-29",
-      "notes": "Monthly Rent"
+      "description": "Monthly Rent",
+      "date": "2025-07-01",
+      "notes": "Rent of PG"
     },
     {
-      "id": "2f53",
-      "type": "expense",
-      "amount": "200",
-      "category": "Groceries",
-      "description": "vegetable and fruites",
-      "date": "2025-06-29",
-      "notes": "wccc"
-    },
-    {
-      "id": "9e45",
-      "type": "income",
-      "amount": "6000",
-      "category": "Freelance",
-      "description": "freelance ",
-      "date": "2025-06-18",
-      "notes": "aasdf"
-    },
-    {
-      "id": "99f8",
-      "type": "expense",
-      "amount": "5000",
-      "category": "Investment",
-      "description": "Investment",
-      "date": "2025-06-30",
-      "notes": "Investment"
-    },
-    {
-      "id": "547e",
+      "id": "70f4",
       "type": "income",
       "amount": "500",
-      "category": "Other",
-      "description": "other",
-      "date": "2025-06-28",
-      "notes": "other"
-    },
-    {
-      "id": "f567",
-      "type": "expense",
-      "amount": "200",
-      "category": "Entertainment",
-      "description": "Prime",
-      "date": "2025-06-29",
-      "notes": "amazon prime"
-    },
-    {
-      "id": "adef",
-      "type": "expense",
-      "amount": "1000",
-      "category": "Healthcare",
-      "description": "Health",
-      "date": "2025-06-30",
-      "notes": "udief"
+      "category": "Freelance",
+      "description": "Freelance work",
+      "date": "2025-07-01",
+      "notes": "Build a website "
     }
   ],
   "budgets": [
@@ -137,6 +101,11 @@
       "id": "ca2b",
       "category": "Groceries ",
       "limit": 1500
+    },
+    {
+      "id": "ad24",
+      "category": "Utilities",
+      "limit": 100
     }
   ],
   "users": [

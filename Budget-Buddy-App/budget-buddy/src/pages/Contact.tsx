@@ -15,15 +15,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import emailjs from "@emailjs/browser";
 import type { User } from "../types";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-interface UserProps {
-  fullName: User[];
-  email: User[];
-}
-
-const Contact: React.FC<UserProps> = () => {
-  const [name, setName] = useState<UserProps>();
-
+const Contact: React.FC = () => {
   const {
     handleSubmit,
     control,
@@ -65,8 +59,14 @@ const Contact: React.FC<UserProps> = () => {
         }
       );
     console.log(data);
-    reset({name: "", email: "",subject: "",message:""});
-    alert("Form submitted successfully! Check console for data.");
+    reset({ name: "", email: "", subject: "", message: "" });
+    toast.success("Form submitted successfully! Check console for data.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+    });
   };
 
   return (

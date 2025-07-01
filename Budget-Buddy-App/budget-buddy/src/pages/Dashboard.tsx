@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [currentBalance, setCurrentBalance] = useState<number | string>(0);
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState<number>(0);
   const [totalMonthlyExpenses, setTotalMonthlyExpenses] = useState<number>(0);
-  const [totalMonthlyIncome, setTotalMonthlyIncome] = useState<number>(0);
+  // const [totalMonthlyIncome, setTotalMonthlyIncome] = useState<number>(0);
   const [pieChartData, setPieChartData] = useState<PieChartData[]>([]);
   const [lastFiveTransactions, setLastFiveTransactions] = useState<
     Transaction[]
@@ -60,45 +60,55 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (transactions.length > 0 && budgets.length > 0) {
-      let balance = 0;
-      let monthyExpenses = 0;
-      let monthlyBudget = 0;
-      const expenseByCategory: { [key: string]: number } = {};
-
-      const currentMonth = new Date().getMonth();
-      const currentYear = new Date().getFullYear();
-
-      balance = transactions.reduce((acc, t) => {
+      const balance = transactions.reduce((acc, t) => {
         const amount = Number(t.amount) || 0;
         return t.type === "income" ? acc + amount : acc - amount;
       }, 0);
+      setCurrentBalance(balance);
 
-      // Filter for transactions in the current month
+      const sortedTransactions = [...transactions].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+      setLastFiveTransactions(sortedTransactions.slice(0, 5));
+    }
+  }, [transactions]);
+
+  
+  useEffect(() => {
+    if (transactions.length > 0 && budgets.length > 0) {
+      const selectedMonth = displayDate.getMonth();
+      const selectedYear = displayDate.getFullYear();
+
+      
       const monthlyTransactions = transactions.filter((t) => {
         const transactionDate = new Date(t.date);
         return (
-          transactionDate.getMonth() === currentMonth &&
-          transactionDate.getFullYear() === currentYear
+          transactionDate.getMonth() === selectedMonth &&
+          transactionDate.getFullYear() === selectedYear
         );
       });
+
+      let monthlyExpenses = 0;
+      const expenseByCategory: { [key: string]: number } = {};
 
       monthlyTransactions.forEach((transaction) => {
         const amountValue = Number(transaction.amount) || 0;
         if (transaction.type === "expense") {
-          monthyExpenses += amountValue;
+          monthlyExpenses += amountValue;
           expenseByCategory[transaction.category] =
             (expenseByCategory[transaction.category] || 0) + amountValue;
-        } else if (
-          transaction.type === "income" &&
-          transaction.category === "Salary"
-        ) {
-          monthlyBudget += amountValue;
         }
       });
 
-      setCurrentBalance(balance);
-      setTotalMonthlyExpenses(monthyExpenses);
-      setTotalMonthlyBudget(monthlyBudget);
+      
+      const totalBudget = budgets.reduce(
+        (acc, budget) => acc + Number(budget.limit),
+        0);
+
+        console.log(totalBudget)
+
+      setTotalMonthlyExpenses(monthlyExpenses);
+      setTotalMonthlyBudget(totalBudget);
 
       const chartData = Object.keys(expenseByCategory).map((category) => ({
         name: category,
@@ -112,17 +122,13 @@ const Dashboard = () => {
         spent: expenseByCategory[budget.category] || 0,
       }));
       setBudgetCategoryData(categoryData);
-
-      const sortedTransactions = [...transactions].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-      setLastFiveTransactions(sortedTransactions.slice(0, 5));
     }
-  }, [transactions, budgets]);
+  }, [transactions, budgets, displayDate]);
 
   const handleMonthChange = (direction: "prev" | "next") => {
     setDisplayDate((currentDate) => {
       const newDate = new Date(currentDate);
+      newDate.setDate(1); 
       newDate.setMonth(newDate.getMonth() + (direction === "next" ? 1 : -1));
 
       const today = new Date();
@@ -136,7 +142,6 @@ const Dashboard = () => {
       return newDate;
     });
   };
-
   return (
     <Box sx={{}}>
       {/* Inner content */}
@@ -191,7 +196,7 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={7}>
           <BudgetOverview pieChartData={pieChartData} />
         </Grid>
-        <Grid item xs={12} lg={5}>
+        <Grid item xs={12} lg={6}>
           <BudgetCategories budgetData={budgetCategoryData} />
         </Grid>
       </Grid>

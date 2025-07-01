@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { registerUser } from "../../redux/authSlice";
+import { toast } from "react-toastify";
 
 const Signup: React.FC = () => {
   const [fullName, setFullName] = useState("");
@@ -36,11 +37,24 @@ const Signup: React.FC = () => {
     dispatch(registerUser({ fullName, email, password }))
       .unwrap()
       .then(() => {
-        alert("Registration successful! Please login.");
+        toast.success("Registration successful! Please login.",{
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false
+        })
         navigate("/login");
       })
       .catch((err) => {
         setError(err);
+        toast.error("Something went wrong!",{
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false
+        })
       });
   };
 

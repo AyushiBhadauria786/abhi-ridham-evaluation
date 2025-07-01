@@ -7,9 +7,9 @@ interface BudgetCategoriesProps {
 }
 
 const BudgetCategories: React.FC<BudgetCategoriesProps> = ({ budgetData }) => {
-   const getProcess = (spend: number, budgeted: number) => {
-        const spentAmount = spend || 0;
-        const budgetAmount = budgeted || 0;
+   const getProcess = (spent: number, limit: number) => {
+        const spentAmount = spent || 0;
+        const budgetAmount = limit || 0;
         if(budgetAmount === 0) return 0;
         return Math.min((spentAmount / budgetAmount) * 100, 100);
     }
@@ -55,12 +55,13 @@ const BudgetCategories: React.FC<BudgetCategoriesProps> = ({ budgetData }) => {
                   variant="body2"
                   sx={{ ml: 2, color: "text.secondary" }}
                 >
-                 ₹{(item.spend || 0).toLocaleString('en-IN')} / ₹{(item.budget || 0).toLocaleString('en-IN')}
+                 ₹{(item.spent || 0).toLocaleString('en-IN')} / ₹{(item.limit || 0).toLocaleString('en-IN')}
                 </Typography>
               </Box>
               <LinearProgress
                 variant="determinate"
-                value={getProcess(item.spend, item.budget)}
+                value={getProcess(item.spent, item.limit)}
+                color= {item.spent === item.limit ? "error" : "primary"}
                 sx={{ mt: 0.5, height: 8, borderRadius: 4 }}
               />
             </Box>

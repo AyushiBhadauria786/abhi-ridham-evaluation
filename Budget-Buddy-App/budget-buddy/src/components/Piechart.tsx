@@ -24,7 +24,7 @@ const MyPieChart: React.FC<{data: PieChartData[]}> = ({data}) => {
           outerRadius={140}
           fill="#8884d8" 
           dataKey="value" 
-          
+          paddingAngle={4}
           label 
         >
           {data.map((entry, index) => (

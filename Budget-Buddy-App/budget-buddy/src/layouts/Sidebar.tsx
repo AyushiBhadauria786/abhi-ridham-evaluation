@@ -5,6 +5,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../redux/store";
 import { logout } from "../redux/authSlice";
+import { toast } from "react-toastify";
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -16,8 +17,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/home');
-  }
+    toast.success("Logout Successful!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+    });
+    navigate("/home");
+  };
 
   const sideBarLinks = [
     {
@@ -88,7 +96,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
             display: "flex",
             alignItems: "center",
             gap: 1,
-            flexShrink: 0
+            flexShrink: 0,
+            borderBottom: "1px solid #E2E8F0",
           }}
         >
           <IconButton
@@ -112,56 +121,73 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
             />
           </IconButton>
           {isSidebarOpen && (
-          <Typography variant="h6" component="span" sx={{ fontWeight: "bold", whiteSpace: 'nowrap' }}>
-            Finance<span style={{ fontWeight: 300 }}>Flow</span>
-          </Typography>
-        )}
-      </Box>
-
-      <Box sx={{ flexGrow: 1, p: 1, overflowY: 'auto', overflowX: 'hidden'  }}>
-        <Box component="nav" sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 2 }}>
-          {sideBarLinks.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              style={({ isActive }) => ({
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                padding: "10px 16px",
-                color: isActive ? "rgb(37, 99, 235)" : "rgb(51, 65, 85)",
-                backgroundColor: isActive ? "rgba(37, 99, 235, 0.1)" : "transparent",
-                textDecoration: "none",
-                borderRadius: "8px",
-                fontWeight: 500
-              })}
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}
             >
-              <img src={item.icon} alt={`${item.name} icon`} style={{ width: "20px", height: "20px" }} />
-              {isSidebarOpen && <Typography variant="body2" sx={{whiteSpace: 'nowrap'}}>{item.name}</Typography>}
-            </NavLink>
-          ))}
+              Finance<span style={{ fontWeight: 300 }}>Flow</span>
+            </Typography>
+          )}
         </Box>
-      </Box>
+
+        <Box sx={{ flexGrow: 1, p: 1, overflowY: "auto", overflowX: "hidden" }}>
+          <Box
+            component="nav"
+            sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 2 }}
+          >
+            {sideBarLinks.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                style={({ isActive }) => ({
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                  padding: "10px 16px",
+                  color: isActive ? "rgb(37, 99, 235)" : "rgb(51, 65, 85)",
+                  backgroundColor: isActive
+                    ? "rgba(37, 99, 235, 0.1)"
+                    : "transparent",
+                  textDecoration: "none",
+                  borderRadius: "8px",
+                  fontWeight: 500,
+                })}
+              >
+                <img
+                  src={item.icon}
+                  alt={`${item.name} icon`}
+                  style={{ width: "20px", height: "20px" }}
+                />
+                {isSidebarOpen && (
+                  <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
+                    {item.name}
+                  </Typography>
+                )}
+              </NavLink>
+            ))}
+          </Box>
+        </Box>
 
         {/* Logout button */}
         <Box sx={{ p: 1, borderTop: "1px solid #E2E8F0", flexShrink: 0 }}>
-        <Button
-          fullWidth
-          onClick={handleLogout}
-          sx={{
-            justifyContent: isSidebarOpen ? 'flex-start' : 'center',
-            color: "rgb(51, 65, 85)",
-            textTransform: 'none',
-            gap: 2,  
-            p: 1,
-            ":hover": { backgroundColor: "#f8fafc" },
-          }}
-        >
-          <LogoutIcon />
-          {isSidebarOpen && 'Logout'}
-        </Button>
+          <Button
+            fullWidth
+            onClick={handleLogout}
+            sx={{
+              justifyContent: isSidebarOpen ? "flex-start" : "center",
+              color: "rgb(51, 65, 85)",
+              textTransform: "none",
+              gap: 2,
+              p: 1,
+              ":hover": { backgroundColor: "#f8fafc" },
+            }}
+          >
+            <LogoutIcon />
+            {isSidebarOpen && "Logout"}
+          </Button>
+        </Box>
       </Box>
-    </Box>
     </>
   );
 };

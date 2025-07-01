@@ -26,6 +26,7 @@ import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { Budget as BudgetType } from "../types";
+import { toast } from "react-toastify";
 
 const Budget = () => {
   const [budgets, setBudgets] = useState<BudgetType[]>([]);
@@ -56,7 +57,13 @@ const Budget = () => {
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!categoryName || !limit || Number(limit) <= 0) {
-      alert("Please enter a valid category name and limit.");
+      toast.warning("Please enter a valid category name and limit.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
       return;
     }
     try {
@@ -67,8 +74,22 @@ const Budget = () => {
       setCategoryName("");
       setLimit("");
       fetchBudgets();
+      toast.success("Added New Category!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } catch (error) {
       console.error("Error adding budget category:", error);
+      toast.error("Please try again!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     }
   };
 
@@ -87,7 +108,13 @@ const Budget = () => {
 
   const handleEditSave = async () => {
     if (!editCategoryName || !editLimit || Number(editLimit) <= 0) {
-      alert("Please enter valid values.");
+      toast.warning("Please enter valid values.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
       return;
     }
     try {
@@ -149,6 +176,11 @@ const Budget = () => {
                 placeholder="0.00"
                 value={limit}
                 onChange={(e) => setLimit(e.target.value)}
+                onKeyDown={(e) => {
+                  if (["e", "E", "+", "-"].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">₹</InputAdornment>

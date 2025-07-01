@@ -18,8 +18,8 @@ export interface BalanceCardItem {
 
 export interface BudgetCategoryData {
   category: string;
-  spend: number;
-  budget: number;
+  spent: number;
+  limit: number;
 }
 
 export interface PieChartData {

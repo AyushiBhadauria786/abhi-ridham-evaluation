@@ -24,6 +24,8 @@ import AuthRoute from "./components/AuthRoute";
 import { checkAuth } from "./redux/authSlice";
 import type { AppDispatch } from "./redux/store";
 import { Navigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -61,6 +63,7 @@ function App() {
 
             <Route path="/*" element={<NotFound />} />
           </Routes>
+          <ToastContainer />
         </BrowserRouter>
       </ThemeProvider>
     </>

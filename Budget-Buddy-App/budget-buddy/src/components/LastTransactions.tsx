@@ -61,7 +61,7 @@ const LastTransactions: React.FC<LastTransactionsProps>= ({transactions}) => {
                 <Typography variant="h6" fontWeight={600}>
                     Last 5 Transactions
                 </Typography>
-                <Button variant="outlined" size="small" onClick={() => navigate('/transaction')} sx={{textTransform: "none"}}>
+                <Button variant="outlined" size="small" onClick={() => navigate('/transaction')} sx={{textTransform: "none", color: "rgb(71, 85, 105)",border: "1px solid rgb(203, 213, 225);"}}>
                     View All Transactions
                 </Button>
             </Box>

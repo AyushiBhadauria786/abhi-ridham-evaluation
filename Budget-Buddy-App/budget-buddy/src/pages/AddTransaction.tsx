@@ -21,6 +21,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import type { Transaction } from "../types";
+import { toast } from "react-toastify";
 
 // export const categories = [
 //   "Groceries",
@@ -42,16 +43,22 @@ type TransactionFormData = Omit<Transaction, "id"> & {
 const AddTransaction = () => {
   const [categories, setCategories] = useState<string[]>([]);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get("http://localhost:3001/budgets");
         const budgetCategories = response.data.map((b: any) => b.category);
-        
-        const defaultCategories = ["Salary", "Freelance", "Investment", "Other"];
-        const allCategories = [...new Set([...budgetCategories, ...defaultCategories])];
-        setCategories(allCategories.sort());
 
+        const defaultCategories = [
+          "Salary",
+          "Freelance",
+          "Investment",
+          "Other",
+        ];
+        const allCategories = [
+          ...new Set([...budgetCategories, ...defaultCategories]),
+        ];
+        setCategories(allCategories.sort());
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       }
@@ -152,14 +159,26 @@ const AddTransaction = () => {
         date: new Date().toISOString().slice(0, 10),
         notes: "",
       });
-      alert("Transaction added successfully!");
+      toast.success("Transaction added successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     } catch (error) {
       console.error("Error adding transaction:", error);
-      alert("Failed to add transaction. Please try again.");
+      toast.error("Failed to add transaction. Please try again.",{
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
     }
   };
 
-   const handleCancel = () => {
+  const handleCancel = () => {
     reset({
       type: "expense",
       amount: "",
@@ -174,7 +193,7 @@ const AddTransaction = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundColor: "#f7f9fc",
+        // backgroundColor: "#f7f9fc",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -265,7 +284,7 @@ const AddTransaction = () => {
             {/* Category */}
             <Box>
               <FormLabel sx={labelStyle}>Category</FormLabel>
-             <Controller
+              <Controller
                 name="category"
                 control={control}
                 rules={{ validate: validateCategory }}
@@ -289,7 +308,6 @@ const AddTransaction = () => {
               />
             </Box>
 
-
             {/* Description */}
             <Box>
               <FormLabel sx={labelStyle}>Description</FormLabel>
@@ -312,7 +330,7 @@ const AddTransaction = () => {
             {/* Date */}
             <Box>
               <FormLabel sx={labelStyle}>Date</FormLabel>
-             <Controller
+              <Controller
                 name="date"
                 control={control}
                 rules={{ validate: validateDate }}
@@ -333,7 +351,7 @@ const AddTransaction = () => {
             {/* Notes */}
             <Box>
               <FormLabel sx={labelStyle}>Notes (Optional)</FormLabel>
-               <Controller
+              <Controller
                 name="notes"
                 control={control}
                 render={({ field }) => (

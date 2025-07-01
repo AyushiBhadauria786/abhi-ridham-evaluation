@@ -66,7 +66,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
   ];
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3.5}>
       {budget.map((item) => (
         <Grid item xs={12} sm={6} md={3}  key={item.heading} >
           <Card
@@ -85,6 +85,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
             <Box
               sx={{
                 display: "flex",
+                gap: 1,
                 justifyContent: "space-between",
                 alignItems: "flex-start",
               }}
