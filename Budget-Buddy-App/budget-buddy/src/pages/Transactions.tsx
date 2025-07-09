@@ -141,7 +141,7 @@ const Transactions = () => {
         <FilterTransaction onFilterChange={handleFilterChange} />
       </Box>
 
-      <TableContainer component={Paper} sx={{ mt: 3, borderRadius: 2 }}>
+      <TableContainer component={Paper} sx={{ mt: 3, borderRadius: 2, border: "1px solid rgba(224, 224, 224, 1);" }}>
         <Table>
           <TableHead>
             <TableRow>

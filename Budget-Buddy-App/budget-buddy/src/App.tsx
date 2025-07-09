@@ -18,21 +18,49 @@ import Login from "./pages/Login";
 import Signup from "./pages/signup/Signup";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import AuthRoute from "./components/AuthRoute";
-import { checkAuth } from "./redux/authSlice";
-import type { AppDispatch } from "./redux/store";
+import type { AppDispatch, RootState } from "./redux/store";
 import { Navigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { onAuthStateChanged } from "firebase/auth";
+import { setAuthUser } from "./redux/authSlice";
+import { auth } from "./firebase/firebase";
+import type { User } from "./types";
+import { Box, CircularProgress } from "@mui/material";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuthInitialized } = useSelector((state: RootState) => state.auth);  
 
+  //For redux store updation
   useEffect(() => {
-    dispatch(checkAuth());
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        const user: User = {
+          id: firebaseUser.uid,
+          fullName: firebaseUser.displayName || "User",
+          email: firebaseUser.email || "",
+        };
+        dispatch(setAuthUser(user));
+      } else {
+        dispatch(setAuthUser(null));
+      }
+    });
+
+    // Cleanup 
+    return () => unsubscribe();
   }, [dispatch]);
+
+   if (!isAuthInitialized) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>

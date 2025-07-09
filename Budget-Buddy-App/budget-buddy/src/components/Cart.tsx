@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardContent, Typography } from "@mui/material";
+import {  Box, Card, CardContent, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";

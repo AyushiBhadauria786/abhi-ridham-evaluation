@@ -239,7 +239,7 @@ const Reports: React.FC = () => {
       </Paper>
 
       <Grid container spacing={3} mt={3} gap={3}>
-        <Grid item xs={12} lg={6}>
+        <Grid size={{xs:12, lg:6}} >
           <Paper
             sx={{
               p: 3,
@@ -277,7 +277,7 @@ const Reports: React.FC = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} lg={6}>
+        <Grid size={{xs:12, lg:6}}>
           <Paper
             sx={{
               p: 3,

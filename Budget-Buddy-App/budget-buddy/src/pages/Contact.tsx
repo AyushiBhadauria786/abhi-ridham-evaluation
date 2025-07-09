@@ -141,8 +141,8 @@ const Contact: React.FC = () => {
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    error={!!errors.name}
-                    helperText={errors.name ? errors.name.message : ""}
+                    error={!!errors.subject}
+                    helperText={errors.subject ? errors.subject.message : ""}
                   />
                 </>
               )}
