@@ -4,8 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../redux/store";
-import { logout } from "../redux/authSlice";
 import { toast } from "react-toastify";
+import { logoutUser } from "../redux/authSlice";
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -16,15 +16,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout());
-    toast.success("Logout Successful!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-    });
-    navigate("/home");
+    dispatch(logoutUser())
+    .unwrap()
+    .then(() => {
+      toast.success("Logout Successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+      });
+      navigate("/home");
+    })
+    .catch((error) => {
+      toast.error("Logout failed.Please try again.")
+      console.error("Logout failed", error)
+    })
   };
 
   const sideBarLinks = [

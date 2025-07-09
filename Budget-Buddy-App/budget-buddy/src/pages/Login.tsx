@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  IconButton,
   Link,
   Paper,
   Typography,
@@ -14,47 +15,39 @@ import { useNavigate } from "react-router-dom";
 import type { AppDispatch, RootState } from "../redux/store";
 import { loginUser } from "../redux/authSlice";
 import { toast } from "react-toastify";
+import { useForm, Controller } from "react-hook-form";
+import type { User } from "../types";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast.warning("Please enter email and password.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-      });
-      return;
-    }
-    dispatch(loginUser({ email, password }))
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Pick<User, "email" | "password">>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = (data: Pick<User, "email" | "password">) => {
+    dispatch(loginUser(data))
       .unwrap()
       .then(() => {
-        toast.success("Loggin Successful!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-        });
+        toast.success("Login Successful!", { position: "top-right",closeOnClick: true, autoClose: 3000 });
         navigate("/dashboard");
       })
       .catch((err) => {
-        toast.error("Something went wrong,Please Try Again!!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
+        toast.error(err || "Something went wrong, Please Try Again!!", {
+          position: "top-right",closeOnClick: true, autoClose: 3000
         });
         console.error("Failed to login:", err);
       });
@@ -103,7 +96,7 @@ const LoginPage: React.FC = () => {
       {/* Form Container */}
       <Paper
         component="form"
-        onSubmit={handleLogin}
+        onSubmit={handleSubmit(handleLogin)}
         elevation={3}
         sx={{
           padding: 4,
@@ -132,21 +125,32 @@ const LoginPage: React.FC = () => {
           >
             Email Address
           </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "10px 12px",
-              borderRadius: 8,
-              border: "1px solid #ccc",
-              backgroundColor: "#eef3fd",
-              fontSize: 14,
-              outline: "none",
-            }}
+          <Controller
+            name="email"
+            control={control}
+            rules={{ required: "Email is required." }}
+            render={({ field }) => (
+              <input
+                id="email"
+                type="email"
+                {...field}
+                style={{
+                  width: "100%",
+                  padding: "10px 12px",
+                  borderRadius: 8,
+                  border: "1px solid #ccc",
+                  backgroundColor: "#eef3fd",
+                  fontSize: 14,
+                  outline: "none",
+                }}
+              />
+            )}
           />
+          {errors.email && (
+            <Typography color="error" variant="caption" mt={1}>
+              {errors.email.message}
+            </Typography>
+          )}
         </Box>
 
         <Box sx={{ mb: 2 }}>
@@ -156,21 +160,47 @@ const LoginPage: React.FC = () => {
           >
             Password
           </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "10px 12px",
-              borderRadius: 8,
-              border: "1px solid #ccc",
-              backgroundColor: "#eef3fd",
-              fontSize: 14,
-              outline: "none",
-            }}
-          />
+          <Box sx={{ position: "relative" }}>
+            <Controller
+              name="password"
+              control={control}
+              rules={{ required: "Password is required." }}
+              render={({ field }) => (
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  {...field}
+                  style={{
+                    width: "100%",
+                    padding: "10px 40px 10px 12px",
+                    borderRadius: 8,
+                    border: "1px solid #ccc",
+                    backgroundColor: "#eef3fd",
+                    fontSize: 14,
+                    outline: "none",
+                  }}
+                />
+              )}
+            />
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={() => setShowPassword((show) => !show)}
+              edge="end"
+              sx={{
+                position: "absolute",
+                right: "8px",
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </Box>
+          {errors.password && (
+            <Typography color="error" variant="caption" mt={1}>
+              {errors.password.message}
+            </Typography>
+          )}
         </Box>
 
         {error && (

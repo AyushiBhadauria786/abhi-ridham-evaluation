@@ -1,4 +1,4 @@
-import { Box, Paper, Typography, Link } from "@mui/material";
+import { Box, Paper, Typography, Link, IconButton } from "@mui/material";
 import React, { useState } from "react";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import "./Signup.css";
@@ -7,54 +7,59 @@ import { useNavigate } from "react-router-dom";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { registerUser } from "../../redux/authSlice";
 import { toast } from "react-toastify";
+import { useForm, Controller } from "react-hook-form";
+import type { AuthPayload } from "../../types";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 const Signup: React.FC = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { loading, error: reduxError } = useSelector(
     (state: RootState) => state.auth
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    if (!fullName || !email || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Password do not match.");
-      return;
-    }
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<AuthPayload>({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    mode: "onChange",
+  });
 
-    dispatch(registerUser({ fullName, email, password }))
+  const passwordValue = watch("password");
+
+  const onSubmit = (data: AuthPayload) => {
+    dispatch(registerUser(data))
       .unwrap()
       .then(() => {
-        toast.success("Registration successful! Please login.",{
+        toast.success("Registration successful!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: false
-        })
+          pauseOnHover: false,
+        });
         navigate("/login");
       })
       .catch((err) => {
-        setError(err);
-        toast.error("Something went wrong!",{
+        toast.error(err || "Something went wrong!", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: false
-        })
+          pauseOnHover: false,
+        });
       });
   };
 
@@ -101,50 +106,181 @@ const Signup: React.FC = () => {
       {/* Signup Form */}
       <Paper
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         elevation={3}
-        sx={{ width: "100%", maxWidth: 480, padding: "32px 28px", borderRadius: 3, boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)" }}
+        sx={{
+          width: "100%",
+          maxWidth: 480,
+          padding: "32px 28px",
+          borderRadius: 3,
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+        }}
       >
         <Box id="sub-heading" mb={3}>
-          <Typography variant="h5" fontWeight={600}>Join FinanceFlow!</Typography>
-          <Typography variant="body2" color="text.secondary">Create your account and start your financial journey</Typography>
+          <Typography variant="h5" fontWeight={600}>
+            Join FinanceFlow!
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Create your account and start your financial journey
+          </Typography>
         </Box>
 
-        <Box className="firstName" sx={{mb: 2}}>
+        <Box className="firstName" sx={{ mb: 2 }}>
           <label htmlFor="fullName">Full Name</label>
-          <input type="text" id="fullName" name="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+          <Controller
+            name="fullName"
+            control={control}
+            rules={{ required: "Full Name is required." }}
+            render={({ field }) => (
+              <input type="text" id="fullName" {...field} />
+            )}
+          />
+          {errors.fullName && (
+            <Typography color="error" variant="caption" mt={1}>
+              {errors.fullName.message}
+            </Typography>
+          )}
         </Box>
 
-        <Box className="email" sx={{mb: 2}}>
+        <Box className="email" sx={{ mb: 2 }}>
           <label htmlFor="email">Email Address</label>
-          <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: "Email is required.",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address.",
+              },
+            }}
+            render={({ field }) => <input type="email" id="email" {...field} />}
+          />
+          {errors.email && (
+            <Typography color="error" variant="caption" mt={1}>
+              {errors.email.message}
+            </Typography>
+          )}
         </Box>
 
-        <Box className="password" sx={{mb: 2}}>
+        <Box className="password" sx={{ mb: 2 }}>
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Box className="input-wrapper">
+            <Controller
+              name="password"
+              control={control}
+              rules={{
+                required: "Password is required.",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters long.",
+                },
+                validate: {
+                  noSpaces: (value) =>
+                    !value.includes(" ") || "Password cannot contain spaces.",
+                  hasUpperCase: (value) =>
+                    [...value].some((char) => char >= "A" && char <= "Z") ||
+                    "Must contain at least one uppercase letter.",
+                  hasLowerCase: (value) =>
+                    [...value].some((char) => char >= "a" && char <= "z") ||
+                    "Must contain at least one lowercase letter.",
+                  hasNumber: (value) =>
+                    [...value].some((char) => char >= "0" && char <= "9") ||
+                    "Must contain at least one number.",
+                  hasSpecialChar: (value) => {
+                    const specialChars = `\`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`;
+                    return (
+                      [...value].some((char) => specialChars.includes(char)) ||
+                      "Must contain at least one special character."
+                    );
+                  },
+                },
+              }}
+              render={({ field }) => (
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  {...field}
+                />
+              )}
+            />
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={() => setShowPassword((show) => !show)}
+              sx={{padding: 2}}
+              edge="end"
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </Box>
+          {errors.password && (
+            <Typography color="error" variant="caption" mt={1}>
+              {errors.password.message}
+            </Typography>
+          )}
         </Box>
 
-        <Box className="confirm-password" sx={{mb: 3}}>
+        <Box className="confirm-password" sx={{ mb: 3 }}>
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <Box className="input-wrapper">
+            <Controller
+              name="confirmPassword"
+              control={control}
+              rules={{
+                required: "Please confirm your password.",
+                validate: (value) =>
+                  value === passwordValue || "Passwords do not match.",
+              }}
+              render={({ field }) => (
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  {...field}
+                />
+              )}
+            />
+            <IconButton
+              aria-label="toggle confirm password visibility"
+              onClick={() => setShowConfirmPassword((show) => !show)}
+              sx={{padding: 2}}
+              edge="end"
+            >
+              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </Box>
+          {errors.confirmPassword && (
+            <Typography color="error" variant="caption" mt={1}>
+              {errors.confirmPassword.message}
+            </Typography>
+          )}
         </Box>
-        
-        {error && <Typography color="error" variant="body2" textAlign="center" mb={2}>{error}</Typography>}
-        {reduxError && !error && <Typography color="error" variant="body2" textAlign="center" mb={2}>{reduxError}</Typography>}
+
+        {reduxError && (
+          <Typography color="error" variant="body2" textAlign="center" mb={2}>
+            {reduxError}
+          </Typography>
+        )}
 
         <Box className="signupBtn">
-          <button type="submit" disabled={loading}>{loading ? 'Signing Up...' : 'Sign Up'}</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Signing Up..." : "Sign Up"}
+          </button>
         </Box>
 
-        <Typography variant="body2" textAlign="center" mt={3} color="text.secondary">
+        <Typography
+          variant="body2"
+          textAlign="center"
+          mt={3}
+          color="text.secondary"
+        >
           Already have an account?{" "}
-          <Link href="/login" underline="hover">Login</Link>
+          <Link href="/login" underline="hover">
+            Login
+          </Link>
         </Typography>
       </Paper>
     </Box>
   );
 };
-
 
 export default Signup;

@@ -1,36 +1,48 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import type { User } from "../types";
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  updateProfile, 
+  onAuthStateChanged
+} from "firebase/auth";
+import { auth } from "../firebase/firebase";
+import type { User, AuthPayload } from "../types";
 
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null | undefined;
+  isAuthInitialized: boolean;
 }
+
+const mapFirebaseUser = (firebaseUser: any): User => {
+  return {
+    id: firebaseUser.uid,
+    fullName: firebaseUser.displayName || "User",
+    email: firebaseUser.email || "",
+  };
+};
 
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   loading: false,
   error: null,
+  isAuthInitialized: false,
 };
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData: Omit<User, "id">, { rejectWithValue }) => {
+  async (userData: AuthPayload, { rejectWithValue }) => {
+    const { email, password, fullName } = userData;
     try {
-      const checkUserRes = await axios.get(
-        `http://localhost:3001/users?email=${userData.email}`
-      );
-      if (checkUserRes.data.length > 0) {
-        return rejectWithValue("An account alredy exist with this email.");
-      }
-      const response = await axios.post(
-        "http://localhost:3001/users",
-        userData
-      );
-      return response.data;
+       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: fullName });
+      return mapFirebaseUser(userCredential.user);
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -41,42 +53,48 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (loginData: Pick<User, "email" | "password">, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/users?email=${loginData.email}&password=${loginData.password}`
-      );
-      if (response.data.length > 0) {
-        const user = response.data[0];
-        localStorage.setItem("user", JSON.stringify(user));
-        return user;
-      } else {
-        return rejectWithValue("Invalid email or password.");
-      }
+      const userCredential = await signInWithEmailAndPassword(auth, loginData.email, loginData.password!);
+      return mapFirebaseUser(userCredential.user);
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser", 
+  async (_, { rejectWithValue }) => {
+    try {
+        await signOut(auth);
+    } catch (error: any) {
+        return rejectWithValue(error.message);
+    }
+});
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setAuthUser: (state, action: PayloadAction<User | null>) => {
+        if (action.payload) {
+            state.user = action.payload;
+            state.isAuthenticated = true;
+        } else {
+            state.user = null;
+            state.isAuthenticated = false;
+        }
+        state.loading = false;
+        state.isAuthInitialized = true;
+    },
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
-      localStorage.removeItem("user");
-    },
-    checkAuth: (state) => {
-      const user = localStorage.getItem("user");
-      if (user) {
-        state.isAuthenticated = true;
-        state.user = JSON.parse(user);
-      }
     },
   },
   extraReducers: (builder) => {
     builder
-       //register
+      // Register
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -101,9 +119,22 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      // Logout
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+        state.loading = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { logout, checkAuth } = authSlice.actions;
+export const { setAuthUser, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -39,3 +39,10 @@ export interface User {
     email: string;
     password?: string;
 }
+
+export interface AuthPayload {
+  fullName: string;
+  email: string;
+  password:string;
+  confirmPassword?: string;
+}
