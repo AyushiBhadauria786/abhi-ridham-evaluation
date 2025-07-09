@@ -22,6 +22,10 @@ import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import type { Transaction } from "../types";
 import { toast } from "react-toastify";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 // export const categories = [
 //   "Groceries",
@@ -77,7 +81,7 @@ const AddTransaction = () => {
       amount: "",
       category: "",
       description: "",
-      date: new Date().toISOString().slice(0, 10),
+      date: "",
       notes: "",
     },
   });
@@ -156,7 +160,7 @@ const AddTransaction = () => {
         amount: "",
         category: "",
         description: "",
-        date: new Date().toISOString().slice(0, 10),
+        date: "",
         notes: "",
       });
       toast.success("Transaction added successfully!", {
@@ -184,7 +188,7 @@ const AddTransaction = () => {
       amount: "",
       category: "",
       description: "",
-      date: new Date().toISOString().slice(0, 10),
+      date: "",
       notes: "",
     });
   };
@@ -317,6 +321,7 @@ const AddTransaction = () => {
                 rules={{ validate: validateDescription }}
                 render={({ field }) => (
                   <TextField
+                    type="description"
                     {...field}
                     fullWidth
                     placeholder="e.g., Coffee, Monthly Salary"
@@ -330,23 +335,33 @@ const AddTransaction = () => {
             {/* Date */}
             <Box>
               <FormLabel sx={labelStyle}>Date</FormLabel>
-              <Controller
-                name="date"
-                control={control}
-                rules={{ validate: validateDate }}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    type="date"
-                    error={!!errors.date}
-                    helperText={errors.date?.message}
-                    inputProps={{ max: new Date().toISOString().slice(0, 10) }}
-                    InputLabelProps={{ shrink: true }}
-                  />
-                )}
-              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Controller
+                  name="date"
+                  control={control}
+                  rules={{ validate: validateDate }}
+                  render={({ field }) => (
+                    <DatePicker
+                      label="Select a date"
+                      value={field.value ? dayjs(field.value) : null}
+                      onChange={(date) =>
+                        field.onChange(date ? date.format("YYYY-MM-DD") : "")
+                      }
+                      format="DD/MM/YYYY"
+                      maxDate={dayjs()} 
+                      slotProps={{
+                        textField: {
+                          fullWidth: true,
+                          error: !!errors.date,
+                          helperText: errors.date?.message,
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
             </Box>
+
 
             {/* Notes */}
             <Box>
@@ -396,7 +411,7 @@ const AddTransaction = () => {
                   },
                 }}
               >
-                Cancel
+                Clear
               </Button>
             </Box>
           </Box>

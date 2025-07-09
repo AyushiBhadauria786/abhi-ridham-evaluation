@@ -2,14 +2,13 @@ import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 
 interface DashboardHeaderProps {
   handleSidebarToggle: () => void;
 }
 
-const user = JSON.parse(localStorage.getItem("user") || "{}");
-const fullName = user.fullName || "User";
-const firstLetter = fullName.charAt(0).toUpperCase();
 
 
 const getHeadingFromPathname = (pathname: string): string => {
@@ -27,6 +26,11 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 }) => {
   const location = useLocation();
   const pageTitle = getHeadingFromPathname(location.pathname);
+
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  const fullName = user?.fullName || "User";
+  const firstLetter = fullName.charAt(0).toUpperCase();
 
   return (
     <Box

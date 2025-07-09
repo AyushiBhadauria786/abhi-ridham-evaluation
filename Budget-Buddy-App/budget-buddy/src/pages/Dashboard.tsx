@@ -59,12 +59,13 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (transactions.length > 0 && budgets.length > 0) {
+    if (transactions.length > 0) {
       const balance = transactions.reduce((acc, t) => {
         const amount = Number(t.amount) || 0;
         return t.type === "income" ? acc + amount : acc - amount;
       }, 0);
       setCurrentBalance(balance);
+      console.log(currentBalance, "68");
 
       const sortedTransactions = [...transactions].sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -73,13 +74,11 @@ const Dashboard = () => {
     }
   }, [transactions]);
 
-  
   useEffect(() => {
     if (transactions.length > 0 && budgets.length > 0) {
       const selectedMonth = displayDate.getMonth();
       const selectedYear = displayDate.getFullYear();
 
-      
       const monthlyTransactions = transactions.filter((t) => {
         const transactionDate = new Date(t.date);
         return (
@@ -100,12 +99,12 @@ const Dashboard = () => {
         }
       });
 
-      
       const totalBudget = budgets.reduce(
         (acc, budget) => acc + Number(budget.limit),
-        0);
+        0
+      );
 
-        console.log(totalBudget)
+      console.log(totalBudget);
 
       setTotalMonthlyExpenses(monthlyExpenses);
       setTotalMonthlyBudget(totalBudget);
@@ -128,7 +127,7 @@ const Dashboard = () => {
   const handleMonthChange = (direction: "prev" | "next") => {
     setDisplayDate((currentDate) => {
       const newDate = new Date(currentDate);
-      newDate.setDate(1); 
+      newDate.setDate(1);
       newDate.setMonth(newDate.getMonth() + (direction === "next" ? 1 : -1));
 
       const today = new Date();
@@ -142,6 +141,11 @@ const Dashboard = () => {
       return newDate;
     });
   };
+
+  const isNextDisabled =
+    displayDate.getFullYear() === new Date().getFullYear() &&
+    displayDate.getMonth() >= new Date().getMonth();
+
   return (
     <Box sx={{}}>
       {/* Inner content */}
@@ -178,7 +182,14 @@ const Dashboard = () => {
           </Typography>{" "}
           <Button
             onClick={() => handleMonthChange("next")}
-            sx={{ border: "1px solid", padding: "0 12px", minWidth: "auto" }}
+            sx={{
+              border: "1px solid",
+              padding: "0 12px",
+              minWidth: "auto",
+              opacity: isNextDisabled ? 0.5 : 1,
+              pointerEvents: isNextDisabled ? "none" : "auto",
+            }}
+            disabled={isNextDisabled}
           >
             &gt;
           </Button>
@@ -193,10 +204,10 @@ const Dashboard = () => {
       />
 
       <Grid container spacing={3} mt={4} sx={{}}>
-        <Grid item xs={12} md={6} lg={7}>
+        <Grid size={{ xs: 12, md: 6, lg: 6 }}>
           <BudgetOverview pieChartData={pieChartData} />
         </Grid>
-        <Grid item xs={12} lg={6}>
+        <Grid size={{ xs: 12, lg: 5 }}>
           <BudgetCategories budgetData={budgetCategoryData} />
         </Grid>
       </Grid>

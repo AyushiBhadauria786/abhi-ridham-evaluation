@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import React from "react";
 import type { BalanceCardItem } from "../types";
 
@@ -29,7 +29,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
           sx={{ color: "text.secondary", opacity: 0.7 }}
         />
       ),
-      balance: currentBalance.toLocaleString('en-IN'),
+      balance: currentBalance.toLocaleString("en-IN"),
       description: `As of ${new Date().toLocaleDateString("en-GB", {
         month: "short",
         day: "numeric",
@@ -40,14 +40,14 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
     {
       heading: "Total Monthly Budget",
       logo: <TrendingUpIcon fontSize="small" sx={{ color: "success.main" }} />,
-      balance: totalMonthlyBudget.toLocaleString('en-IN'),
+      balance: totalMonthlyBudget.toLocaleString("en-IN"),
       description: "This Month",
       color: "success.main",
     },
     {
       heading: "Total Monthly Expenses",
       logo: <TrendingDownIcon fontSize="small" sx={{ color: "error.main" }} />,
-      balance: totalMonthlyExpenses.toLocaleString('en-IN'),
+      balance: totalMonthlyExpenses.toLocaleString("en-IN"),
       description: "This Month",
       color: "error.main",
     },
@@ -59,7 +59,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
           sx={{ color: "text.secondary", opacity: 0.7 }}
         />
       ),
-      balance: remainingMonthlyBudget.toLocaleString('en-IN'),
+      balance: remainingMonthlyBudget.toLocaleString("en-IN"),
       description: "Left to spend",
       color: "success.main",
     },
@@ -68,7 +68,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
   return (
     <Grid container spacing={3.5}>
       {budget.map((item) => (
-        <Grid item xs={12} sm={6} md={3}  key={item.heading} >
+        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={item.heading}>
           <Card
             sx={{
               p: 2,

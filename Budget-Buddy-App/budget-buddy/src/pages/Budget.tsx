@@ -38,6 +38,9 @@ const Budget = () => {
   const [editCategoryName, setEditCategoryName] = useState("");
   const [editLimit, setEditLimit] = useState("");
 
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedBudgetId, setSelectedBudgetId] = useState<string | number | null>(null);
+
   const fetchBudgets = async () => {
     try {
       setLoading(true);
@@ -93,16 +96,25 @@ const Budget = () => {
     }
   };
 
-  const handleDelete = async (id: string | number) => {
-    if (
-      window.confirm("Are you sure you want to delete this budget category?")
-    ) {
-      try {
-        await axios.delete(`http://localhost:3001/budgets/${id}`);
-        fetchBudgets();
-      } catch (error) {
-        console.error("Error deleting budget:", error);
-      }
+  const handleDelete = (id: string | number) => {
+    setSelectedBudgetId(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!selectedBudgetId) return;
+    try {
+      await axios.delete(`http://localhost:3001/budgets/${selectedBudgetId}`);
+      setDeleteDialogOpen(false);
+      setSelectedBudgetId(null);
+      fetchBudgets();
+      toast.success("Budget category deleted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error("Error deleting budget:", error);
+      toast.error("Failed to delete. Please try again.");
     }
   };
 
@@ -144,7 +156,13 @@ const Budget = () => {
         <Paper
           component="form"
           onSubmit={handleAddCategory}
-          sx={{ p: 3, mt: 2, borderRadius: 3, boxShadow: 3 }}
+          sx={{
+            p: 3,
+            mt: 2,
+            borderRadius: 3,
+            boxShadow: 3,
+            border: "1px solid rgba(224, 224, 224, 1);",
+          }}
         >
           <Typography variant="h6" fontWeight={600} color="text.primary" mb={2}>
             Add New Category
@@ -162,6 +180,7 @@ const Budget = () => {
                 Category Name
               </FormLabel>
               <TextField
+                type="name"
                 placeholder="e.g., Groceries"
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
@@ -205,7 +224,15 @@ const Budget = () => {
           </Button>
         </Paper>
 
-        <Paper sx={{ p: 3, mt: 4, borderRadius: 3, boxShadow: 3 }}>
+        <Paper
+          sx={{
+            p: 3,
+            mt: 4,
+            borderRadius: 3,
+            boxShadow: 3,
+            border: "1px solid rgba(224, 224, 224, 1);",
+          }}
+        >
           <Typography variant="h6" fontWeight={600} color="text.primary" mb={2}>
             Your Categories
           </Typography>
@@ -300,6 +327,29 @@ const Budget = () => {
             <Button onClick={() => setEditData(null)}>Cancel</Button>
             <Button onClick={handleEditSave} variant="contained">
               Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Delete Modal */}   
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+        >
+          <DialogTitle>Delete Budget Category</DialogTitle>
+          <DialogContent>
+            <Typography>
+              Are you sure you want to delete this category?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+            <Button
+              onClick={handleConfirmDelete}
+              variant="contained"
+              color="primary"
+            >
+              Delete
             </Button>
           </DialogActions>
         </Dialog>

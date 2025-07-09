@@ -7,6 +7,10 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -100,30 +104,28 @@ const FilterTransaction: React.FC<FilterProps> = ({ onFilterChange }) => {
         </Select>
       </FormControl>
 
-      <TextField
-        label="From Date"
-        type="date"
-        slotProps={{
-          inputLabel: {
-            shrink: true,
-          },
-        }}
-        value={fromDate}
-        onChange={(e) => setFromDate(e.target.value)}
-        fullWidth
-      />
-      <TextField
-        label="To Date"
-        type="date"
-        slotProps={{
-          inputLabel: {
-            shrink: true,
-          },
-        }}
-        value={toDate}
-        onChange={(e) => setToDate(e.target.value)}
-        fullWidth
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="From Date"
+          value={fromDate ? dayjs(fromDate) : null}
+          onChange={(date) =>
+            setFromDate(date ? date.format("YYYY-MM-DD") : "")
+          }
+          format="DD/MM/YYYY"
+          slotProps={{
+            textField: { fullWidth: true },
+          }}
+        />
+        <DatePicker
+          label="To Date"
+          value={toDate ? dayjs(toDate) : null}
+          onChange={(date) => setToDate(date ? date.format("YYYY-MM-DD") : "")}
+          format="DD/MM/YYYY"
+          slotProps={{
+            textField: { fullWidth: true },
+          }}
+        />
+      </LocalizationProvider>
 
       <Box sx={{ display: "flex", gap: 2, gridColumn: "span 3", mt: 1 }}>
         <Button

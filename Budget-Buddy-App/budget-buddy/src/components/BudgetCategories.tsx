@@ -21,7 +21,7 @@ const BudgetCategories: React.FC<BudgetCategoriesProps> = ({ budgetData }) => {
         borderRadius: 3,
         boxShadow: 3,
         height: "100%",
-        width: "200%",
+        width: "120%",
       }}
     >
       <Typography
