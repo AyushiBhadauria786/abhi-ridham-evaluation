@@ -39,6 +39,8 @@ const Transactions = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editTransaction, setEditTransaction] = useState<Transaction | null>(null);
 
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<number | null>(null);
    
     const fetchTransactions = async () => {
       try {
@@ -99,14 +101,23 @@ const Transactions = () => {
     }
   };
   
-  const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this transaction?")) {
-      try {
-        await axios.delete(`http://localhost:3001/transactions/${id}`);
-        fetchTransactions();
-      } catch (err) {
-        console.error("Error deleting transaction:", err);
-      }
+  const handleDeleteClick = (id: number | string) => {
+    setSelectedTransactionId(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!selectedTransactionId) return;
+    try {
+      await axios.delete(
+        `http://localhost:3001/transactions/${selectedTransactionId}`
+      );
+      fetchTransactions();
+    } catch (err) {
+      console.error("Error deleting transaction:", err);
+    } finally {
+      setDeleteDialogOpen(false);
+      setSelectedTransactionId(null);
     }
   };
 
@@ -186,7 +197,7 @@ const Transactions = () => {
                     <IconButton color="primary" onClick={() => handleEditClick(t)}>
                       <EditIcon fontSize="small" />
                     </IconButton>
-                    <IconButton color="error" onClick={() => handleDelete(t.id)}>
+                    <IconButton color="error" onClick={() => handleDeleteClick(t.id)}>
                       <DeleteIcon fontSize="small" />
                     </IconButton>
                   </TableCell>
@@ -213,6 +224,11 @@ const Transactions = () => {
             type="number"
             value={editTransaction?.amount || ""}
             onChange={(e) => handleEditChange("amount", e.target.value)}
+             onKeyDown={(e) => {
+              if (["e", "E", "+", "-"].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
             fullWidth
           />
           <TextField
@@ -249,6 +265,28 @@ const Transactions = () => {
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
           <Button variant="contained" onClick={handleEditSave}>Save</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
+        <DialogTitle>Delete Transaction</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete this transaction?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="primary"
+          >
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
