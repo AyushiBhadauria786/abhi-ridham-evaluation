@@ -97,6 +97,15 @@
       "description": "Coffee",
       "date": "2025-07-08",
       "notes": "Coffee"
+    },
+    {
+      "id": "d802",
+      "type": "expense",
+      "amount": "750",
+      "category": "Utilities",
+      "description": "Daily Routine Items",
+      "date": "2025-07-10",
+      "notes": "Utilities"
     }
   ],
   "budgets": [
@@ -114,6 +123,11 @@
       "id": "9d3d",
       "category": "Investment",
       "limit": 500
+    },
+    {
+      "id": "bb83",
+      "category": "Utilities",
+      "limit": 450
     }
   ],
   "users": [

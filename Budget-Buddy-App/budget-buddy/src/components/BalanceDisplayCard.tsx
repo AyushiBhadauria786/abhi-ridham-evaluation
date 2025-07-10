@@ -61,7 +61,7 @@ const BalanceDisplayCard: React.FC<BalanceDisplayProps> = ({
       ),
       balance: remainingMonthlyBudget.toLocaleString("en-IN"),
       description: "Left to spend",
-      color: "success.main",
+      color: remainingMonthlyBudget < 0 ? "error.main":"success.main",
     },
   ];
 

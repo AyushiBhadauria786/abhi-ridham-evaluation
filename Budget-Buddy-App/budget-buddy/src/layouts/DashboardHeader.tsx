@@ -10,7 +10,6 @@ interface DashboardHeaderProps {
 }
 
 
-
 const getHeadingFromPathname = (pathname: string): string => {
   const name = pathname.split("/").pop()?.replace("-", " ");
   if (!name) return "Dashboard";
