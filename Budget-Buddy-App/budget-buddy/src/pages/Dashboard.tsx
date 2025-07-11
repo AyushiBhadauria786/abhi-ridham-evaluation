@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import BalanceDisplayCard from "../components/BalanceDisplayCard";
 import BudgetOverview from "../components/BudgetOverview";
@@ -11,16 +11,20 @@ import type {
   PieChartData,
   Budget as BudgetType,
 } from "../types";
+import useApi from "../hooks/useApi";
 
 const Dashboard = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [budgets, setBudgets] = useState<BudgetType[]>([]);
+  const { data: transactions, loading: transactionsLoading } = useApi<Transaction[]>('/transactions');
+  const { data: budgets, loading: budgetsLoading } = useApi<BudgetType[]>('/budgets');
+
+  // const [transactions, setTransactions] = useState<Transaction[]>([]);
+  // const [budgets, setBudgets] = useState<BudgetType[]>([]);
+  
   const [displayDate, setDisplayDate] = useState(new Date());
 
   const [currentBalance, setCurrentBalance] = useState<number | string>(0);
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState<number>(0);
   const [totalMonthlyExpenses, setTotalMonthlyExpenses] = useState<number>(0);
-  // const [totalMonthlyIncome, setTotalMonthlyIncome] = useState<number>(0);
   const [pieChartData, setPieChartData] = useState<PieChartData[]>([]);
   const [lastFiveTransactions, setLastFiveTransactions] = useState<
     Transaction[]
@@ -30,36 +34,36 @@ const Dashboard = () => {
   >([]);
 
   // initial data fetch
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:3001/transactions");
+  //       console.log(response.data);
+  //       setTransactions(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching transactions:", error);
+  //     }
+  //   };
+
+  //   fetchTransactions();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchBudgets = async () => {
+  //     try {
+  //       const budgetRes = await axios.get("http://localhost:3001/budgets");
+  //       console.log(budgetRes.data);
+  //       setBudgets(budgetRes.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchBudgets();
+  // }, []);
+
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/transactions");
-        console.log(response.data);
-        setTransactions(response.data);
-      } catch (error) {
-        console.error("Error fetching transactions:", error);
-      }
-    };
-
-    fetchTransactions();
-  }, []);
-
-  useEffect(() => {
-    const fetchBudgets = async () => {
-      try {
-        const budgetRes = await axios.get("http://localhost:3001/budgets");
-        console.log(budgetRes.data);
-        setBudgets(budgetRes.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchBudgets();
-  }, []);
-
-  useEffect(() => {
-    if (transactions.length > 0) {
+    if (transactions) {
       const balance = transactions.reduce((acc, t) => {
         const amount = Number(t.amount) || 0;
         return t.type === "income" ? acc + amount : acc - amount;
@@ -75,7 +79,7 @@ const Dashboard = () => {
   }, [transactions]);
 
   useEffect(() => {
-    if (transactions.length > 0 && budgets.length > 0) {
+    if (transactions && budgets) {
       const selectedMonth = displayDate.getMonth();
       const selectedYear = displayDate.getFullYear();
 
@@ -146,6 +150,22 @@ const Dashboard = () => {
     displayDate.getFullYear() === new Date().getFullYear() &&
     displayDate.getMonth() >= new Date().getMonth();
 
+
+    if(transactionsLoading || budgetsLoading){
+      return (
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 64px)",
+        }}
+        >
+          <CircularProgress />
+        </Box>
+      )
+    }
+
   return (
     <Box sx={{}}>
       {/* Inner content */}
@@ -197,7 +217,7 @@ const Dashboard = () => {
       </Box>
 
       <BalanceDisplayCard
-        currentBalance={currentBalance}
+        currentBalance={Number(currentBalance)}
         totalMonthlyBudget={totalMonthlyBudget}
         totalMonthlyExpenses={totalMonthlyExpenses}
         remainingMonthlyBudget={totalMonthlyBudget - totalMonthlyExpenses}

@@ -2,7 +2,7 @@ import {  Box, Card, CardContent, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import useApi from "../hooks/useApi";
 
 interface CardData {
   icon?: string;
@@ -12,15 +12,15 @@ interface CardData {
 }
 
 const Cart: React.FC<CardData> = () => {
-  const [data, setData] = useState<CardData[]>([]);
+const { data } = useApi<CardData[]>("/card");
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/card")
-      // .then(res => console.log(res))
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err.message));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3001/card")
+  //     // .then(res => console.log(res))
+  //     .then((res) => setData(res.data))
+  //     .catch((err) => console.log(err.message));
+  // }, []);
 
   return (
     <>
@@ -93,7 +93,7 @@ const Cart: React.FC<CardData> = () => {
                   <Typography
                     variant="body2"
                     component="p"
-                    sx={{ fontSize: 12 }}
+                    sx={{ fontSize: 12, color: "text.secondary" }}
                   >
                     {item.description}
                   </Typography>

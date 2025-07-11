@@ -20,12 +20,13 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
-import type { Transaction } from "../types";
+import type { Transaction, Budget } from "../types";
 import { toast } from "react-toastify";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import useApi from "../hooks/useApi";
 
 // export const categories = [
 //   "Groceries",
@@ -45,30 +46,25 @@ type TransactionFormData = Omit<Transaction, "id"> & {
 };
 
 const AddTransaction = () => {
+  const { data: budgetData } = useApi<Budget[]>("/budgets");
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/budgets");
-        const budgetCategories = response.data.map((b: any) => b.category);
+    if (budgetData) {
+      const budgetCategories = budgetData.map((b) => b.category);
 
-        const defaultCategories = [
-          "Salary",
-          "Freelance",
-          "Investment",
-          "Other",
-        ];
-        const allCategories = [
-          ...new Set([...budgetCategories, ...defaultCategories]),
-        ];
-        setCategories(allCategories.sort());
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+      const defaultCategories = [
+        "Salary",
+        "Freelance",
+        "Investment",
+        "Other",
+      ];
+      const allCategories = [
+        ...new Set([...budgetCategories, ...defaultCategories]),
+      ];
+      setCategories(allCategories.sort());
+    }
+  }, [budgetData]);
 
   const {
     control,
@@ -151,6 +147,7 @@ const AddTransaction = () => {
     try {
       const response = await axios.post("http://localhost:3001/transactions", {
         ...data,
+        amount: Number(data.amount),
         description: data.description.trim(),
       });
       console.log("Submitted Data:", response.data);

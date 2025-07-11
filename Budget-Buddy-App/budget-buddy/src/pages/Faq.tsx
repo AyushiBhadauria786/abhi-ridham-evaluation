@@ -15,6 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import useApi from "../hooks/useApi";
 
 interface FAQ {
   id: number;
@@ -29,39 +30,42 @@ interface FAQSection {
   faqs: FAQ[];
 }
 
-interface FAQData {
-  faqSections: FAQSection[];
-}
 
 const Faq = () => {
-  const [faqData, setFaqData] = useState<FAQSection[]>([]);
+const { data: faqData, loading, error } = useApi<FAQSection[]>("/faqSections");
   const [filteredSections, setFilteredSections] = useState<FAQSection[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
+
+  // useEffect(() => {
+  //   const fetchFAQData = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await axios.get(
+  //         "http://localhost:3001/faqSections"
+  //       );
+  //       setFaqData(response.data);
+  //       setFilteredSections(response.data);
+  //       setError(null);
+  //     } catch (err) {
+  //       console.error("Error fetching FAQ data:", err);
+  //       setError("Failed to load FAQ data. Please try again later.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchFAQData();
+  // }, []);
 
   useEffect(() => {
-    const fetchFAQData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "http://localhost:3001/faqSections"
-        );
-        setFaqData(response.data);
-        setFilteredSections(response.data);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching FAQ data:", err);
-        setError("Failed to load FAQ data. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!faqData) {
+      setFilteredSections([]);
+      return;
+    }
 
-    fetchFAQData();
-  }, []);
-
-  useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredSections(faqData);
       return;
@@ -73,13 +77,10 @@ const Faq = () => {
       .map((section) => {
         const filteredFAQs = section.faqs.filter((faq) => {
           const questionMatch = faq.question.toLowerCase().includes(query);
-
           const answerMatch = faq.answer.toLowerCase().includes(query);
-
           const keywordMatch = faq.keywords.some((keyword) =>
             keyword.toLowerCase().includes(query)
           );
-
           return questionMatch || answerMatch || keywordMatch;
         });
 
@@ -91,6 +92,7 @@ const Faq = () => {
       .filter((section) => section.faqs.length > 0);
     setFilteredSections(filtered);
   }, [searchQuery, faqData]);
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);

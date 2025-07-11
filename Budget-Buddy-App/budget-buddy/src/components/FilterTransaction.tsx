@@ -13,6 +13,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useApi from "../hooks/useApi";
+import type { Budget } from "../types";
 
 interface FilterProps {
   onFilterChange?: (filters: any) => void;
@@ -24,20 +26,31 @@ const FilterTransaction: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [category, setCategory] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const { data: budgetData } = useApi<Budget[]>("/budgets");
   const [categories, setCategories] = useState<string[]>([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/budgets");
-        const catList = res.data.map((b: any) => b.category);
-        setCategories(catList);
-      } catch (err) {
-        console.error("Failed to fetch categories", err);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:3001/budgets");
+  //       const catList = res.data.map((b: any) => b.category);
+  //       setCategories(catList);
+  //     } catch (err) {
+  //       console.error("Failed to fetch categories", err);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
+
+    useEffect(() => {
+      if(budgetData){
+        const catList = budgetData.map((b) => b.category);
+        const allCats = [
+          ...new Set([...catList, "Salary", "Freelance", "Investment", "Other"])
+        ];
+        setCategories(allCats.sort());
       }
-    };
-    fetchCategories();
-  }, []);
+    },[budgetData]);
 
   const handleClearFilters = () => {
     setDescription("");
@@ -65,6 +78,10 @@ const FilterTransaction: React.FC<FilterProps> = ({ onFilterChange }) => {
         gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
         gap: 2,
         mb: 2,
+        p: 3,
+        border: "1px solid #e2e8f0",
+        borderRadius: 2,
+        backgroundColor: "white",
       }}
     >
       <TextField
@@ -146,6 +163,7 @@ const FilterTransaction: React.FC<FilterProps> = ({ onFilterChange }) => {
             borderColor: "rgb(71 85 105)",
             ":hover": {
               backgroundColor: "#f8fafc",
+              borderColor: "rgb(55 65 81)",
             },
           }}
         >

@@ -27,12 +27,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { Budget as BudgetType } from "../types";
 import { toast } from "react-toastify";
+import useApi from "../hooks/useApi";
 
 const Budget = () => {
-  const [budgets, setBudgets] = useState<BudgetType[]>([]);
+ const {
+    data: budgets,
+    loading,
+    refetch: fetchBudgets,
+  } = useApi<BudgetType[]>("/budgets"); 
   const [categoryName, setCategoryName] = useState("");
   const [limit, setLimit] = useState("");
-  const [loading, setLoading] = useState(true);
 
   const [editData, setEditData] = useState<BudgetType | null>(null);
   const [editCategoryName, setEditCategoryName] = useState("");
@@ -41,21 +45,21 @@ const Budget = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedBudgetId, setSelectedBudgetId] = useState<string | number | null>(null);
 
-  const fetchBudgets = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get("http://localhost:3001/budgets");
-      setBudgets(response.data);
-    } catch (error) {
-      console.error("Error fetching budgets:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchBudgets = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.get("http://localhost:3001/budgets");
+  //     setBudgets(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching budgets:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchBudgets();
-  }, []);
+  // useEffect(() => {
+  //   fetchBudgets();
+  // }, []);
 
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +123,7 @@ const Budget = () => {
   };
 
   const handleEditSave = async () => {
-    if (!editCategoryName || !editLimit || Number(editLimit) <= 0) {
+    if (!editData || !editCategoryName || !editLimit || Number(editLimit) <= 0) {
       toast.warning("Please enter valid values.", {
         position: "top-right",
         autoClose: 3000,
@@ -138,6 +142,7 @@ const Budget = () => {
       fetchBudgets();
     } catch (err) {
       console.error("Error updating category:", err);
+      toast.error("Failed to update category.");
     }
   };
 
@@ -253,7 +258,7 @@ const Budget = () => {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  budgets.map((budget) => (
+                  budgets?.map((budget) => (
                     <TableRow
                       key={budget.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

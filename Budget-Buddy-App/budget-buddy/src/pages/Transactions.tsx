@@ -20,6 +20,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  CircularProgress
 } from "@mui/material";
 import React from "react";
 import { useEffect,useState } from "react";
@@ -30,33 +31,48 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import type { Transaction } from "../types";
 import { formatDate } from "../components/LastTransactions";
+import useApi from "../hooks/useApi"; 
 
 const Transactions = () => {
 
   const navigate = useNavigate();
-   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
+   const {
+    data: allTransactions,
+    loading,
+    error,
+    refetch: fetchTransactions,
+  } = useApi<Transaction[]>("/transactions");
+
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editTransaction, setEditTransaction] = useState<Transaction | null>(null);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedTransactionId, setSelectedTransactionId] = useState<number | null>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<number | string |  null>(null);
    
-    const fetchTransactions = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/transactions");
-        setAllTransactions(res.data);
-        setFilteredTransactions(res.data);
-      } catch (err) {
-        console.error("Failed to fetch transactions:", err);
-      }
-    };
+    // const fetchTransactions = async () => { 
+    //   try {
+    //     const res = await axios.get("http://localhost:3001/transactions");
+    //     setAllTransactions(res.data);
+    //     setFilteredTransactions(res.data);
+    //   } catch (err) {
+    //     console.error("Failed to fetch transactions:", err);
+    //   }
+    // };
+
+    // useEffect(() => {
+    //   fetchTransactions();
+    // },[])
 
     useEffect(() => {
-      fetchTransactions();
-    },[])
+      if(allTransactions){
+        setFilteredTransactions(allTransactions);
+      }
+    },[allTransactions])
 
    const handleFilterChange = (filters: any) => {
+     if (!allTransactions) return;
+
     let filtered = [...allTransactions];
 
     if (filters.description) {
@@ -120,6 +136,30 @@ const Transactions = () => {
       setSelectedTransactionId(null);
     }
   };
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+    if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Typography color="error">
+          Failed to load transactions: {error}
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ padding: "24px" }}>

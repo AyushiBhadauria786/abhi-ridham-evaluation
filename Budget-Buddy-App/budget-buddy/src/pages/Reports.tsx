@@ -1,9 +1,8 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -18,6 +17,7 @@ import BudgetOverview from "../components/BudgetOverview";
 import MyPieChart from "../components/Piechart";
 import type { PieChartData, Transaction } from "../types";
 import axios from "axios";
+import useApi from "../hooks/useApi";
 
 // const data = [
 //   {
@@ -108,24 +108,24 @@ const CustomBarTooltip = ({active,payload,label}:any) => {
 };
 
 const Reports: React.FC = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+ const { data: transactions, loading, error } = useApi<Transaction[]>("/transactions");  
   const [monthlySummary, setMonthlySummary] = useState<any[]>([]);
   const [categorySpending, setCategorySpending] = useState<PieChartData[]>([]);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/transactions");
-        setTransactions(res.data);
-      } catch (err) {
-        console.error("Failed to fetch transactions:", err);
-      }
-    };
-    fetchTransactions();
-  }, []);
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:3001/transactions");
+  //       setTransactions(res.data);
+  //     } catch (err) {
+  //       console.error("Failed to fetch transactions:", err);
+  //     }
+  //   };
+  //   fetchTransactions();
+  // }, []);
 
   useEffect(() => {
-    if (transactions.length === 0) return;
+    if (!transactions) return;
 
     const lastMonthsData: { year: number; month: number; name: string }[] = [];
     const today = new Date();
@@ -187,6 +187,31 @@ const Reports: React.FC = () => {
     );
     setCategorySpending(pieData);
   }, [transactions]);
+
+    if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Typography color="error">
+          Failed to load reports data: {error}
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ p: { xs: 1, md: 2 } }}>
@@ -307,7 +332,7 @@ const Reports: React.FC = () => {
               >
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="name" />
-                <YAxis />
+                <YAxis tickFormatter={(value) => `₹${Number(value) / 1000}k`}/>
                 <Tooltip />
                 <Legend />
                 <Line type="monotone" dataKey="Expenses" stroke="#8884d8" strokeWidth={2} activeDot={{r: 8}} />
