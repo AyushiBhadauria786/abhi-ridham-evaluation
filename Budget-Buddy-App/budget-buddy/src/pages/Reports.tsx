@@ -91,7 +91,7 @@ import useApi from "../hooks/useApi";
 //   },
 // ];
 
-const CustomBarTooltip = ({active,payload,label}:any) => {
+export const CustomBarTooltip = ({active,payload,label}:any) => {
   if(active && payload && payload.length){
     return (
       <Paper sx={{p: 1.5, backgroundColor: 'rgba(255, 255, 255, 0.95)', border: '1px solid #ccc', borderRadius: 2}}>

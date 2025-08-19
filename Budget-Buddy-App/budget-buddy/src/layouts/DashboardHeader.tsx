@@ -49,7 +49,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       }}
     >
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <IconButton onClick={handleSidebarToggle} edge="start">
+        <IconButton onClick={handleSidebarToggle} edge="start" aria-label="menu">
             <MenuIcon />
         </IconButton>
         <Typography variant="h6" fontWeight={600} color="text.primary">
